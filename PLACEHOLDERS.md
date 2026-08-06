@@ -4,8 +4,10 @@ Todo lo que **no está confirmado** y hay que resolver antes de vender la págin
 como sitio real. Nada de esto está inventado en la página: donde no había dato,
 la línea no existe. Esta lista es lo que falta, no lo que hay que corregir.
 
-Estado: **DEMO**. `index.html` y `gracias.html` llevan
-`<meta name="robots" content="noindex,nofollow">` y `robots.txt` bloquea todo.
+Estado: **EN PRODUCCIÓN** (lanzado 2026-08-06). Las 15 páginas de CORE 15 ya
+no llevan `noindex` y `robots.txt` permite el crawl. `gracias.html` y
+`404.html` mantienen `noindex,nofollow` a propósito — no son páginas de
+contenido y no deben indexarse.
 
 ---
 
@@ -99,15 +101,15 @@ PNG originales borrados de la carpeta de deploy, como estaba pedido.
 
 ## 8. Checklist de lanzamiento
 
-1. Sacar `<meta name="robots" content="noindex,nofollow">` de `index.html` **y** de `gracias.html`.
-2. Cambiar `robots.txt` por el bloque PRODUCCIÓN que ya está comentado al final del archivo.
-3. Actualizar `<lastmod>` en `sitemap.xml`.
-4. Crear el sitio en venderCRM (slug `tasacion`), generar la clave y cargar `VENDERCRM_API_KEY` y `VENDERCRM_URL` en hPanel.
-5. Probar el formulario de verdad y confirmar el contacto en venderCRM. Enviarlo dos veces seguidas: no debe crear dos contactos.
-6. Cambiar `WA_NUMBER` si ya hay número dedicado.
-7. Pegar el snippet de analítica en el hueco marcado del `<head>`.
-8. Agregar el TXT de verificación en DNS y mandar el sitemap.
-9. Confirmar que `leads.log` **no** es accesible por web (ya está bloqueado en `robots.txt`, pero conviene además una regla en `.htaccess`).
+1. ✅ Sacar `<meta name="robots" content="noindex,nofollow">` de `index.html` y de las 14 páginas nuevas (2026-08-06). `gracias.html` y `404.html` mantienen `noindex` a propósito.
+2. ✅ Cambiar `robots.txt` por el bloque PRODUCCIÓN (2026-08-06).
+3. ✅ `<lastmod>` en `sitemap.xml` ya está en la fecha de lanzamiento.
+4. **Pendiente**: crear el sitio en venderCRM (slug `tasacion`), generar la clave y cargar `VENDERCRM_API_KEY` y `VENDERCRM_URL` en hPanel.
+5. **Pendiente**: probar el formulario de verdad y confirmar el contacto en venderCRM. Enviarlo dos veces seguidas: no debe crear dos contactos.
+6. **Pendiente**: cambiar `WA_NUMBER` si ya hay número dedicado.
+7. **Pendiente**: pegar el snippet de analítica en el hueco marcado del `<head>`.
+8. **Pendiente**: agregar el TXT de verificación en DNS y mandar el sitemap en Search Console.
+9. **Pendiente**: confirmar que `leads.log` no es accesible por web (ya bloqueado en `robots.txt`, pero conviene además una regla en `.htaccess`).
 
 ## 9. Archivos que NO van al deploy
 
@@ -137,4 +139,4 @@ después de construir las 14 páginas nuevas + home:
 9. **Exportación real de KWP** — los dos temas de `/guias/` se eligieron por lógica de rubro, no de datos de búsqueda. Antes de planificar la página 16+ hace falta una exportación real de Keyword Planner.
 10. **Tres imágenes específicas de zona** (Luque, San Lorenzo, Fernando de la Mora) — hoy esas tres páginas reutilizan imágenes de terrenos/casas/locales genéricas. `build-images.mjs` puede generarlas en el mismo estilo cuando haga falta.
 11. **Snippet de analítica** — sigue sin activar. Todo `data-ev` ya está en las 15 páginas + `gracias.html` + `404.html`; activarlo es un pegado en el `<head>`, sin tocar markup.
-12. **Checklist de lanzamiento** — sigue pendiente como paso separado (ver §8 arriba). Las 15 páginas + `gracias.html` + `404.html` mantienen `noindex` y `robots.txt` sigue bloqueando todo.
+12. **Checklist de lanzamiento** — pasos 1–3 (noindex, robots.txt, sitemap) hechos el 2026-08-06. Pasos 4–9 (venderCRM, WA_NUMBER dedicado, analítica, Search Console, `.htaccess` de `leads.log`) siguen pendientes — ver §8 arriba.

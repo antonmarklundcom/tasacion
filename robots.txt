@@ -1,22 +1,9 @@
-# tasacion.com.py — DEMO. La página lleva <meta name="robots" content="noindex,nofollow">.
-# Al lanzar: quitar el meta noindex del index.html y reemplazar el bloque de
-# abajo por el bloque "PRODUCCIÓN" que está comentado al final de este archivo.
+# tasacion.com.py — PRODUCCIÓN.
 
 User-agent: *
-Disallow: /
-
-# Nunca indexar, ni en demo ni en producción:
+Allow: /
 Disallow: /lead-forward.php
 Disallow: /leads.log
 Disallow: /gracias.html
 
 Sitemap: https://tasacion.com.py/sitemap.xml
-
-# ── PRODUCCIÓN (activar al lanzar) ───────────────────────────────────
-# User-agent: *
-# Allow: /
-# Disallow: /lead-forward.php
-# Disallow: /leads.log
-# Disallow: /gracias.html
-#
-# Sitemap: https://tasacion.com.py/sitemap.xml
