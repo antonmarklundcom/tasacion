@@ -120,3 +120,21 @@ node_modules/      .claude/    PLACEHOLDERS.md
 
 Al servidor van solo: `index.html`, `gracias.html`, `lead-forward.php`,
 `robots.txt`, `sitemap.xml` y `assets/`.
+
+## 10. CORE 15 — pendientes tras el build de expansión (BUILD-SPEC.md §14)
+
+Nada de lo siguiente se inventó para completar una sección. Es lo que falta
+después de construir las 14 páginas nuevas + home:
+
+1. **RUC, factura legal, razón social** — ninguna línea existe en ninguna de las 15 páginas.
+2. **Matrícula / registro profesional** — no se construyó ninguna sección de confianza sobre habilitación.
+3. **Habilitación BCP** — deliberadamente ausente. Si alguna vez existe, es una sección nueva, no una línea suelta.
+4. **Número de WhatsApp dedicado** — sigue siendo el compartido de etapa 1 (`WA_NUMBER` en una línea por archivo). Buscar y reemplazar `595995628862` el día que cambie.
+5. **Grilla de precios para el informe** — no bloquea nada del CORE 15, pero hace falta para una futura `/precios/`.
+6. **Tabla de comparables (Gs./m² por zona y tipo, con fecha y fuente)** — bloquea la Opción B del `/cotizador/` (§7.1 del BUILD-SPEC). El cotizador construido es un medidor de completitud, no una calculadora de precio, y así debe quedar hasta que exista esa tabla real.
+7. **Reseñas reales** — siguen sin existir. No se agregó `aggregateRating` en ningún JSON-LD.
+8. **URL + API key de venderCRM** — los dos formularios (`/` y `/contacto/`) siguen posteando a `/lead-forward.php`, que sigue logueando a `leads.log` sin tocar código.
+9. **Exportación real de KWP** — los dos temas de `/guias/` se eligieron por lógica de rubro, no de datos de búsqueda. Antes de planificar la página 16+ hace falta una exportación real de Keyword Planner.
+10. **Tres imágenes específicas de zona** (Luque, San Lorenzo, Fernando de la Mora) — hoy esas tres páginas reutilizan imágenes de terrenos/casas/locales genéricas. `build-images.mjs` puede generarlas en el mismo estilo cuando haga falta.
+11. **Snippet de analítica** — sigue sin activar. Todo `data-ev` ya está en las 15 páginas + `gracias.html` + `404.html`; activarlo es un pegado en el `<head>`, sin tocar markup.
+12. **Checklist de lanzamiento** — sigue pendiente como paso separado (ver §8 arriba). Las 15 páginas + `gracias.html` + `404.html` mantienen `noindex` y `robots.txt` sigue bloqueando todo.
