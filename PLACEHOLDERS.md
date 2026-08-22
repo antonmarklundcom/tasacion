@@ -92,10 +92,23 @@ PNG originales borrados de la carpeta de deploy, como estaba pedido.
 
 ## 7. Analítica
 
-- Sin GA4, sin GTM, sin ningún script de terceros. Cero requests externos
-  aparte de Google Fonts.
-- Todos los CTA ya llevan `data-ev` + `data-ev-loc`, y el shim empuja a
-  `dataLayer`. Activar analítica después es un solo pegado, sin tocar markup.
+- **Falta un solo dato: el ID de medición.** El cableado ya está hecho
+  (2026-08-22). Cada una de las 17 páginas declara `var ANALYTICS_ID = '';`
+  en el `<head>`, en el hueco marcado, con el mismo patrón que `WA_NUMBER`.
+  Poner ahí el ID de GA4 (`G-XXXXXXXXXX`) o el de GTM (`GTM-XXXXXXX`) y la
+  analítica queda activa en todo el sitio, sin tocar markup.
+- Mientras `ANALYTICS_ID` esté vacío: cero requests a terceros aparte de
+  Google Fonts, exactamente como hasta ahora.
+- El cargador vive en `assets/js/site.js`, junto al shim. Detecta solo si el
+  ID es de GA4 o de GTM. En GA4 manda `anonymize_ip`.
+- **El tag se inyecta únicamente con consentimiento de estadísticas**
+  (`tsc_consent === 'stats'`, Ley 6534/2020): al aceptar en el diálogo carga
+  en el acto, sin recargar. Si el visitante retira el consentimiento con el
+  tag ya cargado, la página se recarga — un script inyectado no se puede
+  desinyectar.
+- Todos los CTA ya llevan `data-ev` + `data-ev-loc` y el shim los empuja a
+  `dataLayer` haya o no tag: los clics previos al consentimiento quedan
+  encolados y el tag los consume al cargar.
 - Verificación de Search Console: hacerla por **registro TXT de DNS**, no por
   archivo HTML ni meta tag.
 
@@ -107,7 +120,7 @@ PNG originales borrados de la carpeta de deploy, como estaba pedido.
 4. **Pendiente**: crear el sitio en venderCRM (slug `tasacion`), generar la clave y cargar `VENDERCRM_API_KEY` y `VENDERCRM_URL` en hPanel.
 5. **Pendiente**: probar el formulario de verdad y confirmar el contacto en venderCRM. Enviarlo dos veces seguidas: no debe crear dos contactos.
 6. **Pendiente**: cambiar `WA_NUMBER` si ya hay número dedicado.
-7. **Pendiente**: pegar el snippet de analítica en el hueco marcado del `<head>`.
+7. **Pendiente (falta solo el ID)**: el cableado de analítica está hecho (2026-08-22). Cargar el ID de medición en `var ANALYTICS_ID = '';` — una línea por archivo, 17 archivos. Buscar y reemplazar, igual que `WA_NUMBER`.
 8. **Pendiente**: agregar el TXT de verificación en DNS y mandar el sitemap en Search Console.
 9. **Pendiente**: confirmar que `leads.log` no es accesible por web (ya bloqueado en `robots.txt`, pero conviene además una regla en `.htaccess`).
 
@@ -137,6 +150,11 @@ después de construir las 14 páginas nuevas + home:
 7. **Reseñas reales** — siguen sin existir. No se agregó `aggregateRating` en ningún JSON-LD.
 8. **URL + API key de venderCRM** — los dos formularios (`/` y `/contacto/`) siguen posteando a `/lead-forward.php`, que sigue logueando a `leads.log` sin tocar código.
 9. **Exportación real de KWP** — los dos temas de `/guias/` se eligieron por lógica de rubro, no de datos de búsqueda. Antes de planificar la página 16+ hace falta una exportación real de Keyword Planner.
-10. **Tres imágenes específicas de zona** (Luque, San Lorenzo, Fernando de la Mora) — hoy esas tres páginas reutilizan imágenes de terrenos/casas/locales genéricas. `build-images.mjs` puede generarlas en el mismo estilo cuando haga falta.
-11. **Snippet de analítica** — sigue sin activar. Todo `data-ev` ya está en las 15 páginas + `gracias.html` + `404.html`; activarlo es un pegado en el `<head>`, sin tocar markup.
-12. **Checklist de lanzamiento** — pasos 1–3 (noindex, robots.txt, sitemap) hechos el 2026-08-06. Pasos 4–9 (venderCRM, WA_NUMBER dedicado, analítica, Search Console, `.htaccess` de `leads.log`) siguen pendientes — ver §8 arriba.
+10. **Tres imágenes específicas de zona** (Luque, San Lorenzo, Fernando de la Mora) — **generadas el 2026-08-22**, pendiente de bajarlas. Se generaron con Higgsfield (`seedream_v5_pro`, 21:9, 2K, 3 créditos c/u) en el mismo estilo documental que el resto: luz difusa, paleta cálida apagada, sin personas y sin carteles legibles. Ninguna se presenta como trabajo propio. La sesión que las generó no pudo bajar los PNG — la política de red de ese entorno bloquea el CDN de Higgsfield —, así que los archivos siguen en la cuenta de Higgsfield. Para terminar:
+    1. Bajar las tres de Higgsfield y guardarlas como `zone-img/luque.png`, `zone-img/san-lorenzo.png` y `zone-img/fernando-de-la-mora.png` (`zone-img/` está en `.gitignore`, igual que `src-img/` y `new-img/`).
+    2. `npm install && node build-images.mjs`.
+    3. Commit de `assets/img/` y de las tres páginas de zona.
+
+    El script hace todo lo demás: genera `tasacion-de-inmuebles-luque`, `-san-lorenzo` y `-fernando-de-la-mora` en 640/1280/1920 × AVIF + WebP, reapunta el `<picture>` de cada página de zona y corrige el `alt` para que describa lo que realmente se ve. Es idempotente y saltea cualquier job sin PNG fuente, así que corre sin romperse aunque falten los originales de las otras ocho imágenes. Hasta que se corra, las tres páginas siguen mostrando las imágenes genéricas de siempre — nada quedó apuntando a un archivo inexistente.
+11. **Snippet de analítica** — **cableado el 2026-08-22**, falta solo el ID. Las 17 páginas (15 + `gracias.html` + `404.html`) declaran `var ANALYTICS_ID = '';` en el `<head>` y el cargador con puerta de consentimiento está en `assets/js/site.js`. Cargar el ID de GA4 o de GTM y la analítica arranca sin tocar markup. Ver §7.
+12. **Checklist de lanzamiento** — pasos 1–3 (noindex, robots.txt, sitemap) hechos el 2026-08-06. Pasos 4–9 (venderCRM, WA_NUMBER dedicado, ID de analítica, Search Console, `.htaccess` de `leads.log`) siguen pendientes — ver §8 arriba.

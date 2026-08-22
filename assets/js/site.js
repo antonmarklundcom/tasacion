@@ -16,6 +16,34 @@
       site: location.hostname
     });
   }, true);
+
+  /* Carga del tag. El ID vive en una sola linea del <head> de cada pagina
+     (`ANALYTICS_ID`, igual que `WA_NUMBER`). Sin ID no se pide nada a
+     terceros. Con ID, el tag se inyecta solo despues del consentimiento
+     de estadisticas — los eventos de arriba quedan encolados en
+     `dataLayer` y el tag los consume al cargar. */
+  var ID = (typeof ANALYTICS_ID === 'string' ? ANALYTICS_ID : '').trim();
+  var loaded = false;
+
+  function load() {
+    if (loaded || !ID) return;
+    loaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    if (ID.indexOf('GTM-') === 0) {
+      window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+      s.src = 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(ID);
+    } else {
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', ID, { anonymize_ip: true });
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ID);
+    }
+    document.head.appendChild(s);
+  }
+
+  window.tscAnalytics = { load: load, isLoaded: function () { return loaded; } };
+  try { if (localStorage.getItem('tsc_consent') === 'stats') load(); } catch (e) {}
 })();
 
 /* web-design-system — motion.js. Copy verbatim. No dependencies. ~2KB.
@@ -125,7 +153,16 @@
   if (box) {
     var KEY = 'tsc_consent';
     if (!localStorage.getItem(KEY)) box.setAttribute('data-open', '');
-    function close(v) { try { localStorage.setItem(KEY, v); } catch (e) {} box.removeAttribute('data-open'); }
+    function close(v) {
+      try { localStorage.setItem(KEY, v); } catch (e) {}
+      box.removeAttribute('data-open');
+      var a = window.tscAnalytics;
+      if (!a) return;
+      // Aceptar carga el tag al instante. Retirar el consentimiento con el
+      // tag ya cargado exige recargar: no se puede desinyectar un script.
+      if (v === 'stats') a.load();
+      else if (a.isLoaded()) location.reload();
+    }
     d.getElementById('consent-save').addEventListener('click', function () {
       close(d.getElementById('consent-stats').checked ? 'stats' : 'necessary');
     });
