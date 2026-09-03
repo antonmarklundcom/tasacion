@@ -1,9 +1,7 @@
-# tasacion.com.py — PRODUCCIÓN.
-
 User-agent: *
 Allow: /
-Disallow: /lead-forward.php
-Disallow: /leads.log
-Disallow: /gracias.html
+Disallow: /go/
+Disallow: /api/
+Disallow: /storage/
 
 Sitemap: https://tasacion.com.py/sitemap.xml

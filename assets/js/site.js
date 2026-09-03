@@ -1,12 +1,13 @@
-/* assets/js/site.js — shared across all pages.
-   Contains: 1) analytics shim  2) motion.js (web-design-system, verbatim)
-   3) page script (WA_NUMBER rewrite, --bleedw, page_url, #yr, consent).
-   The qualifier (#q-send/#q-preview) is page-specific and lives inline
-   on / and /cotizador/ only — this script tolerates its absence. */
+/* assets/js/site.js — shared across all pages. Vanilla, no dependencies.
+   1) analytics shim (consent-gated tag load)
+   2) header nav (toggle, dropdown)
+   3) zone selector (sets z= on every wa_url link on the page)
+   4) page glue: page_url, sticky header state
+   5) consent dialog (Ley 6534/2020: nothing pre-marked, nothing loads before consent) */
 
-(function(){
+(function () {
   window.dataLayer = window.dataLayer || [];
-  document.addEventListener('click', function(e){
+  document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-ev]');
     if (!t) return;
     window.dataLayer.push({
@@ -17,11 +18,6 @@
     });
   }, true);
 
-  /* Carga del tag. El ID vive en una sola linea del <head> de cada pagina
-     (`ANALYTICS_ID`, igual que `WA_NUMBER`). Sin ID no se pide nada a
-     terceros. Con ID, el tag se inyecta solo despues del consentimiento
-     de estadisticas — los eventos de arriba quedan encolados en
-     `dataLayer` y el tag los consume al cargar. */
   var ID = (typeof ANALYTICS_ID === 'string' ? ANALYTICS_ID : '').trim();
   var loaded = false;
 
@@ -46,58 +42,69 @@
   try { if (localStorage.getItem('tsc_consent') === 'stats') load(); } catch (e) {}
 })();
 
-/* web-design-system — motion.js. Copy verbatim. No dependencies. ~2KB.
-   Budget: at most 15% of elements should carry data-reveal. */
 (function () {
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var d = document;
 
-  // 1. Scroll reveal with capped stagger -------------------------------
-  var items = d.querySelectorAll('[data-reveal]');
-  if (reduce || !('IntersectionObserver' in window)) {
-    items.forEach(function (el) { el.style.opacity = 1; el.style.transform = 'none'; });
-  } else {
-    items.forEach(function (el) {
-      el.style.opacity = 0;
-      el.style.transform = 'translateY(18px)';
-      el.style.transition = 'opacity 280ms cubic-bezier(.16,1,.3,1), transform 280ms cubic-bezier(.16,1,.3,1)';
+  // --- Header nav: hamburger + dropdown -------------------------------
+  var toggle = d.getElementById('nav-toggle');
+  var panel = d.getElementById('nav-panel');
+  if (toggle && panel) {
+    toggle.addEventListener('click', function () {
+      var open = panel.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var i = Math.min(+(e.target.dataset.reveal || 0), 6); // cap stagger at 6
-        e.target.style.transitionDelay = (i * 70) + 'ms';
-        e.target.style.opacity = 1;
-        e.target.style.transform = 'none';
-        io.unobserve(e.target);
-      });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.15 });
-    items.forEach(function (el) { io.observe(el); });
+  }
+  var ddBtn = d.getElementById('nav-dropdown-btn');
+  var dd = d.getElementById('nav-dropdown');
+  if (ddBtn && dd) {
+    ddBtn.addEventListener('click', function () {
+      var open = dd.classList.toggle('is-open');
+      ddBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    d.addEventListener('click', function (e) {
+      if (!ddBtn.contains(e.target) && !dd.contains(e.target)) {
+        dd.classList.remove('is-open');
+        ddBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 
-  // 2. Count-up on numbers --------------------------------------------
-  var nums = d.querySelectorAll('[data-count]');
-  if (nums.length && !reduce && 'IntersectionObserver' in window) {
-    var nio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var el = e.target, to = parseFloat(el.dataset.count), t0 = null;
-        var suffix = el.dataset.countSuffix || '';
-        function step(ts) {
-          if (!t0) t0 = ts;
-          var p = Math.min((ts - t0) / 900, 1);
-          var eased = 1 - Math.pow(1 - p, 3);
-          el.textContent = Math.round(to * eased).toLocaleString() + suffix;
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-        nio.unobserve(el);
+  // --- Zone selector: progressive enhancement of wa_url() links -------
+  var zoneWrap = d.querySelector('[data-zone-selector]');
+  if (zoneWrap) {
+    var buttons = zoneWrap.querySelectorAll('[data-zone]');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        buttons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var zone = btn.dataset.zone || '';
+        d.querySelectorAll('a[href^="/go/whatsapp.php"]').forEach(function (a) {
+          try {
+            var url = new URL(a.href, location.origin);
+            if (zone) { url.searchParams.set('z', zone); }
+            else { url.searchParams.delete('z'); }
+            a.href = url.pathname + '?' + url.searchParams.toString();
+          } catch (e) {}
+        });
       });
-    }, { threshold: 0.5 });
-    nums.forEach(function (el) { nio.observe(el); });
+    });
   }
 
-  // 3. Sticky header state --------------------------------------------
+  // --- Smooth scroll for [data-scroll] hero buttons --------------------
+  d.querySelectorAll('[data-scroll]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = d.getElementById(a.dataset.scroll);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // --- page_url hidden field for the lead handler ----------------------
+  d.querySelectorAll('#page_url').forEach(function (el) { el.value = location.href; });
+
+  // --- Sticky header state ---------------------------------------------
   var hdr = d.querySelector('[data-sticky-header]');
   if (hdr) {
     var tick = false;
@@ -110,66 +117,34 @@
       });
     }, { passive: true });
   }
-})();
 
-(function () {
-  var d = document;
-
-  // --- 1. Un solo número. Cambiar WA_NUMBER arriba reescribe todo. ----
-  (function () {
-    var n = window.WA_NUMBER;
-    d.querySelectorAll('a[href^="https://wa.me/"]').forEach(function (a) {
-      a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/' + n);
-    });
-    d.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
-      a.href = 'tel:+' + n;
-    });
-  })();
-
-  // --- 2. Ancho real de página (sin barra de scroll) para los .bleed ---
-  (function () {
-    var root = d.documentElement, raf = false;
-    function measure() {
-      root.style.setProperty('--bleedw', root.clientWidth + 'px');
-      raf = false;
-    }
-    measure();
-    window.addEventListener('resize', function () {
-      if (raf) return;
-      raf = true;
-      requestAnimationFrame(measure);
-    }, { passive: true });
-  })();
-
-  // --- 3. page_url oculto para el handler de leads --------------------
-  var pu = d.getElementById('page_url');
-  if (pu) pu.value = location.href;
-
-  var yr = d.getElementById('yr');
-  if (yr) yr.textContent = new Date().getFullYear();
-
-  // --- 5. Consentimiento (Ley 6534/2020). Nada pre-marcado. -----------
+  // --- Consent dialog (Ley 6534/2020). Nothing pre-marked. --------------
   var box = d.getElementById('consent');
   if (box) {
     var KEY = 'tsc_consent';
-    if (!localStorage.getItem(KEY)) box.setAttribute('data-open', '');
+    try { if (!localStorage.getItem(KEY)) box.setAttribute('data-open', ''); } catch (e) { box.setAttribute('data-open', ''); }
+
     function close(v) {
       try { localStorage.setItem(KEY, v); } catch (e) {}
       box.removeAttribute('data-open');
       var a = window.tscAnalytics;
       if (!a) return;
-      // Aceptar carga el tag al instante. Retirar el consentimiento con el
-      // tag ya cargado exige recargar: no se puede desinyectar un script.
       if (v === 'stats') a.load();
       else if (a.isLoaded()) location.reload();
     }
-    d.getElementById('consent-save').addEventListener('click', function () {
-      close(d.getElementById('consent-stats').checked ? 'stats' : 'necessary');
+
+    var saveBtn = d.getElementById('consent-save');
+    var rejectBtn = d.getElementById('consent-reject');
+    var reopenBtn = d.getElementById('consent-reopen');
+    var statsCheck = d.getElementById('consent-stats');
+
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+      close(statsCheck && statsCheck.checked ? 'stats' : 'necessary');
     });
-    d.getElementById('consent-reject').addEventListener('click', function () { close('necessary'); });
-    d.getElementById('consent-reopen').addEventListener('click', function (e) {
+    if (rejectBtn) rejectBtn.addEventListener('click', function () { close('necessary'); });
+    if (reopenBtn) reopenBtn.addEventListener('click', function (e) {
       e.preventDefault();
-      d.getElementById('consent-stats').checked = localStorage.getItem(KEY) === 'stats';
+      try { if (statsCheck) statsCheck.checked = localStorage.getItem(KEY) === 'stats'; } catch (err) {}
       box.setAttribute('data-open', '');
     });
   }

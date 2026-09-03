@@ -1,94 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CORE 15 — 15 URLs. 404.html is intentionally excluded (§10.3). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tasacion.com.py/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/servicios/tasacion-online/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://tasacion.com.py/tasaciones/casas/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/servicios/tasacion-de-casas-y-departamentos/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://tasacion.com.py/tasaciones/departamentos/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/servicios/tasacion-de-terrenos/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://tasacion.com.py/tasaciones/terrenos/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/servicios/tasacion-de-locales-comerciales/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://tasacion.com.py/tasaciones/corporativa/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/servicios/informe-de-tasacion/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://tasacion.com.py/tasaciones/hipotecaria/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/zonas/luque/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://tasacion.com.py/tasaciones/locales-comerciales/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/zonas/san-lorenzo/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://tasacion.com.py/tasaciones/campos/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/zonas/fernando-de-la-mora/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://tasacion.com.py/valuacion-para-vender/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/zonas/interior/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://tasacion.com.py/informes-periciales/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
-    <loc>https://tasacion.com.py/cotizador/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://tasacion.com.py/guias/que-es-una-tasacion-inmobiliaria/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tasacion.com.py/guias/documentos-para-tasar-un-inmueble/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://tasacion.com.py/contacto/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://tasacion.com.py/nosotros/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
   <url>
     <loc>https://tasacion.com.py/preguntas-frecuentes/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2026-09-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tasacion.com.py/contacto/</loc>
+    <lastmod>2026-09-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tasacion.com.py/politica-de-privacidad/</loc>
+    <lastmod>2026-09-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tasacion.com.py/politica-de-cookies/</loc>
+    <lastmod>2026-09-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tasacion.com.py/terminos-y-condiciones/</loc>
+    <lastmod>2026-09-03</lastmod>
   </url>
 </urlset>

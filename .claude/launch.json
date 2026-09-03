@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "tasacion",
-      "runtimeExecutable": "node",
-      "runtimeArgs": ["serve.mjs"],
-      "port": 4322
+      "runtimeExecutable": "php",
+      "runtimeArgs": ["-S", "127.0.0.1:8080", "index.php"],
+      "port": 8080
     }
   ]
 }

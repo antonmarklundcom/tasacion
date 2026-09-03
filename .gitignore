@@ -1,5 +1,7 @@
 node_modules/
 new-img/
 src-img/
-leads.log
 zone-img/
+config/secrets.php
+storage/*.log
+dist/
