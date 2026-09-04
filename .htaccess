@@ -1,0 +1,24 @@
+# tasacion.com.py — bloqueos de acceso directo.
+# robots.txt para bots; esto es para bloquear la descarga directa, con o sin bot.
+
+# Nunca servir dotfiles ni carpetas de control de versiones/herramientas.
+RedirectMatch 404 ^/\.git(/|$)
+RedirectMatch 404 ^/\.claude(/|$)
+RedirectMatch 404 ^/\.gitignore$
+RedirectMatch 404 ^/\.htaccess$
+
+# Documentación interna y specs — no forman parte del sitio público.
+RedirectMatch 404 ^/docs(/|$)
+RedirectMatch 404 ^/BUILD-SPEC(.*)\.md$
+RedirectMatch 404 ^/NEXT-STEPS\.md$
+RedirectMatch 404 ^/PLACEHOLDERS\.md$
+
+# Herramientas de build/dev — no se ejecutan en el servidor de producción.
+RedirectMatch 404 ^/build-images\.mjs$
+RedirectMatch 404 ^/serve\.mjs$
+RedirectMatch 404 ^/package(-lock)?\.json$
+RedirectMatch 404 ^/node_modules(/|$)
+
+# Log de leads: contiene datos personales (teléfono, etc). robots.txt ya lo
+# bloquea para crawlers; esto lo bloquea para cualquiera con la URL directa.
+RedirectMatch 404 ^/leads\.log$
