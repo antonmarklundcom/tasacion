@@ -18,6 +18,14 @@ RedirectMatch 404 ^/build-images\.mjs$
 RedirectMatch 404 ^/serve\.mjs$
 RedirectMatch 404 ^/package(-lock)?\.json$
 RedirectMatch 404 ^/node_modules(/|$)
+RedirectMatch 404 ^/plan\.md$
+RedirectMatch 404 ^/prompts(/|$)
+RedirectMatch 404 ^/tests(/|$)
+RedirectMatch 404 ^/deploy(/|$)
+RedirectMatch 404 ^/verify\.mjs$
+RedirectMatch 404 ^/content\.mjs$
+RedirectMatch 404 ^/build-site\.mjs$
+RedirectMatch 404 ^/\.github(/|$)
 
 # Log de leads: contiene datos personales (teléfono, etc). robots.txt ya lo
 # bloquea para crawlers; esto lo bloquea para cualquiera con la URL directa.

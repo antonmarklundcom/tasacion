@@ -1,0 +1,49 @@
+name: verify
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: node verify.mjs
+        run: node verify.mjs
+
+      - name: PHP lint lead-forward.php
+        run: php -l lead-forward.php
+
+  screenshots:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright (Chromium only)
+        run: |
+          npm install --no-audit --no-fund playwright
+          npx playwright install --with-deps chromium
+
+      - name: Capture screenshots (1440 + 390px, 5 páginas clave)
+        run: |
+          node build-site.mjs
+          node serve.mjs &
+          for i in $(seq 1 40); do curl -sf -o /dev/null http://127.0.0.1:4322/ && break; sleep 0.25; done
+          node tests/screenshots.mjs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: docs/screenshots/
