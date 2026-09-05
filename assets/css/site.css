@@ -151,6 +151,7 @@ a{color:var(--navy)}
 .card--accent{border-top:3px solid var(--navy)}
 .card--muted{background:var(--base)}
 .link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--navy);text-decoration:none;margin-top:6px}
+.link svg{width:16px;height:16px;flex:none}
 
 /* ---------------------------------------------------------------- price panel */
 .price-panel{background:var(--surface);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);padding:64px 0}
