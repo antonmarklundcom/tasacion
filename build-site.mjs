@@ -24,10 +24,32 @@ const ICON_BURGER = `<svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h
 // ---------------------------------------------------------------- header/nav
 function renderNav(current) {
   const items = NAV.map((i) => {
+    if (i.children) {
+      const childActive = i.children.some((c) => c.href === current);
+      const active = i.href === current || childActive ? ' aria-current="page"' : '';
+      const subItems = i.children.map((c) => `<li><a href="${c.href}"${c.href === current ? ' aria-current="page"' : ''}>${esc(c.label)}</a></li>`).join('\n            ');
+      return `<li class="hdr__nav-item hdr__nav-item--has-children">
+          <a href="${i.href}"${active}>${esc(i.label)}</a>
+          <ul class="hdr__dropdown">
+            ${subItems}
+          </ul>
+        </li>`;
+    }
     const active = i.href === current ? ' aria-current="page"' : '';
     return `<li><a href="${i.href}"${active}>${esc(i.label)}</a></li>`;
   }).join('\n        ');
-  const panelItems = NAV.map((i) => `<li><a href="${i.href}">${esc(i.label)}</a></li>`).join('\n        ');
+  const panelItems = NAV.map((i) => {
+    if (i.children) {
+      const subPanelItems = i.children.map((c) => `<li><a href="${c.href}">${esc(c.label)}</a></li>`).join('\n            ');
+      return `<li class="hdr__panel-item hdr__panel-item--has-children">
+          <a href="${i.href}">${esc(i.label)}</a>
+          <ul class="hdr__panel-sub">
+            ${subPanelItems}
+          </ul>
+        </li>`;
+    }
+    return `<li><a href="${i.href}">${esc(i.label)}</a></li>`;
+  }).join('\n        ');
   return `<header class="hdr" data-hdr>
   <div class="container hdr__row">
     <a href="/" class="hdr__brand">Tasación<span>.com.py</span></a>

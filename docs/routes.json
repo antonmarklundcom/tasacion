@@ -2,6 +2,7 @@
   "copyDone": true,
   "routes": [
     { "slug": "/", "title": "Tasación de inmuebles en Asunción y Gran Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/" },
+    { "slug": "/tasaciones/", "title": "Tasaciones de inmuebles en Paraguay: casas, departamentos, terrenos y más | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/" },
     { "slug": "/tasaciones/casas/", "title": "Tasación de casas en Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/casas/" },
     { "slug": "/tasaciones/departamentos/", "title": "Tasación de departamentos en Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/departamentos/" },
     { "slug": "/tasaciones/terrenos/", "title": "Tasación de terrenos en Paraguay | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/terrenos/" },

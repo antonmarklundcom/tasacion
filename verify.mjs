@@ -24,8 +24,8 @@ try {
 
 // ------------------------------------------------------------ 2. 13 rutas
 step('rutas congeladas');
-if (routes.length !== 13) fail(`docs/routes.json tiene ${routes.length} rutas, se esperaban 13`);
-else ok('13 rutas en docs/routes.json');
+if (routes.length !== 14) fail(`docs/routes.json tiene ${routes.length} rutas, se esperaban 14`);
+else ok('14 rutas en docs/routes.json');
 
 function pathForSlug(slug) {
   return slug === '/' ? 'index.html' : slug.replace(/^\//, '') + 'index.html';
@@ -49,19 +49,19 @@ for (const r of routes) {
   if (title !== r.title) fail(`${r.slug}: title cambió — "${title}" != "${r.title}"`);
   if (canonical !== r.canonical) fail(`${r.slug}: canonical cambió — "${canonical}" != "${r.canonical}"`);
 }
-if (failures === 0) ok('title + canonical de las 13 rutas sin cambios');
+if (failures === 0) ok('title + canonical de las 14 rutas sin cambios');
 
 // ---------------------------------------------------------------- 3. sitemap
 step('sitemap.xml');
 const sitemap = readFileSync('sitemap.xml', 'utf8');
 const locs = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]);
-if (locs.length !== 13) fail(`sitemap.xml tiene ${locs.length} <loc>, se esperaban 13`);
+if (locs.length !== 14) fail(`sitemap.xml tiene ${locs.length} <loc>, se esperaban 14`);
 const expected = new Set(routes.map((r) => r.canonical));
 for (const loc of locs) if (!expected.has(loc)) fail(`sitemap.xml tiene una URL fuera de docs/routes.json: ${loc}`);
-if (locs.length === 13 && locs.every((l) => expected.has(l))) ok('sitemap.xml == 13 rutas de docs/routes.json');
+if (locs.length === 14 && locs.every((l) => expected.has(l))) ok('sitemap.xml == 14 rutas de docs/routes.json');
 
 // ------------------------------------------------------ 4. checks por página
-step('checks por página (las 13 + 404 + gracias)');
+step('checks por página (las 14 + 404 + gracias)');
 const FORBIDDEN = [
   'RUC', 'matrícula N', 'Mat. ', 'años de experiencia', 'años en el mercado',
   'respondemos en', 'en minutos', 'testimonio', '★', 'habilitado por el BCP',
