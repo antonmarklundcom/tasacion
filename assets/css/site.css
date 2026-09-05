@@ -242,7 +242,7 @@ ul.list{padding-left:1.2em;color:var(--ink-muted)}
 ul.list--links li{margin-bottom:.4em}
 
 /* ---------------------------------------------------------------- wa menu */
-.wa-fab{position:fixed;right:24px;bottom:24px;width:56px;height:56px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-2);z-index:70;border:none;cursor:pointer}
+.wa-fab{position:fixed;right:24px;bottom:24px;width:56px;height:56px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-2);z-index:70;border:none;cursor:pointer;text-decoration:none}
 .wa-fab svg{width:28px;height:28px;fill:#fff}
 @media (max-width:640px){.wa-fab{right:16px;bottom:16px}}
 

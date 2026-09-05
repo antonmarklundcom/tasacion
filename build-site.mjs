@@ -111,7 +111,7 @@ function renderWaMenu(ctx) {
     <p class="wa-menu__foot">${ICON_WA}Se abre WhatsApp con el mensaje ya escrito.</p>
   </div>
 </div>
-<button type="button" class="wa-fab" data-wa-trigger data-wa-anchor="fab" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="Abrir WhatsApp" data-ev="wa_click" data-ev-loc="fab">${ICON_WA}</button>`;
+<a class="wa-fab" href="${waOptionHref('informe', ctx)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="informe" data-wa-anchor="fab" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="Abrir WhatsApp" data-ev="wa_click" data-ev-loc="fab">${ICON_WA}</a>`;
 }
 
 // -------------------------------------------------------------------- blocks
