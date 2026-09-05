@@ -181,7 +181,7 @@ function block(section, page) {
     </div>
     <div class="price-panel__card">
       <span class="eyebrow eyebrow--dark">Precio</span>
-      <p class="price-panel__figure">${esc(PRECIO_TXT.replace(' a ', ' a<br>'))}</p>
+      <p class="price-panel__figure">${PRECIO_TXT.split(' a ').map(esc).join(' a<br>')}</p>
       <p class="price-panel__note">según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita</p>
       <ul class="price-panel__rows">
         ${section.rows.map((r) => `<li><span>${esc(r[0])}</span><span>${esc(r[1])}</span></li>`).join('\n        ')}
@@ -345,7 +345,7 @@ function heroPicture(img, eager, seal) {
 function renderChip(page) {
   if (page.kind === 'secondary-free') return '';
   if (page.showPriceChip) {
-    return `<p class="offer-chip offer-chip--price"><strong>Informe oficial: ${esc(PRECIO_TXT.replace(' a ', ' a '))}</strong><span>según tipo y tamaño del inmueble</span></p>`;
+    return `<p class="offer-chip offer-chip--price"><strong>Informe oficial: ${esc(PRECIO_TXT)}</strong><span>según tipo y tamaño del inmueble</span></p>`;
   }
   return `<p class="offer-chip"><strong>Informe oficial de tasación</strong><span>pago · firmado por el Tasador ${esc(TASADOR)}</span></p>`;
 }
