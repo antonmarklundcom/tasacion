@@ -1,0 +1,18 @@
+{
+  "copyDone": false,
+  "routes": [
+    { "slug": "/", "title": "Tasación de inmuebles en Asunción y Gran Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/" },
+    { "slug": "/tasaciones/casas/", "title": "Tasación de casas en Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/casas/" },
+    { "slug": "/tasaciones/departamentos/", "title": "Tasación de departamentos en Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/departamentos/" },
+    { "slug": "/tasaciones/terrenos/", "title": "Tasación de terrenos en Paraguay | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/terrenos/" },
+    { "slug": "/tasaciones/corporativa/", "title": "Tasación corporativa en Paraguay | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/corporativa/" },
+    { "slug": "/tasaciones/hipotecaria/", "title": "Tasación hipotecaria en Paraguay | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/hipotecaria/" },
+    { "slug": "/tasaciones/locales-comerciales/", "title": "Tasación de locales comerciales en Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/locales-comerciales/" },
+    { "slug": "/tasaciones/campos/", "title": "Tasación de campos y estancias en Paraguay | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/campos/" },
+    { "slug": "/valuacion-para-vender/", "title": "Valoración gratis para vender tu propiedad | Tasación.com.py", "canonical": "https://tasacion.com.py/valuacion-para-vender/" },
+    { "slug": "/informes-periciales/", "title": "Informes periciales con validez jurídica y bancaria | Tasación.com.py", "canonical": "https://tasacion.com.py/informes-periciales/" },
+    { "slug": "/nosotros/", "title": "Nosotros | Tasación.com.py", "canonical": "https://tasacion.com.py/nosotros/" },
+    { "slug": "/preguntas-frecuentes/", "title": "Preguntas frecuentes sobre tasación de inmuebles | Tasación.com.py", "canonical": "https://tasacion.com.py/preguntas-frecuentes/" },
+    { "slug": "/contacto/", "title": "Contacto | Tasación.com.py", "canonical": "https://tasacion.com.py/contacto/" }
+  ]
+}
