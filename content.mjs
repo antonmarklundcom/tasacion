@@ -32,6 +32,27 @@ const porQueElegirnos = {
 
 const otrasTasaciones = (heading, items) => ({ type: 'links', heading: heading || 'Otras tasaciones', items });
 
+const INCLUYE_INFORME = ['Firma del Tasador Fernando Capurro', 'Visita técnica al inmueble', 'Análisis de comparables reales', 'Documentación fotográfica', 'Metodología de tasación explicada', 'Vigencia legal para bancos y juzgados'];
+
+const freeAsideVender = () => ({
+  type: 'freeAside',
+  heading: 'Valoración gratis para vender',
+  body: 'Si tu objetivo es vender, te damos un rango de valor de mercado sin costo. No es un informe oficial ni tiene validez legal ni bancaria.',
+  cta: { label: 'Valoración gratis para vender', href: '/valuacion-para-vender/' },
+});
+
+// labelMin/labelMax: categoría al extremo inferior/superior del rango
+// confirmado (§3.9 — nunca cifras intermedias inventadas).
+const priceBlockVertical = (heading, labelMin, labelMax) => ({
+  type: 'priceBlock',
+  heading,
+  includes: INCLUYE_INFORME,
+  rows: [
+    [labelMin, `desde ${fmtGs(PRECIO.min)}`],
+    [labelMax, `hasta ${fmtGs(PRECIO.max)}`],
+  ],
+});
+
 const ctaBand = (heading, body) => ({
   type: 'ctaBand',
   eyebrow: 'Informe oficial · firmado por tasador',
@@ -150,14 +171,8 @@ export const PAGES = [
           { title: 'Comparables Reales', body: 'Ventas cerradas recientemente, no solo precios de lista.' },
         ],
       },
-      {
-        type: 'grid2',
-        heading: 'Para vender (gratis) vs Informe oficial certificado',
-        items: [
-          { title: 'Para vender (gratis)', body: 'Recibí un análisis comercial de mercado sin costo si tu objetivo es vender con nuestra red de agentes.', href: '/valuacion-para-vender/', label: 'Saber más' },
-          { title: 'Informe oficial certificado', body: 'Documento firmado por perito matriculado con validez para bancos, juzgados y trámites oficiales.', href: '/informes-periciales/', label: 'Ver servicios legales' },
-        ],
-      },
+      priceBlockVertical('Qué incluye el informe de tasación de tu casa', 'Casa estándar en barrio urbano', 'Casas grandes o en barrio cerrado'),
+      freeAsideVender(),
       {
         type: 'zonas',
         heading: 'Zonas de cobertura',
@@ -166,8 +181,9 @@ export const PAGES = [
       {
         type: 'faq',
         items: [
+          { q: '¿Cuánto cuesta el informe de una casa?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo y tamaño de la casa; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
           { q: '¿Cuánto tarda la tasación de una casa?', a: 'Coordinamos la visita según tu disponibilidad y te confirmamos el plazo exacto por WhatsApp antes de empezar.' },
-          { q: '¿La visita a la casa tiene costo?', a: 'Si tu objetivo es vender, el análisis comercial es sin costo. Para un informe oficial certificado, te cotizamos antes de agendar la visita.' },
+          { q: '¿La visita tiene costo?', a: 'Si tu objetivo es vender, la valoración es gratis. Para el informe oficial, el costo es el rango de arriba.' },
         ],
       },
       otrasTasaciones(null, [
@@ -209,9 +225,12 @@ export const PAGES = [
           { title: 'Cierres en el mismo Edificio', body: 'Datos reales de ventas recientes en la misma torre.' },
         ],
       },
+      priceBlockVertical('Qué incluye el informe de tasación de tu departamento', 'Unidad estándar', 'Unidades grandes, dúplex o pozo'),
+      freeAsideVender(),
       {
         type: 'faq',
         items: [
+          { q: '¿Cuánto cuesta el informe de un departamento?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo y tamaño de la unidad; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
           { q: '¿El piso y la orientación cambian el valor?', a: 'Sí, son parte de los factores que evaluamos junto con vista, luz natural y confort térmico.' },
           { q: '¿Tasan en propiedad horizontal y pozo?', a: 'Sí, tasamos unidades terminadas en propiedad horizontal y también preventas en pozo. Contanos tu caso por WhatsApp.' },
         ],
@@ -255,9 +274,12 @@ export const PAGES = [
           { title: 'Potencial de Desarrollo', body: 'Análisis de capacidad constructiva máxima.' },
         ],
       },
+      priceBlockVertical('Qué incluye el informe de tasación de tu terreno', 'Lote urbano estándar', 'Fracciones grandes o loteamientos'),
+      freeAsideVender(),
       {
         type: 'faq',
         items: [
+          { q: '¿Cuánto cuesta el informe de un terreno?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según la superficie y el tipo de terreno; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
           { q: '¿Tasan fracciones grandes y loteamientos?', a: 'Sí, tasamos desde lotes individuales hasta fracciones grandes con potencial de loteamiento.' },
           { q: '¿Consideran el potencial de desarrollo?', a: 'Sí, es parte central del análisis: zonificación, F.O.S., F.O.T. y alturas permitidas.' },
         ],
@@ -305,10 +327,13 @@ export const PAGES = [
           { title: 'Retail', body: 'Centros comerciales, galerías y grandes superficies de venta.' },
         ],
       },
+      priceBlockVertical('Qué incluye el informe corporativo', 'Oficinas y locales administrativos', 'Plantas, depósitos y complejos'),
+      freeAsideVender(),
       porQueElegirnos,
       {
         type: 'faq',
         items: [
+          { q: '¿Cuánto cuesta el informe corporativo?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo y tamaño del activo; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
           { q: '¿Emiten informes para estados contables y auditoría?', a: 'Sí, emitimos informes técnicos aptos para revaluación de activos fijos en balances.' },
           { q: '¿Tasan plantas industriales completas?', a: 'Sí, tasamos plantas de producción, depósitos y complejos agroindustriales completos.' },
         ],
@@ -352,9 +377,11 @@ export const PAGES = [
           { title: 'Cumplimiento Normativo', body: 'Ajustado a los estándares bancarios del Paraguay.' },
         ],
       },
+      priceBlockVertical('Qué incluye el informe hipotecario', 'Vivienda', 'Inmuebles comerciales o grandes'),
       {
         type: 'faq',
         items: [
+          { q: '¿Cuánto cuesta el informe hipotecario?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo de inmueble; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
           { q: '¿Sirve para cualquier banco?', a: 'Trabajamos con el formato y los requisitos estándar del mercado paraguayo; confirmanos el banco puntual por WhatsApp.' },
           { q: '¿Cuánto tarda el informe?', a: 'Te confirmamos el plazo exacto por WhatsApp una vez que sabemos el tipo de inmueble y su ubicación.' },
         ],
@@ -398,9 +425,12 @@ export const PAGES = [
           { title: 'Comparables de Renta', body: 'Valores de alquiler reales en el mismo corredor.' },
         ],
       },
+      priceBlockVertical('Qué incluye el informe de tasación de tu local', 'Local a pie de calle', 'Locales grandes, galerías o shopping'),
+      freeAsideVender(),
       {
         type: 'faq',
         items: [
+          { q: '¿Cuánto cuesta el informe de un local comercial?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo y tamaño del local; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
           { q: '¿Valúan por rentabilidad o por m²?', a: 'Usamos ambos criterios: rentabilidad estimada y comparables de m² del mismo corredor comercial.' },
           { q: '¿Tasan locales en shopping?', a: 'Sí, tasamos locales a pie de calle, en galerías y en shoppings.' },
         ],
@@ -442,10 +472,13 @@ export const PAGES = [
           { title: 'Situación Legal', body: 'Verificamos títulos, planos y cumplimiento de normativas ambientales (reservas forestales).' },
         ],
       },
+      priceBlockVertical('Qué incluye el informe de tasación de tu campo', 'Campos chicos', 'Estancias y establecimientos grandes'),
+      freeAsideVender(),
       porQueElegirnos,
       {
         type: 'faq',
         items: [
+          { q: '¿Cuánto cuesta el informe de un campo?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según la extensión y el tipo de establecimiento; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
           { q: '¿Tasan en todo el territorio nacional?', a: 'Sí, cubrimos campos y estancias en todo el territorio paraguayo.' },
           { q: '¿Qué tipo de análisis técnico realizan?', a: 'Aptitud del suelo, infraestructura instalada, logística y situación legal del inmueble.' },
           { q: '¿El informe sirve para garantías bancarias?', a: 'Sí, el informe pericial puede usarse como respaldo para garantías reales.' },
