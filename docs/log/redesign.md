@@ -43,4 +43,4 @@ Known issues:
 - Ninguno bloqueante para PR-1. Copy sigue siendo el del MVP (con `ctaBand` en vez de `ctaFinal`);
   la jerarquía de oferta se corrige en PR-2/PR-3.
 
-Verification: verify green on <pendiente, se completa en el commit final del PR>.
+Verification: `node verify.mjs` → PASS, `node tests/wa-menu.mjs` → PASS on local commit before opening the PR-1 diff (CI confirms on push).
