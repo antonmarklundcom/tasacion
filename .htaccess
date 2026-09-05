@@ -22,3 +22,14 @@ RedirectMatch 404 ^/node_modules(/|$)
 # Log de leads: contiene datos personales (teléfono, etc). robots.txt ya lo
 # bloquea para crawlers; esto lo bloquea para cualquiera con la URL directa.
 RedirectMatch 404 ^/leads\.log$
+
+# CORE 15 (rebuild anterior) -> sitemap actual. build-images.mjs y contenido
+# quedaron atrás; estos 301 evitan 404s de cualquier link/bookmark viejo.
+RedirectMatch 301 ^/servicios/tasacion-de-casas-y-departamentos/?$ /tasaciones/casas/
+RedirectMatch 301 ^/servicios/tasacion-de-terrenos/?$ /tasaciones/terrenos/
+RedirectMatch 301 ^/servicios/tasacion-de-locales-comerciales/?$ /tasaciones/locales-comerciales/
+RedirectMatch 301 ^/servicios/informe-de-tasacion/?$ /informes-periciales/
+RedirectMatch 301 ^/servicios/tasacion-online/?$ /valuacion-para-vender/
+RedirectMatch 301 ^/zonas/.*$ /
+RedirectMatch 301 ^/cotizador/?$ /contacto/
+RedirectMatch 301 ^/guias/.*$ /preguntas-frecuentes/
