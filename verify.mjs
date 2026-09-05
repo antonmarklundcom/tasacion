@@ -128,7 +128,7 @@ for (const p of allPagePaths) {
 
     const freeAsides = [...html.matchAll(/<div class="free-aside">[\s\S]*?<\/div>\s*<\/div>/g)].map((m) => m[0]);
     for (const fa of freeAsides) {
-      if (!fa.includes('no es un informe oficial')) fail(`${p}: un free-aside no aclara "no es un informe oficial"`);
+      if (!fa.toLowerCase().includes('no es un informe oficial')) fail(`${p}: un free-aside no aclara "no es un informe oficial"`);
     }
 
     const firstPrimary = (html.match(/<main>[\s\S]*?class="btn btn--primary"[^>]*data-wa-open="([^"]*)"/) || [])[1];

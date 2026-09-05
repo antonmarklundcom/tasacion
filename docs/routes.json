@@ -1,5 +1,5 @@
 {
-  "copyDone": false,
+  "copyDone": true,
   "routes": [
     { "slug": "/", "title": "Tasación de inmuebles en Asunción y Gran Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/" },
     { "slug": "/tasaciones/casas/", "title": "Tasación de casas en Asunción | Tasación.com.py", "canonical": "https://tasacion.com.py/tasaciones/casas/" },
