@@ -43,6 +43,7 @@ export const PAGES = [
   // ---------------------------------------------------------------- HOME
   {
     slug: '/',
+    heroImage: { base: 'tasacion-de-inmuebles-asuncion', alt: 'Tasador de Tasación.com.py señalando un terreno en el Gran Asunción' },
     title: 'Tasación de inmuebles en Asunción y Gran Asunción | Tasación.com.py',
     description: 'Conocé el valor real de tu inmueble por WhatsApp. Valoración gratuita para vender o informe pericial oficial con validez legal y bancaria.',
     h1: 'Conocé el valor real de tu inmueble, certificado por expertos locales',
@@ -111,6 +112,7 @@ export const PAGES = [
   // ------------------------------------------------------------ CASAS
   {
     slug: '/tasaciones/casas/',
+    heroImage: { base: 'tasacion-casas-departamentos-asuncion', alt: 'Casa residencial en un barrio de Asunción' },
     title: 'Tasación de casas en Asunción | Tasación.com.py',
     description: 'Valuación de mercado para residencias urbanas y barrios cerrados, hecha por peritos que conocen tu zona. Gratis si querés vender; certificada si es para un trámite.',
     h1: 'Tasación de casas en Asunción: conocé el valor real de tu vivienda',
@@ -164,6 +166,7 @@ export const PAGES = [
   // ------------------------------------------------------ DEPARTAMENTOS
   {
     slug: '/tasaciones/departamentos/',
+    heroImage: { base: 'tasador-midiendo-propiedad-asuncion', alt: 'Tasador midiendo una propiedad en Asunción' },
     title: 'Tasación de departamentos en Asunción | Tasación.com.py',
     description: 'Valuación precisa por zona, edificio y unidad. Analizamos m², amenities y ubicación en altura para darte el valor real de mercado.',
     h1: 'Tasación de departamentos en Asunción, edificio por edificio',
@@ -204,6 +207,7 @@ export const PAGES = [
   // ------------------------------------------------------------- TERRENOS
   {
     slug: '/tasaciones/terrenos/',
+    heroImage: { base: 'tasacion-terrenos-paraguay', alt: 'Terreno en Paraguay listo para tasar' },
     title: 'Tasación de terrenos en Paraguay | Tasación.com.py',
     description: 'Tasación técnica basada en ubicación, zonificación y capacidad constructiva. No dejes que tu tierra se venda por debajo de su potencial.',
     h1: 'Tasación de terrenos: lotes, fracciones y potencial real de desarrollo',
@@ -244,6 +248,7 @@ export const PAGES = [
   // ----------------------------------------------------------- CORPORATIVA
   {
     slug: '/tasaciones/corporativa/',
+    heroImage: { base: 'tasador-midiendo-propiedad-asuncion', alt: 'Tasador evaluando un inmueble corporativo' },
     title: 'Tasación corporativa en Paraguay | Tasación.com.py',
     description: 'Soluciones de valuación para activos corporativos, industriales y logísticos. Precisión técnica para decisiones empresariales, garantías y estados contables.',
     h1: 'Tasación corporativa: informes oficiales para tu empresa',
@@ -289,6 +294,7 @@ export const PAGES = [
   // ------------------------------------------------------------ HIPOTECARIA
   {
     slug: '/tasaciones/hipotecaria/',
+    heroImage: { base: 'informe-de-tasacion-linderos-paraguay', alt: 'Documentación técnica de un informe de tasación en Paraguay' },
     title: 'Tasación hipotecaria en Paraguay | Tasación.com.py',
     description: 'Informes periciales firmados por peritos matriculados que cumplen con los requisitos bancarios para créditos de vivienda y comerciales.',
     h1: 'Tasación hipotecaria: certificá tu carpeta para el banco',
@@ -329,6 +335,7 @@ export const PAGES = [
   // ------------------------------------------------------ LOCALES COMERCIALES
   {
     slug: '/tasaciones/locales-comerciales/',
+    heroImage: { base: 'tasacion-locales-comerciales-asuncion', alt: 'Local comercial en Asunción' },
     title: 'Tasación de locales comerciales en Asunción | Tasación.com.py',
     description: 'Análisis técnico para locales a pie de calle, en galerías o shoppings. Evaluamos el flujo, la visibilidad y el potencial de renta.',
     h1: 'Tasación de locales comerciales: valor por rentabilidad y ubicación',
@@ -369,6 +376,7 @@ export const PAGES = [
   // ------------------------------------------------------------------ CAMPOS
   {
     slug: '/tasaciones/campos/',
+    heroImage: { base: 'tasador-de-terrenos-gran-asuncion', alt: 'Tasador recorriendo un campo en el Gran Asunción' },
     title: 'Tasación de campos y estancias en Paraguay | Tasación.com.py',
     description: 'Valuación técnica de activos rurales, establecimientos ganaderos y tierras agrícolas con criterio profesional y conocimiento del terreno.',
     h1: 'Tasación de Campos y Estancias en Paraguay',
@@ -410,6 +418,7 @@ export const PAGES = [
   // ----------------------------------------------------- VALUACION PARA VENDER
   {
     slug: '/valuacion-para-vender/',
+    heroImage: { base: 'tasacion-de-inmuebles-asuncion', alt: 'Propiedad lista para la venta en Asunción' },
     title: 'Valoración gratis para vender tu propiedad | Tasación.com.py',
     description: 'Recibí un análisis profesional de mercado sin costo y descubrí cómo nuestra red puede acelerar tu venta.',
     h1: 'Valoración comercial gratis para vender tu propiedad',
@@ -459,6 +468,7 @@ export const PAGES = [
   // ------------------------------------------------------ INFORMES PERICIALES
   {
     slug: '/informes-periciales/',
+    heroImage: { base: 'informe-de-tasacion-linderos-paraguay', alt: 'Documentación técnica de un informe pericial en Paraguay' },
     title: 'Informes periciales con validez jurídica y bancaria | Tasación.com.py',
     description: 'Documentación técnica certificada para procesos legales, bancarios y notariales en todo el Paraguay.',
     h1: 'Informes periciales con validez jurídica y bancaria',
@@ -497,6 +507,7 @@ export const PAGES = [
   // ------------------------------------------------------------------ NOSOTROS
   {
     slug: '/nosotros/',
+    heroImage: { base: 'tasador-midiendo-propiedad-asuncion', alt: 'Perito tasador trabajando en el terreno en Asunción' },
     title: 'Nosotros | Tasación.com.py',
     description: 'En Tasación.com.py combinamos la experiencia técnica de peritos matriculados con datos reales del mercado inmobiliario paraguayo.',
     h1: 'Peritos tasadores con conocimiento de campo',

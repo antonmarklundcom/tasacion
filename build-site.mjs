@@ -230,13 +230,27 @@ function block(section) {
   }
 }
 
+function heroPicture(img, eager) {
+  const b = img.base;
+  const srcset = (ext) => [640, 1280, 1920].map((w) => `/assets/img/${b}-${w}.${ext} ${w}w`).join(', ');
+  return `<picture class="hero__pic">
+      <source type="image/avif" srcset="${srcset('avif')}" sizes="(min-width:900px) 45vw, 100vw">
+      <source type="image/webp" srcset="${srcset('webp')}" sizes="(min-width:900px) 45vw, 100vw">
+      <img src="/assets/img/${b}-1280.webp" alt="${esc(img.alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'}>
+    </picture>`;
+}
+
 function renderHero(page) {
-  return `<section class="hero">
-  <div class="container">
+  const text = `<div class="hero__text">
     <h1>${esc(page.h1)}</h1>
     <p class="hero__sub">${esc(page.subcopy)}</p>
     ${page.trustBar ? `<p class="hero__trust">${page.trustBar.map((t) => esc(t)).join(' · ')}</p>` : ''}
     <a class="btn btn--wa btn--lg" href="${waHref()}" target="_blank" rel="noopener" data-ev="wa_click" data-ev-loc="hero">${esc(page.heroCta || 'Solicitá tu Valuación por WhatsApp')}</a>
+  </div>`;
+  return `<section class="hero${page.heroImage ? ' hero--split' : ''}">
+  <div class="container hero__row">
+    ${text}
+    ${page.heroImage ? heroPicture(page.heroImage, true) : ''}
   </div>
 </section>`;
 }
