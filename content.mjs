@@ -64,7 +64,18 @@ const ctaBand = (heading, body) => ({
 
 export const NAV = [
   { label: 'Inicio', href: '/' },
-  { label: 'Tasaciones', href: '/#tasaciones' },
+  {
+    label: 'Tasaciones', href: '/tasaciones/',
+    children: [
+      { label: 'Casas', href: '/tasaciones/casas/' },
+      { label: 'Departamentos', href: '/tasaciones/departamentos/' },
+      { label: 'Terrenos', href: '/tasaciones/terrenos/' },
+      { label: 'Corporativa', href: '/tasaciones/corporativa/' },
+      { label: 'Hipotecaria', href: '/tasaciones/hipotecaria/' },
+      { label: 'Locales Comerciales', href: '/tasaciones/locales-comerciales/' },
+      { label: 'Campos y Estancias', href: '/tasaciones/campos/' },
+    ],
+  },
   { label: 'Informe oficial', href: '/informes-periciales/' },
   { label: 'Vender', href: '/valuacion-para-vender/' },
   { label: 'Nosotros', href: '/nosotros/' },
@@ -90,7 +101,7 @@ export const PAGES = [
     kind: 'home',
     eyebrow: 'Tasador Fernando Capurro · Asunción y Gran Asunción',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver todos los servicios', href: '#tasaciones' }, freeLink: { label: '¿Solo querés vender? Pedí tu valoración gratis →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver todos los servicios', href: '/tasaciones/' }, freeLink: { label: '¿Solo querés vender? Pedí tu valoración gratis →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-de-inmuebles-asuncion', alt: 'Tasador de Tasación.com.py señalando un terreno en el Gran Asunción' },
     title: 'Tasación de inmuebles en Asunción y Gran Asunción | Tasación.com.py',
     description: 'Informe oficial de tasación firmado por el Tasador Fernando Capurro, con validez legal y bancaria. También disponible: valoración gratis si tu objetivo es vender.',
@@ -126,6 +137,40 @@ export const PAGES = [
         body: 'Si tu objetivo es vender, te damos un rango de valor de mercado sin costo. No es un informe oficial ni tiene validez legal ni bancaria.',
         cta: { label: 'Valoración gratis para vender', href: '/valuacion-para-vender/' },
       },
+      {
+        type: 'faqPreview',
+        heading: 'Preguntas frecuentes',
+        items: [
+          '¿Cuánto cuesta el informe oficial de tasación?',
+          '¿La valoración para vender es realmente gratuita?',
+          '¿Sus informes son válidos para créditos hipotecarios?',
+        ],
+        href: '/preguntas-frecuentes/',
+      },
+      ctaBand('Pedí tu informe oficial de tasación', 'Documento firmado por el Tasador Fernando Capurro, con validez para bancos, juzgados y escribanías.'),
+    ],
+  },
+
+  // -------------------------------------------------------- TASACIONES (hub)
+  {
+    slug: '/tasaciones/',
+    waContext: 'Tasaciones',
+    kind: 'vertical',
+    eyebrow: 'Tasaciones · Paraguay',
+    showPriceChip: false,
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver los 7 tipos de inmueble', href: '#servicios' }, freeLink: { label: '¿Solo querés vender? Pedí tu valoración gratis →', href: '/valuacion-para-vender/' } },
+    heroImage: { base: 'tasacion-de-inmuebles-asuncion', alt: 'Tasador de Tasación.com.py señalando un terreno en el Gran Asunción' },
+    title: 'Tasaciones de inmuebles en Paraguay: casas, departamentos, terrenos y más | Tasación.com.py',
+    description: 'Elegí el tipo de inmueble que querés tasar: casas, departamentos, terrenos, corporativa, hipotecaria, locales comerciales o campos y estancias.',
+    h1: 'Tasaciones de inmuebles, para cada tipo de propiedad',
+    subcopy: 'Cada tipo de inmueble tiene su propia lógica de valuación. Elegí el que corresponde a tu caso para ver qué incluye el informe y el rango de precio.',
+    sections: [
+      {
+        type: 'services', id: 'servicios',
+        heading: 'Especialistas en cada tipo de inmueble',
+        items: SERVICIOS,
+      },
+      freeAsideVender(),
       {
         type: 'faqPreview',
         heading: 'Preguntas frecuentes',
