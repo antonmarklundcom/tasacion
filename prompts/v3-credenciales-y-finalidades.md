@@ -59,6 +59,7 @@ judicial) → todo lo judicial, sucesiones incluidas, F6. Q5 (franja) → F9. Q6
 
 | D | Decisión pendiente (Anton) | Constante | Default del build si no hay respuesta |
 |---|---|---|---|
+| Q7 | (Pendiente para Fer, no bloquea) ¿Podés comprometer la **visita dentro de 48 horas hábiles** en Asunción y Gran Asunción? | `VISITA_TXT` | `null` → la fila de confianza dice solo `Informe firmado en ${PLAZO_TXT}`. Si Fer dice sí: `VISITA_TXT = 'Visita en 48 horas hábiles en Asunción y Gran Asunción'` y se antepone en la fila de confianza, el bloque de valor y el paso 2 de `steps`. |
 | D1 | **DECIDIDO (Anton, 2026-09-10): precios "+ IVA".** Cifras redondas actuales; cada rango se renderiza como `Gs. 800.000 a Gs. 1.500.000 + IVA`; `FACTURA_TXT` va en la fila de confianza de las páginas con precio y al pie de `pricingTiers`. | `IVA_TXT = '+ IVA'`, `PRECIOS` sin cambios | — (no hay fallback; está decidido). |
 
 ## 3. Contrato de contenido — cambios aditivos a plan.md §2
@@ -79,6 +80,9 @@ export const PRECIO_JUDICIAL_TXT = rango(PRECIOS.judicial);    // "Gs. 1.800.000
 export const PRECIO_CREDITO_TXT = `desde ${fmtGs(PRECIOS.credito.min)}`; // "desde Gs. 1.500.000"
 export const PRECIO_NOTA = 'según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
 export const FRANJA_COTIZA = 'Presupuesto por proyecto, según la cantidad de lotes y edificaciones dentro de la franja.';
+export const VISITA_TXT = null;                    // Q7; 'Visita en 48 horas hábiles en Asunción y Gran Asunción' si Fer confirma
+export const EJEMPLO = { valor: 400000000, error: 0.05 }; // §5.15: ejemplo aritmético, único lugar con estas cifras
+// EJEMPLO.valor * EJEMPLO.error = 20.000.000 = más de 10 veces el informe más caro de compraventa (1.500.000 + IVA).
 // Regla de render: toda cifra de precio va seguida de IVA_TXT en el mismo nodo de texto
 // ("Gs. 800.000 a Gs. 1.500.000 + IVA"). El gate lo comprueba (§7).
 
@@ -99,7 +103,8 @@ export const FINALIDADES = [
 // Nuevos tipos de sección (build-site.mjs los renderiza):
 { type: 'useCases', heading, items: FINALIDADES.slice(0,3) (+ opcional 4ª tarjeta B2B) }   // §5.1
 { type: 'credentials', heading, tasador: [CRED_CSJ, CRED_ARQ], credito: `Para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS}`, plazo: PLAZO_TXT, factura: FACTURA_TXT } // bloque de confianza
-{ type: 'pricingTiers', heading, rows: FINALIDADES → [label, `${precio} ${IVA_TXT}`], nota: PRECIO_NOTA, pie: `${FACTURA_TXT} · Informe firmado en ${PLAZO_TXT}` } // tabla por finalidad
+{ type: 'pricingTiers', heading, tiers: [...] , pie }   // tres tarjetas por finalidad, ver §5.6
+{ type: 'valueBlock', heading, items: [...], short?: bool } // "qué hacés con el informe", ver §5.15
 // priceBlock existente: gana `eyebrow`, `ctaLabel`, `waOption` y `rows` puede incluir la fila judicial y la de crédito (§5.4).
 ```
 
@@ -167,8 +172,8 @@ diga BCP usa `CRED_BCP_FIRMA` textual; (e) la fila de confianza bajo el hero
   "¿Para qué necesitás la tasación?", tres tarjetas = FINALIDADES compraventa / credito /
   judicial con `corto` + enlace a la página que corresponde: `/informes-periciales/`,
   `/tasaciones/hipotecaria/`, `/informes-periciales/#judicial`; 4ª tarjeta `.card--muted`
-  "¿Sos empresa o consorcio vial?" → `/tasaciones/franja-de-dominio/`) → `services` (8
-  tarjetas, se agrega franja) → **`credentials`** (H2 "Quién firma tu informe": columna
+  "¿Sos empresa o consorcio vial?" → `/tasaciones/franja-de-dominio/`) → **`valueBlock`**
+  completo (§5.15) → `services` (8 tarjetas, se agrega franja) → **`credentials`** (H2 "Quién firma tu informe": columna
   Fernando con `CRED_CSJ` + `CRED_ARQ`; columna crédito con `CRED_BCP_FIRMA + CRED_BCP_BANCOS`;
   pie con `PLAZO_TXT`) → `steps` (paso 3: "Recibís el informe firmado en 3 a 5 días hábiles
   después de la visita") → `freeAsideVender()` → `faqPreview` (Q1 "¿Cuánto cuesta según la
@@ -194,6 +199,7 @@ Paraguay | Tasación.com.py") y actualizar `docs/routes.json`.
   finalidad".
 - Lista "qué incluye" (`INCLUYE_INFORME`): reemplazar "Firma del Tasador Fernando Capurro" por
   `Firma de ${CRED_CSJ}` y agregar `Entrega en ${PLAZO_TXT}` como 7º ítem.
+- Después del `priceBlock` y antes del `freeAside`: **`valueBlock` corto** (§5.15, ítems 1–3).
 - FAQ: la Q de costo responde con las tres finalidades (una frase cada una, cifra + `IVA_TXT`);
   la Q de plazo responde `Una vez hecha la visita, el informe firmado está listo en ${PLAZO_TXT}.`;
   se agrega Q "¿Sirve para mi banco o cooperativa?" → `Sí: para crédito, ${CRED_BCP_FIRMA}.
@@ -246,8 +252,28 @@ con `text` sobreescrito por página: agregar soporte `page.waConsultaText`).
   abogados y jueces calculan sus honorarios."
 - Nueva `lead` `id="credito"` H2 "Tasación para crédito": `Para crédito, ${CRED_BCP_FIRMA}.
   ${CRED_BCP_BANCOS}` + `PRECIO_CREDITO_TXT` `IVA_TXT`, enlace a `/tasaciones/hipotecaria/`.
-- `priceBlock` → **`pricingTiers`** (tabla completa, 4 filas con `IVA_TXT`, `PRECIO_NOTA`,
-  pie `FACTURA_TXT · Informe firmado en ${PLAZO_TXT}`).
+- `priceBlock` → **`pricingTiers`**: no es una tabla, son **tres tarjetas** en una fila
+  (`grid auto-fit minmax(280px,1fr)`, gap 20; apiladas en móvil), sobre banda `--surface`,
+  `id="precios"`. Cada tarjeta: eyebrow de finalidad · H3 · cifra en `.display` 28px + `IVA_TXT`
+  en 15px muted · línea "Firma:" · línea "Plazo:" · lista "Incluye" (4 checks) · botón. Copy
+  exacto:
+  1. **Compra o venta** — eyebrow "Lo más pedido" (tarjeta resaltada: `border-top: 3px solid
+     var(--navy)`) · `PRECIO_TXT` + IVA · Firma: `CRED_CSJ_CORTA` · Plazo: `PLAZO_TXT` · Incluye:
+     Visita técnica al inmueble · Comparables reales de mercado, no promedios · Registro
+     fotográfico · Informe firmado, con la metodología explicada · botón `.btn--primary`
+     "Pedir informe para comprar o vender" (`informe`).
+  2. **Crédito bancario** — eyebrow "Hipotecario o fiduciario" · `PRECIO_CREDITO_TXT` + IVA ·
+     Firma: "Tasador inscripto en el registro del BCP" · Plazo: `PLAZO_TXT` · Incluye: lo de la
+     tarjeta 1 + "Formato para carpeta bancaria" (reemplaza al 4º) · nota 13px "Incluye la firma
+     que tu banco o cooperativa exige" · botón `.btn--ghost` "Pedir tasación para crédito"
+     (`credito`).
+  3. **Sucesiones y juicios** — eyebrow "Informe pericial" · `PRECIO_JUDICIAL_TXT` + IVA · Firma:
+     `CRED_CSJ_CORTA` · Plazo: `PLAZO_TXT` · Incluye: lo de la tarjeta 1 + "Informe detallado,
+     para presentar en el juzgado" (reemplaza al 4º) · botón `.btn--ghost` "Pedir tasación
+     pericial" (`judicial`).
+  Pie de la banda (14px muted, tres frases): `FACTURA_TXT` · `PRECIO_NOTA` · "Si vendés con un
+  corredor asociado, el costo se descuenta de la comisión al cerrar la venta."
+- Después de `pricingTiers`: **`valueBlock`** completo (§5.15).
 - `credentials` antes del FAQ. FAQ: agregar "¿Quién firma?" (F1/F2/F4 en dos frases) y "¿Cuánto
   tarda?" (PLAZO_TXT).
 
@@ -324,6 +350,41 @@ Eyebrow "Informe oficial · firmado por perito tasador" · cuerpo termina con "L
   `otrasTasaciones` (corporativa, terrenos) → `ctaBand` propia (primario `consulta`,
   secundario `informe`).
 
+### 5.15 Bloque de valor `valueBlock` — por qué conviene pagar el informe
+
+Copy fijado por Fable; Sonnet lo interpola, no lo reescribe. Todo lo que afirma es aritmética,
+mecánica general de crédito/sucesión, o palabras de Fer. **No** cita tasas de interés, LTV,
+bancos, cooperativas ni programas (nada de eso está confirmado; el gate lo bloquea).
+
+- H2: "El informe no es un gasto: es lo que destraba la operación"
+- Lede (solo en la versión completa): "Nadie tasa por curiosidad. Se tasa porque un banco, un
+  juzgado, una escribanía o una contraparte lo exige — o porque hay mucha plata en juego en
+  ponerle el precio equivocado a un inmueble."
+- Ítems (título · cuerpo). `short: true` renderiza solo 1–3.
+  1. **Define cuánto te presta el banco** · "El banco o la cooperativa calcula el monto del
+     crédito como un porcentaje del valor que fija la tasación. Sin informe no hay garantía; con
+     un informe bien hecho, la garantía vale lo que tiene que valer."
+  2. **Evita el error más caro de una compraventa** · `Ejemplo: en una casa de
+     ${fmtGs(EJEMPLO.valor)}, un 5 % de error de precio son ${fmtGs(EJEMPLO.valor * EJEMPLO.error)}
+     — más de 10 veces lo que cuesta el informe. Comprar caro o vender barato sale mucho más
+     caro que tasar.`
+  3. **Fija tu parte en una herencia** · "En una sucesión, el valor que establece el informe
+     pericial es el que se reparte entre los herederos y sobre el que se calculan los
+     honorarios. Un perito matriculado ante la Corte Suprema de Justicia es lo que el juzgado
+     acepta."
+  4. **Respalda a tu empresa** · "Garantías para crédito comercial, revaluación de activos para
+     balances, valores de reposición para seguros y compraventa de activos." (mismas
+     afirmaciones que ya lleva `/tasaciones/corporativa/`)
+  5. **Con validez, con plazo y con factura** · `Firmado por perito matriculado, entregado en
+     ${PLAZO_TXT}, con factura legal. Precio anclado por finalidad antes de la visita, sin
+     sorpresas.` (si `VISITA_TXT` existe, se antepone: `${VISITA_TXT}; informe en …`)
+- Render: `.value-block` sobre `--base`, grid 12: lede en `span 4`, ítems en `span 8` como lista
+  numerada estilo `steps` (círculo navy 32px). Sin imágenes. Sin botón (el CTA es el de la
+  sección siguiente).
+- Gate: `EJEMPLO.valor` (400.000.000) y `EJEMPLO.valor*EJEMPLO.error` (20.000.000) son las
+  únicas cifras `Gs.` adicionales permitidas, y solo dentro de `.value-block` y precedidas por
+  "Ejemplo:". No llevan `IVA_TXT` (no son precios) — la regla de §7 los exceptúa por selector.
+
 ## 6. Renderer, CSS, JS
 
 - `build-site.mjs`: nuevos bloques `useCases`, `credentials`, `pricingTiers`; `priceBlock` con
@@ -350,10 +411,15 @@ Eyebrow "Informe oficial · firmado por perito tasador" · cuerpo termina con "L
 
 ## 7. Gate `verify.mjs` — cambios
 
-- Cifras `Gs.` permitidas: `800000`, `1500000`, `1800000`, `2500000` (si D1 = IVA incluido:
-  `880000`, `1650000`, `1980000`, `2750000`). Cualquier otra → FAIL. Toda cifra `Gs.` debe estar
-  seguida, en el mismo nodo de texto, por `IVA_TXT` (regex `Gs\. [\d.]+( a Gs\. [\d.]+)? \+ IVA`
-  o "IVA incluido"); excepción: el segundo `Gs.` de un rango, que es el que lleva el sufijo.
+- Cifras `Gs.` permitidas: `800000`, `1500000`, `1800000`, `2500000`; además `400000000` y
+  `20000000` **solo** dentro de `<section class="value-block…">` y precedidas por "Ejemplo:".
+  Cualquier otra → FAIL. Toda cifra `Gs.` fuera de `.value-block` debe estar seguida, en el mismo
+  nodo de texto, por `IVA_TXT` (regex `Gs\. [\d.]+( a Gs\. [\d.]+)? \+ IVA`); el primer `Gs.` de
+  un rango no lleva sufijo, el segundo sí.
+- CSS/JS: `.use-cases`, `.credentials`, `.pricing-tiers`, `.value-block` existen en `site.css`;
+  `tests/wa-menu.mjs` (o un `tests/layout.mjs` nuevo) comprueba en `/informes-periciales/` que
+  las tres tarjetas de precio están en una fila a 1280 px y apiladas a 390 px, y que la tarjeta
+  "Compra o venta" es la resaltada.
 - Los números `4.168` y `3.738` solo pueden aparecer dentro de `CRED_CSJ`/`CRED_CSJ_CORTA` y
   `CRED_ARQ` textuales. `FORBIDDEN` **pierde** `'matrícula N'` y `'Mat. '` (ahora son parte de
   la canónica) y **gana**: `'en trámite'`, `'peritos matriculados'`, `'perito matriculado
