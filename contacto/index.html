@@ -88,7 +88,7 @@
   <div class="container hero__row">
     <div class="hero__text">
     <span class="eyebrow">Contacto</span>
-    <h1>Pedí tu informe oficial de tasación</h1>
+    <h1>Pedí tu tasación por WhatsApp o dejanos tus datos</h1>
     <p class="hero__sub">Escribinos por WhatsApp para el informe oficial firmado por el Tasador Fernando Capurro, o dejanos tus datos y te contactamos nosotros.</p>
     <p class="offer-chip"><strong>Informe oficial de tasación</strong><span>pago · firmado por el Tasador Fernando Capurro</span></p>
     <div class="hero__actions">
@@ -119,18 +119,21 @@
 <section class="section section--narrow">
   <div class="container">
     <h2>¿Preferís que te escribamos?</h2>
-    <p>Dejanos tus datos y un perito se pondrá en contacto con vos.</p>
+    <p>Dejanos tus datos y te contactamos nosotros.</p>
     <form class="form" action="/lead-forward.php" method="post">
       <input type="hidden" name="page_url" id="page_url">
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
       <label class="field">Nombre completo<input type="text" name="nombre" required></label>
       <label class="field">Número de WhatsApp<input type="tel" name="telefono" required></label>
       <label class="field">Email (opcional)<input type="email" name="email"></label>
-      <div class="radios">
-          <label><input type="radio" name="mensaje" value="Informe oficial de tasación" checked> Informe oficial de tasación</label>
-          <label><input type="radio" name="mensaje" value="Tasación para vender"> Tasación para vender</label>
-          <label><input type="radio" name="mensaje" value="Otra consulta"> Otra consulta</label>
-        </div>
+      <fieldset class="radios">
+          <legend>¿Qué necesitás?</legend>
+          <label><input type="radio" name="mensaje" value="Necesito el informe oficial para comprar o vender" checked> Necesito el informe oficial para comprar o vender</label>
+          <label><input type="radio" name="mensaje" value="Necesito una tasación para un crédito"> Necesito una tasación para un crédito</label>
+          <label><input type="radio" name="mensaje" value="Necesito una tasación para una sucesión o un juicio"> Necesito una tasación para una sucesión o un juicio</label>
+          <label><input type="radio" name="mensaje" value="Quiero una tasación para vender con un corredor"> Quiero una tasación para vender con un corredor</label>
+          <label><input type="radio" name="mensaje" value="Tengo otra consulta"> Tengo otra consulta</label>
+        </fieldset>
       <button class="btn btn--primary" type="submit">Enviar mis datos</button>
     </form>
   </div>
