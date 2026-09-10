@@ -45,6 +45,9 @@ implementar todo desde §3 + §4.
      Botón fantasma o enlace, nunca el botón primario navy.
 2. **Hechos confirmados — los únicos dos:** el nombre "Tasador Fernando Capurro" (commit
    `faaabf9`, ya en producción) y el rango de precio de arriba. Nada más.
+   **Superseded 2026-09-10 por prompts/v3-credenciales-y-finalidades.md §1**: matrícula CSJ,
+   matrícula de arquitecto, plazo, factura y precios por finalidad ya están confirmados — ver ese
+   archivo para las cadenas canónicas vigentes.
 3. **Nunca inventar** (sin cambio respecto del MVP): RUC, factura legal, número de matrícula o
    registro profesional, dirección, teléfono dedicado, reseñas/testimonios, años en el rubro,
    promesas de tiempo de respuesta, habilitación bancaria/BCP, credenciales adicionales del
@@ -52,6 +55,9 @@ implementar todo desde §3 + §4.
    requisitos bancarios") se conserva tal cual — viene del sitio anterior — pero **no se agrega
    ninguna afirmación nueva**. Al reescribir, preferir "firmado por el Tasador Fernando Capurro"
    antes que "perito matriculado".
+   **Superseded 2026-09-10 por prompts/v3-credenciales-y-finalidades.md §1**: factura y matrículas
+   ya no están prohibidas — están confirmadas y tienen cadena canónica; "peritos matriculados" y
+   "cumplen los requisitos bancarios" quedaron prohibidos por el gate v3.
 4. **Las 13 rutas, sus `<title>` y sus `<link rel="canonical">` no cambian.** Google Ads apunta
    a estas URLs exactas. Lista congelada en §8.1. `sitemap.xml` sigue con exactamente estas 13.
 5. **Infra que se REUSA, no se reemplaza:** `lead-forward.php` (campos POST `nombre`,

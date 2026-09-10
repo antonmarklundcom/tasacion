@@ -70,6 +70,13 @@ const porQueElegirnos = {
 
 const otrasTasaciones = (heading, items) => ({ type: 'links', heading: heading || 'Otras tasaciones', items });
 
+// §5.3 (v3): las tres preguntas de FAQ comunes a las 7 verticales.
+const verticalFaqCore = (item) => [
+  { q: `¿Cuánto cuesta el informe de ${item}?`, a: `Compra o venta: ${PRECIO_TXT} ${IVA_TXT}. Sucesiones y juicios: ${PRECIO_JUDICIAL_TXT} ${IVA_TXT}. Crédito bancario: ${PRECIO_CREDITO_TXT} ${IVA_TXT}.` },
+  { q: '¿Cuánto tarda?', a: `Una vez hecha la visita, el informe firmado está listo en ${PLAZO_TXT}.` },
+  { q: '¿Sirve para mi banco o cooperativa?', a: `Sí: para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS}` },
+];
+
 const INCLUYE_INFORME = [`Firma de ${CRED_CSJ}`, 'Visita técnica al inmueble', 'Análisis de comparables reales', 'Documentación fotográfica', 'Metodología de tasación explicada', 'Vigencia legal para bancos y juzgados', `Entrega en ${PLAZO_TXT}`];
 
 const freeAsideVender = () => ({
@@ -79,16 +86,20 @@ const freeAsideVender = () => ({
   cta: { label: 'Ver cómo funciona', href: '/valuacion-para-vender/' },
 });
 
-// labelMin/labelMax: categoría al extremo inferior/superior del rango
-// confirmado (§3.9 — nunca cifras intermedias inventadas).
-const priceBlockVertical = (heading, labelMin, labelMax) => ({
+// §5.3 (v3): panel navy con la tabla por finalidad (ya no "desde/hasta por
+// tamaño"). Cifra grande = rango compraventa; filas = las tres finalidades.
+const priceBlockFinalidades = (heading) => ({
   type: 'priceBlock',
   heading,
+  eyebrow: 'Precio por finalidad',
   includes: INCLUYE_INFORME,
+  figure: PRECIO_TXT,
   rows: [
-    [labelMin, `desde ${fmtGs(PRECIO.min)}`],
-    [labelMax, `hasta ${fmtGs(PRECIO.max)}`],
+    ['Compra o venta', `${PRECIO_TXT} ${IVA_TXT}`],
+    ['Sucesiones y juicios', `${PRECIO_JUDICIAL_TXT} ${IVA_TXT}`],
+    ['Crédito bancario', `${PRECIO_CREDITO_TXT} ${IVA_TXT}`],
   ],
+  pie: FACTURA_TXT,
 });
 
 const ctaBand = (heading, body, opts = {}) => ({
@@ -283,7 +294,8 @@ export const PAGES = [
           { title: 'Comparables Reales', body: 'Ventas cerradas recientemente, no solo precios de lista.' },
         ],
       },
-      priceBlockVertical('Qué incluye el informe de tasación de tu casa', 'Casa estándar en barrio urbano', 'Casas grandes o en barrio cerrado'),
+      priceBlockFinalidades('Qué incluye el informe de tasación de tu casa'),
+      valueBlockShort(),
       freeAsideVender(),
       {
         type: 'zonas',
@@ -293,9 +305,8 @@ export const PAGES = [
       {
         type: 'faq',
         items: [
-          { q: '¿Cuánto cuesta el informe de una casa?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo y tamaño de la casa; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
-          { q: '¿Cuánto tarda la tasación de una casa?', a: 'Coordinamos la visita según tu disponibilidad y te confirmamos el plazo exacto por WhatsApp antes de empezar.' },
-          { q: '¿La visita tiene costo?', a: 'Para vender, la tasación tiene el mismo costo que el informe oficial (rango de arriba); si firmás exclusividad con uno de nuestros corredores asociados, ese costo se descuenta de la comisión al cerrar la venta.' },
+          ...verticalFaqCore('una casa'),
+          { q: '¿La visita tiene costo?', a: 'La visita está incluida en el precio del informe, para cualquier finalidad.' },
         ],
       },
       otrasTasaciones(null, [
@@ -337,12 +348,13 @@ export const PAGES = [
           { title: 'Cierres en el mismo Edificio', body: 'Datos reales de ventas recientes en la misma torre.' },
         ],
       },
-      priceBlockVertical('Qué incluye el informe de tasación de tu departamento', 'Unidad estándar', 'Unidades grandes, dúplex o pozo'),
+      priceBlockFinalidades('Qué incluye el informe de tasación de tu departamento'),
+      valueBlockShort(),
       freeAsideVender(),
       {
         type: 'faq',
         items: [
-          { q: '¿Cuánto cuesta el informe de un departamento?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo y tamaño de la unidad; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
+          ...verticalFaqCore('un departamento'),
           { q: '¿El piso y la orientación cambian el valor?', a: 'Sí, son parte de los factores que evaluamos junto con vista, luz natural y confort térmico.' },
           { q: '¿Tasan en propiedad horizontal y pozo?', a: 'Sí, tasamos unidades terminadas en propiedad horizontal y también preventas en pozo. Contanos tu caso por WhatsApp.' },
         ],
@@ -386,12 +398,13 @@ export const PAGES = [
           { title: 'Potencial de Desarrollo', body: 'Análisis de capacidad constructiva máxima.' },
         ],
       },
-      priceBlockVertical('Qué incluye el informe de tasación de tu terreno', 'Lote urbano estándar', 'Fracciones grandes o loteamientos'),
+      priceBlockFinalidades('Qué incluye el informe de tasación de tu terreno'),
+      valueBlockShort(),
       freeAsideVender(),
       {
         type: 'faq',
         items: [
-          { q: '¿Cuánto cuesta el informe de un terreno?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según la superficie y el tipo de terreno; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
+          ...verticalFaqCore('un terreno'),
           { q: '¿Tasan fracciones grandes y loteamientos?', a: 'Sí, tasamos desde lotes individuales hasta fracciones grandes con potencial de loteamiento.' },
           { q: '¿Consideran el potencial de desarrollo?', a: 'Sí, es parte central del análisis: zonificación, F.O.S., F.O.T. y alturas permitidas.' },
         ],
@@ -399,6 +412,7 @@ export const PAGES = [
       otrasTasaciones(null, [
         { title: 'Casas', href: '/tasaciones/casas/' },
         { title: 'Corporativa', href: '/tasaciones/corporativa/' },
+        { title: 'Franja de Dominio', href: '/tasaciones/franja-de-dominio/' },
       ]),
       ctaBand('Informe oficial de tasación de tu terreno', 'Documento técnico firmado por el Tasador Fernando Capurro, con validez legal y bancaria.'),
     ],
@@ -411,7 +425,8 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasación corporativa · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Solicitar informe corporativo', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Solicitar informe corporativo', waOption: 'consulta' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    waConsultaText: 'Hola, vengo de la página de Tasación Corporativa y necesito una tasación para mi empresa. El activo es: ______',
     heroImage: { base: 'tasacion-corporativa-oficinas-asuncion', alt: 'Edificio de oficinas corporativo en Asunción listo para tasar' },
     title: 'Tasación corporativa en Paraguay | Tasación.com.py',
     description: 'Soluciones de valuación para activos corporativos, industriales y logísticos. Precisión técnica para decisiones empresariales, garantías y estados contables.',
@@ -427,6 +442,7 @@ export const PAGES = [
           { title: 'Garantías', body: 'Informes certificados para líneas de crédito corporativas.' },
           { title: 'Seguros', body: 'Determinación de valores de reposición para pólizas.' },
           { title: 'Compra-Venta', body: 'Asesoramiento en adquisiciones y desinversiones.' },
+          { title: 'Franja de Dominio', body: 'Relevamiento y avaluación edilicia para proyectos viales.', href: '/tasaciones/franja-de-dominio/', label: 'Ver franja de dominio' },
         ],
       },
       {
@@ -439,13 +455,14 @@ export const PAGES = [
           { title: 'Retail', body: 'Centros comerciales, galerías y grandes superficies de venta.' },
         ],
       },
-      priceBlockVertical('Qué incluye el informe corporativo', 'Oficinas y locales administrativos', 'Plantas, depósitos y complejos'),
+      priceBlockFinalidades('Qué incluye el informe corporativo'),
+      valueBlockShort(),
       freeAsideVender(),
       porQueElegirnos,
       {
         type: 'faq',
         items: [
-          { q: '¿Cuánto cuesta el informe corporativo?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo y tamaño del activo; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
+          ...verticalFaqCore('un activo corporativo'),
           { q: '¿Emiten informes para estados contables y auditoría?', a: 'Sí, emitimos informes técnicos aptos para revaluación de activos fijos en balances.' },
           { q: '¿Tasan plantas industriales completas?', a: 'Sí, tasamos plantas de producción, depósitos y complejos agroindustriales completos.' },
         ],
@@ -453,8 +470,12 @@ export const PAGES = [
       otrasTasaciones('Servicios relacionados', [
         { title: 'Locales Comerciales', href: '/tasaciones/locales-comerciales/' },
         { title: 'Informes Periciales', href: '/informes-periciales/' },
+        { title: 'Franja de Dominio', href: '/tasaciones/franja-de-dominio/' },
       ]),
-      ctaBand('Informe oficial para tu empresa', 'Documentación técnica firmada por el Tasador Fernando Capurro, apta para balances, garantías y auditoría.'),
+      ctaBand('Informe oficial para tu empresa', 'Documentación técnica firmada por el Tasador Fernando Capurro, apta para balances, garantías y auditoría.', {
+        primary: { label: 'Solicitar informe corporativo', waOption: 'consulta' },
+        secondaryLink: { label: 'o pedir un informe para compra o venta', waOption: 'informe' },
+      }),
     ],
   },
 
@@ -553,12 +574,13 @@ export const PAGES = [
           { title: 'Comparables de Renta', body: 'Valores de alquiler reales en el mismo corredor.' },
         ],
       },
-      priceBlockVertical('Qué incluye el informe de tasación de tu local', 'Local a pie de calle', 'Locales grandes, galerías o shopping'),
+      priceBlockFinalidades('Qué incluye el informe de tasación de tu local'),
+      valueBlockShort(),
       freeAsideVender(),
       {
         type: 'faq',
         items: [
-          { q: '¿Cuánto cuesta el informe de un local comercial?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según el tipo y tamaño del local; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
+          ...verticalFaqCore('un local comercial'),
           { q: '¿Valúan por rentabilidad o por m²?', a: 'Usamos ambos criterios: rentabilidad estimada y comparables de m² del mismo corredor comercial.' },
           { q: '¿Tasan locales en shopping?', a: 'Sí, tasamos locales a pie de calle, en galerías y en shoppings.' },
         ],
@@ -600,17 +622,17 @@ export const PAGES = [
           { title: 'Situación Legal', body: 'Verificamos títulos, planos y cumplimiento de normativas ambientales (reservas forestales).' },
         ],
       },
-      priceBlockVertical('Qué incluye el informe de tasación de tu campo', 'Campos chicos', 'Estancias y establecimientos grandes'),
+      priceBlockFinalidades('Qué incluye el informe de tasación de tu campo'),
+      valueBlockShort(),
       freeAsideVender(),
       porQueElegirnos,
       {
         type: 'faq',
         items: [
-          { q: '¿Cuánto cuesta el informe de un campo?', a: `El informe oficial cuesta entre ${PRECIO_TXT}, según la extensión y el tipo de establecimiento; confirmamos el monto exacto por WhatsApp antes de agendar la visita.` },
+          ...verticalFaqCore('un campo'),
           { q: '¿Tasan en todo el territorio nacional?', a: 'Sí, cubrimos campos y estancias en todo el territorio paraguayo.' },
           { q: '¿Qué tipo de análisis técnico realizan?', a: 'Aptitud del suelo, infraestructura instalada, logística y situación legal del inmueble.' },
           { q: '¿El informe sirve para garantías bancarias?', a: 'Sí, el informe pericial puede usarse como respaldo para garantías reales.' },
-          { q: '¿Cuánto tiempo demora el peritaje?', a: 'Depende de la extensión y ubicación del campo; te confirmamos el plazo por WhatsApp antes de empezar.' },
         ],
       },
       otrasTasaciones('Otras Tasaciones', [

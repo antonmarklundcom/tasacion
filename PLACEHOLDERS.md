@@ -15,11 +15,11 @@ contenido y no deben indexarse.
 
 | Dato | Estado | Qué hace falta |
 |---|---|---|
-| **RUC** | Ausente. No se menciona en ningún lado. | Número de RUC del titular o de la sociedad. Va en el footer. |
-| **Factura legal** | Ausente. La página no dice que se factura. | Confirmar si se emite factura legal y con qué timbrado. Recién ahí se puede poner "Emitimos factura legal" en la franja de confianza. |
+| **RUC** | Ausente. Sigue sin publicarse. | Número de RUC del titular o de la sociedad. Va en el footer. |
+| **Factura legal** | **Confirmada (2026-09-10).** Fernando emite factura legal; `FACTURA_TXT = 'Emitimos factura legal'` aparece en toda página con precio. Timbrado y RUC siguen sin publicarse. | — |
 | **Razón social** | Ausente. La marca es el dominio (`Tasación.com.py`), correcto para MODO 3. | Cuando haya sociedad o titular formal, agregar `legalName` al JSON-LD. |
-| **Matrícula / registro profesional del tasador** | Ausente. | Paraguay no exige matrícula única de tasador, pero si el tasador tiene matrícula de arquitecto/ingeniero o registro en alguna entidad, es el activo de confianza más fuerte que tiene el sitio. Confirmar número exacto — **no estimar ni redondear**. |
-| **Habilitación BCP** | **Deliberadamente ausente y sin sección.** | No somos tasadores habilitados por el BCP. No agregar nada sobre bancos, hipotecas ni tasaciones para créditos hasta que exista la habilitación. Si algún día existe, es una sección nueva, no una línea suelta. |
+| **Matrícula / registro profesional del tasador** | **Confirmadas y publicadas (2026-09-10).** `CRED_CSJ`: Perito Tasador matriculado ante la Corte Suprema de Justicia, matrícula N.º 4.168. `CRED_ARQ`: Arquitecto, matrícula profesional N.º 3.738. | — |
+| **Habilitación BCP** | Fernando: **en trámite** (no se menciona en el sitio; nunca "habilitado por el BCP"). Para crédito: el informe lo firma un tasador inscripto en el registro del BCP con quien Fernando trabaja (`CRED_BCP_FIRMA`, canónica en `content.mjs`); ese colega no se nombra. Bancos no se nombran por decisión de Fer (cada banco arma su propia nómina). | Cuando Fernando obtenga su propia habilitación BCP, reescribir esta sección entera. |
 
 ## 2. Contacto
 
@@ -32,15 +32,20 @@ contenido y no deben indexarse.
 | **Email** | No hay email público en la página. Si se quiere uno, definir la casilla primero. |
 | **Redes** | Sin Facebook ni Instagram. El JSON-LD no lleva `sameAs`. Crear ambos perfiles con NAP idéntico y después agregar el array. |
 
-## 3. Precios — NO HAY NINGUNO EN LA PÁGINA
+## 3. Precios — CONFIRMADOS POR FINALIDAD (2026-09-10)
 
-- La tasación online se presenta como **sin costo**, que es la propuesta real.
-- El informe formal se presenta como **pago**, con la frase honesta
-  "el monto depende del tipo de inmueble, de la superficie y del uso".
-- **Falta**: la grilla real de precios del informe (por tipo de inmueble y
-  rango de superficie), y si el monto lleva IVA incluido o no.
-- Cuando exista, se muestra en guaraníes con punto de miles (`Gs. 1.500.000`)
-  y con el IVA declarado explícitamente. Hoy no hay ningún importe publicado.
+Precios reales de Fer, con IVA (`IVA_TXT = '+ IVA'`, decisión D1 de Anton):
+
+- **Compra o venta** (lo más pedido): `Gs. 800.000 a Gs. 1.500.000 + IVA`.
+- **Sucesiones y juicios** (todo lo judicial, sucesiones incluidas): `Gs.
+  1.800.000 a Gs. 2.500.000 + IVA`.
+- **Crédito bancario** (lleva la firma de otro profesional, ≥ Gs. 500.000):
+  `desde Gs. 1.500.000 + IVA`, sin tope publicado.
+- **Tasación para vender**: mismo rango que compra/venta; se descuenta de la
+  comisión si hay exclusividad con un corredor asociado (ya en producción
+  desde el 2026-09-10, no es parte de esta lista de pendientes).
+- 800.000 fue un precio de prueba; sirve si entran 10–20 tasaciones/mes
+  (contexto de negocio, no va al sitio).
 
 ## 4. Prueba social — NO EXISTE
 
@@ -52,9 +57,10 @@ No hay, y no se inventó nada:
 - Sin "nuestro equipo", sin fotos de personas identificadas como staff.
 - Sin antes/después, sin trabajos presentados como propios.
 - Sin garantías de ningún tipo.
-- Sin promesa de tiempo de respuesta. El FAQ "¿Cuánto demora?" responde con
-  el criterio real ("te confirmamos el plazo antes de empezar") en lugar de
-  con un número inventado.
+- **Plazo confirmado (2026-09-10):** `PLAZO_TXT = '3 a 5 días hábiles después
+  de la visita'` (suele ser 3; margen por si hay varias visitas). Ya no dice
+  "te confirmamos el plazo" en ningún lado — esa frase está prohibida por el
+  gate desde v3.
 - Sin horarios. El JSON-LD **no** lleva `openingHours`.
 
 Para llenarlo hace falta material real: reseñas de Google textuales con nombre
