@@ -1,6 +1,12 @@
 # tasacion.com.py — bloqueos de acceso directo.
 # robots.txt para bots; esto es para bloquear la descarga directa, con o sin bot.
 
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.tasacion\.com\.py$ [NC]
+RewriteRule ^(.*)$ https://tasacion.com.py/$1 [L,R=301]
+
 # Nunca servir dotfiles ni carpetas de control de versiones/herramientas.
 RedirectMatch 404 ^/\.git(/|$)
 RedirectMatch 404 ^/\.claude(/|$)

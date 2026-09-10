@@ -8,14 +8,51 @@ export const SITE = 'https://tasacion.com.py';
 export const TASADOR = 'Fernando Capurro';
 export const PRECIO = { min: 800000, max: 1500000 };
 export const fmtGs = (n) => 'Gs. ' + n.toLocaleString('es-PY').replace(/ /g, '.');
-export const PRECIO_TXT = `${fmtGs(PRECIO.min)} a ${fmtGs(PRECIO.max)}`;
+const rango = (r) => (r.max ? `${fmtGs(r.min)} a ${fmtGs(r.max)}` : `desde ${fmtGs(r.min)}`);
+
+// -------------------------------------------------- v3 -- credenciales reales
+// prompts/v3-credenciales-y-finalidades.md §1. Cadenas canonicas: el copy las
+// interpola, nunca las reescribe. verify.mjs comprueba que se usen textuales.
+export const CRED_CSJ = 'Perito Tasador matriculado ante la Corte Suprema de Justicia, matrícula N.º 4.168';
+export const CRED_CSJ_CORTA = 'Perito Tasador CSJ · Mat. 4.168';
+export const CRED_ARQ = 'Arquitecto, matrícula profesional N.º 3.738';
+export const CRED_BCP_FIRMA = 'el informe lo firma un tasador inscripto en el registro del BCP';
+export const CRED_BCP_BANCOS = 'Trabajamos con todos los bancos y cooperativas: al gestionar tu carpeta coordinamos la firma que tu entidad requiere.';
+export const PLAZO_TXT = '3 a 5 días hábiles después de la visita';
+export const IVA_TXT = '+ IVA'; // D1 (Anton, 2026-09-10)
+export const FACTURA_TXT = 'Emitimos factura legal';
+export const PRECIOS = { compraventa: { min: 800000, max: 1500000 }, judicial: { min: 1800000, max: 2500000 }, credito: { min: 1500000, max: null } };
+export const PRECIO_TXT = rango(PRECIOS.compraventa); // compat: "Gs. 800.000 a Gs. 1.500.000" (sin IVA_TXT; se agrega al renderizar)
+export const PRECIO_JUDICIAL_TXT = rango(PRECIOS.judicial);
+export const PRECIO_CREDITO_TXT = rango(PRECIOS.credito);
 export const PRECIO_NOTA = 'según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
+export const FRANJA_COTIZA = 'Presupuesto por proyecto, según la cantidad de lotes y edificaciones dentro de la franja.';
+export const VISITA_TXT = null; // Q7, pendiente de confirmar
+export const EJEMPLO = { valor: 400000000, error: 0.05 };
+
+export const FINALIDADES = [
+  { id: 'compraventa', label: 'Compra o venta', precio: PRECIOS.compraventa, firma: 'csj',
+    corto: 'Sabé el valor real antes de firmar una oferta o una escritura.' },
+  { id: 'credito', label: 'Crédito bancario', precio: PRECIOS.credito, firma: 'bcp',
+    corto: 'Hipotecario o fiduciario: el informe que tu banco o cooperativa te pide para la carpeta, con la firma que exige el BCP.' },
+  { id: 'judicial', label: 'Sucesiones y juicios', precio: PRECIOS.judicial, firma: 'csj',
+    corto: 'Herencias, remates judiciales, liquidaciones: un informe pericial firmado por perito de la CSJ, que se sostiene ante el juzgado.' },
+  { id: 'vender', label: 'Vender con corredor', precio: PRECIOS.compraventa, firma: 'csj',
+    corto: 'Mismo informe; si firmás exclusividad con un corredor asociado, el costo se descuenta de la comisión.' },
+];
 
 export const WA_MENU = {
   options: [
-    { id: 'informe', label: 'Quiero un informe oficial de tasación', sub: 'Pago · con firma del tasador', text: (ctx) => `Hola, vengo de la página de ${ctx} y quiero un informe oficial de tasación.` },
-    { id: 'valoracion', label: 'Quiero una tasación no oficial, para vender', sub: 'Sin validez legal ni bancaria', text: (ctx) => `Hola, vengo de la página de ${ctx} y quiero una tasación no oficial para vender mi propiedad.` },
-    { id: 'consulta', label: 'Tengo otra consulta', sub: 'Escribinos lo que necesites', text: (ctx) => `Hola, vengo de la página de ${ctx} y tengo una consulta.` },
+    { id: 'informe', label: 'Necesito el informe oficial para comprar o vender', sub: 'Firmado por perito tasador',
+      text: (ctx) => `Hola, vengo de la página de ${ctx} y necesito un informe oficial de tasación para una compra o venta. El inmueble está en: ______` },
+    { id: 'credito', label: 'Necesito una tasación para un crédito', sub: 'Banco o cooperativa · hipotecario o fiduciario',
+      text: (ctx) => `Hola, vengo de la página de ${ctx} y necesito una tasación para presentar en un crédito bancario o de cooperativa. El inmueble está en: ______` },
+    { id: 'judicial', label: 'Necesito una tasación para una sucesión o un juicio', sub: 'Herencias, remates, liquidaciones',
+      text: (ctx) => `Hola, vengo de la página de ${ctx} y necesito una tasación pericial para una sucesión o un proceso judicial. El inmueble está en: ______` },
+    { id: 'valoracion', label: 'Quiero una tasación para vender con un corredor', sub: 'El costo se descuenta de la comisión',
+      text: (ctx) => `Hola, vengo de la página de ${ctx} y quiero una tasación para vender mi propiedad con un corredor asociado. El inmueble está en: ______` },
+    { id: 'consulta', label: 'Tengo otra consulta', sub: 'Empresas, franja de dominio, otros casos',
+      text: (ctx) => `Hola, vengo de la página de ${ctx} y tengo una consulta.` },
   ],
   fallback: (ctx) => `Hola, vengo de tasacion.com.py (${ctx}) y quiero información sobre una tasación.`,
 };
@@ -26,13 +63,13 @@ const porQueElegirnos = {
   items: [
     { title: 'Datos Reales de Mercado', body: 'No usamos promedios genéricos. Analizamos ventas reales y tendencias actuales del mercado paraguayo.' },
     { title: 'Rapidez por WhatsApp', body: 'Recibí atención rápida y personalizada según tu necesidad: venta o trámite oficial.' },
-    { title: 'Peritos Tasadores', body: 'Cada tasación es supervisada por peritos matriculados con trayectoria en Asunción y Gran Asunción.' },
+    { title: 'Perito matriculado', body: `${CRED_CSJ} y ${CRED_ARQ}: el mismo profesional que visita el inmueble firma el informe.` },
   ],
 };
 
 const otrasTasaciones = (heading, items) => ({ type: 'links', heading: heading || 'Otras tasaciones', items });
 
-const INCLUYE_INFORME = ['Firma del Tasador Fernando Capurro', 'Visita técnica al inmueble', 'Análisis de comparables reales', 'Documentación fotográfica', 'Metodología de tasación explicada', 'Vigencia legal para bancos y juzgados'];
+const INCLUYE_INFORME = [`Firma de ${CRED_CSJ}`, 'Visita técnica al inmueble', 'Análisis de comparables reales', 'Documentación fotográfica', 'Metodología de tasación explicada', 'Vigencia legal para bancos y juzgados', `Entrega en ${PLAZO_TXT}`];
 
 const freeAsideVender = () => ({
   type: 'freeAside',
@@ -53,13 +90,13 @@ const priceBlockVertical = (heading, labelMin, labelMax) => ({
   ],
 });
 
-const ctaBand = (heading, body) => ({
+const ctaBand = (heading, body, opts = {}) => ({
   type: 'ctaBand',
-  eyebrow: 'Informe oficial · firmado por tasador',
+  eyebrow: 'Informe oficial · firmado por perito tasador',
   heading,
-  body,
-  primary: { label: 'Solicitar informe oficial', waOption: 'informe' },
-  secondaryLink: { label: 'o pedir una tasación no oficial para vender', waOption: 'valoracion' },
+  body: body.includes(PLAZO_TXT) ? body : `${body} Listo en ${PLAZO_TXT}.`,
+  primary: opts.primary || { label: 'Solicitar informe oficial', waOption: 'informe' },
+  secondaryLink: opts.secondaryLink || { label: 'o pedir una tasación para vender con un corredor', waOption: 'valoracion' },
 });
 
 export const NAV = [
@@ -74,6 +111,7 @@ export const NAV = [
       { label: 'Hipotecaria', href: '/tasaciones/hipotecaria/' },
       { label: 'Locales Comerciales', href: '/tasaciones/locales-comerciales/' },
       { label: 'Campos y Estancias', href: '/tasaciones/campos/' },
+      { label: 'Franja de Dominio', href: '/tasaciones/franja-de-dominio/' },
     ],
   },
   { label: 'Informe oficial', href: '/informes-periciales/' },
@@ -91,6 +129,7 @@ export const SERVICIOS = [
   { title: 'Tasación Hipotecaria', body: 'Documentación certificada para la aprobación de carpetas bancarias.', href: '/tasaciones/hipotecaria/' },
   { title: 'Tasación de Locales Comerciales', body: 'Valuación de activos comerciales por rentabilidad y ubicación.', href: '/tasaciones/locales-comerciales/' },
   { title: 'Tasación de Campos y Estancias', body: 'Valuación técnica de activos rurales y establecimientos ganaderos.', href: '/tasaciones/campos/' },
+  { title: 'Franja de Dominio', body: 'Relevamiento y avaluación edilicia para proyectos viales.', href: '/tasaciones/franja-de-dominio/' },
 ];
 
 export const PAGES = [
@@ -103,7 +142,7 @@ export const PAGES = [
     showPriceChip: false,
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver todos los servicios', href: '/tasaciones/' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-de-inmuebles-asuncion', alt: 'Tasador de Tasación.com.py señalando un terreno en el Gran Asunción' },
-    title: 'Tasación de inmuebles en Asunción y Gran Asunción | Tasación.com.py',
+    title: 'Tasación de inmuebles en Asunción | Tasación.com.py',
     description: 'Informe oficial de tasación firmado por el Tasador Fernando Capurro, con validez legal y bancaria. También hacemos la tasación para vender, con el costo cubierto si vendés con uno de nuestros corredores asociados.',
     h1: 'Informe oficial de tasación, firmado por un tasador',
     subcopy: 'Un documento técnico firmado por el Tasador Fernando Capurro, con validez para bancos, juzgados y escribanías. Si tu objetivo es vender, también hacemos la tasación, con el costo cubierto por tu corredor.',
@@ -155,7 +194,7 @@ export const PAGES = [
     showPriceChip: false,
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver los 7 tipos de inmueble', href: '#servicios' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-de-inmuebles-asuncion', alt: 'Tasador de Tasación.com.py señalando un terreno en el Gran Asunción' },
-    title: 'Tasaciones de inmuebles en Paraguay: casas, departamentos, terrenos y más | Tasación.com.py',
+    title: 'Tasaciones de inmuebles en Paraguay | Tasación.com.py',
     description: 'Elegí el tipo de inmueble que querés tasar: casas, departamentos, terrenos, corporativa, hipotecaria, locales comerciales o campos y estancias.',
     h1: 'Tasaciones de inmuebles, para cada tipo de propiedad',
     subcopy: 'Cada tipo de inmueble tiene su propia lógica de valuación. Elegí el que corresponde a tu caso para ver qué incluye el informe y el rango de precio.',
@@ -393,7 +432,7 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasación hipotecaria · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: null },
+    hero: { primary: { label: 'Pedir mi tasación para crédito', waOption: 'credito' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: null },
     heroImage: { base: 'tasacion-hipotecaria-documentacion-paraguay', alt: 'Documentación de tasación hipotecaria sobre un escritorio junto a llaves de una vivienda' },
     title: 'Tasación hipotecaria en Paraguay | Tasación.com.py',
     description: 'Informes periciales firmados por peritos matriculados que cumplen con los requisitos bancarios para créditos de vivienda y comerciales.',
@@ -443,7 +482,7 @@ export const PAGES = [
     showPriceChip: false,
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-locales-comerciales-asuncion', alt: 'Local comercial en Asunción' },
-    title: 'Tasación de locales comerciales en Asunción | Tasación.com.py',
+    title: 'Tasación de locales comerciales | Tasación.com.py',
     description: 'Análisis técnico para locales a pie de calle, en galerías o shoppings. Evaluamos el flujo, la visibilidad y el potencial de renta.',
     h1: 'Tasación de locales comerciales: valor por rentabilidad y ubicación',
     subcopy: 'Análisis técnico para locales a pie de calle, en galerías o shoppings. Evaluamos el flujo, la visibilidad y el potencial de renta.',
@@ -533,6 +572,35 @@ export const PAGES = [
     ],
   },
 
+  // ------------------------------------------------------- FRANJA DE DOMINIO
+  // v3 T9 (§5.14): ruta nueva. Copy provisional en PR-1 (solo H1/lede/CTA);
+  // completa en PR-2. kind 'vertical-b2b': sin panel de precio, sin freeAside.
+  {
+    slug: '/tasaciones/franja-de-dominio/',
+    waContext: 'Franja de Dominio',
+    kind: 'vertical-b2b',
+    eyebrow: 'Para empresas, consorcios y constructoras',
+    showPriceChip: false,
+    waConsultaText: 'Hola, vengo de la página de Franja de Dominio y necesito relevamiento y avaluación edilicia para un proyecto vial. Cantidad aproximada de lotes: ______',
+    hero: { primary: { label: 'Pedir presupuesto por proyecto', waOption: 'consulta' }, secondary: null, freeLink: null },
+    heroImage: { base: 'tasacion-terrenos-paraguay', alt: 'Terreno en Paraguay listo para tasar' },
+    title: 'Franja de dominio: relevamiento edilicio | Tasación.com.py',
+    description: 'Relevamiento y avaluación edilicia en franja de dominio para proyectos viales: mediciones, cómputo y valor de mercado por lote.',
+    h1: 'Relevamiento y avaluación edilicia en franja de dominio de proyectos viales',
+    subcopy: 'La franja de dominio es la faja que ocupa la ruta y que hay que liberar antes de construirla; suele afectar muchos lotes a la vez. Relevamos y medimos todas las edificaciones y terrenos dentro de la franja, los computamos y les asignamos valor de mercado, y entregamos el informe que el consorcio adjudicatario presenta para que el Estado indemnice a las familias afectadas.',
+    sections: [
+      {
+        type: 'lead',
+        heading: 'Cómo se cotiza',
+        body: FRANJA_COTIZA,
+      },
+      ctaBand('Pedí tu presupuesto para franja de dominio', 'Relevamiento y avaluación edilicia firmados por el Tasador Fernando Capurro.', {
+        primary: { label: 'Pedir presupuesto por proyecto', waOption: 'consulta' },
+        secondaryLink: { label: 'o pedir un informe para compra o venta', waOption: 'informe' },
+      }),
+    ],
+  },
+
   // ----------------------------------------------------- VALUACION PARA VENDER
   {
     slug: '/valuacion-para-vender/',
@@ -602,7 +670,7 @@ export const PAGES = [
     showPriceChip: true,
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'informe-de-tasacion-linderos-paraguay', alt: 'Documentación técnica de un informe pericial en Paraguay' },
-    title: 'Informes periciales con validez jurídica y bancaria | Tasación.com.py',
+    title: 'Informes periciales con validez legal | Tasación.com.py',
     description: 'Documentación técnica certificada para procesos legales, bancarios y notariales en todo el Paraguay.',
     h1: 'Informes periciales con validez jurídica y bancaria',
     subcopy: 'Documentación técnica firmada por el Tasador Fernando Capurro, para procesos legales, bancarios y notariales en todo el Paraguay.',
@@ -646,7 +714,7 @@ export const PAGES = [
     showPriceChip: false,
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'oficina-de-tasaciones-asuncion', alt: 'Escritorio de trabajo con planos y documentación de tasación en una oficina de Asunción' },
-    title: 'Nosotros | Tasación.com.py',
+    title: 'Tasador Fernando Capurro, Perito Tasador | Tasación.com.py',
     description: 'El Tasador Fernando Capurro y el equipo de Tasación.com.py combinan experiencia técnica con datos reales del mercado inmobiliario paraguayo.',
     h1: 'Tasador Fernando Capurro y el equipo de Tasación.com.py',
     subcopy: 'Combinamos la experiencia técnica del tasador responsable con datos reales del mercado inmobiliario paraguayo para darte una valuación en la que podés confiar.',
@@ -682,7 +750,7 @@ export const PAGES = [
     eyebrow: 'Preguntas frecuentes',
     showPriceChip: false,
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
-    title: 'Preguntas frecuentes sobre tasación de inmuebles | Tasación.com.py',
+    title: 'Preguntas frecuentes sobre tasación | Tasación.com.py',
     description: 'Resolvé tus dudas sobre costos, validez legal y procesos de valuación en Paraguay.',
     h1: 'Preguntas frecuentes sobre tasación de inmuebles',
     subcopy: 'Resolvé tus dudas sobre costos, validez legal y procesos de valuación en Paraguay.',
@@ -728,7 +796,7 @@ export const PAGES = [
     eyebrow: 'Contacto',
     showPriceChip: false,
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
-    title: 'Contacto | Tasación.com.py',
+    title: 'Contacto — tasaciones en Asunción | Tasación.com.py',
     description: 'Pedí tu informe oficial de tasación por WhatsApp, firmado por el Tasador Fernando Capurro, o dejanos tus datos.',
     h1: 'Pedí tu informe oficial de tasación',
     subcopy: 'Escribinos por WhatsApp para el informe oficial firmado por el Tasador Fernando Capurro, o dejanos tus datos y te contactamos nosotros.',

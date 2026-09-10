@@ -2,16 +2,27 @@
 // content.mjs. node build-site.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { PAGES, EXTRAS, NAV, WA_NUMBER, SITE, TASADOR, PRECIO_TXT, WA_MENU } from './content.mjs';
+import {
+  PAGES, EXTRAS, NAV, WA_NUMBER, SITE, TASADOR, PRECIO_TXT, WA_MENU,
+  CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS,
+} from './content.mjs';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
 const waHref = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 const nl2p = (body) => body.split('\n\n').map((p) => `<p>${esc(p)}</p>`).join('\n');
 
-function waOptionHref(optionId, ctx) {
+// optionId 'consulta' + page.waConsultaText (§3.5, corporativa/franja-de-dominio):
+// esa página sobreescribe el texto de la 5ª opción del menú, en el panel y en
+// cualquier trigger que abra 'consulta' desde esa página.
+function waOptionText(optionId, ctx, page) {
   const opt = WA_MENU.options.find((o) => o.id === optionId) || WA_MENU.options[0];
-  return waHref(opt.text(ctx));
+  if (optionId === 'consulta' && page && page.waConsultaText) return page.waConsultaText;
+  return opt.text(ctx);
+}
+
+function waOptionHref(optionId, ctx, page) {
+  return waHref(waOptionText(optionId, ctx, page));
 }
 
 // -------------------------------------------------------------- icons (SVG)
@@ -22,7 +33,7 @@ const ICON_SEAL = `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" 
 const ICON_BURGER = `<svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 
 // ---------------------------------------------------------------- header/nav
-function renderNav(current) {
+function renderNav(current, ctx) {
   const items = NAV.map((i) => {
     if (i.children) {
       const childActive = i.children.some((c) => c.href === current);
@@ -58,8 +69,8 @@ function renderNav(current) {
         ${items}
       </ul>
     </nav>
-    <a class="wa-pill" href="${waHref(WA_MENU.fallback(''))}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false">${ICON_WA}WhatsApp</a>
-    <a class="wa-round" href="${waHref(WA_MENU.fallback(''))}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="WhatsApp">${ICON_WA}</a>
+    <a class="wa-pill" href="${waHref(WA_MENU.fallback(ctx))}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false">${ICON_WA}WhatsApp</a>
+    <a class="wa-round" href="${waHref(WA_MENU.fallback(ctx))}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="WhatsApp">${ICON_WA}</a>
     <button type="button" class="hdr__burger" data-hdr-burger aria-expanded="false" aria-controls="hdr-panel" aria-label="Abrir menú">${ICON_BURGER}</button>
   </div>
   <div class="hdr__panel" id="hdr-panel" data-hdr-panel>
@@ -77,7 +88,7 @@ function renderFooter() {
   <div class="container ftr__grid">
     <div>
       <p class="ftr__brand">Tasación<span>.com.py</span></p>
-      <p class="ftr__muted">Tasador responsable: ${esc(TASADOR)}</p>
+      <p class="ftr__muted">Tasador responsable: Fernando Capurro · ${esc(CRED_CSJ)}</p>
       <p class="ftr__muted">Informe oficial de tasación pago · Tasación para vender, costo cubierto por tu corredor</p>
     </div>
     <nav aria-label="Servicios">
@@ -90,6 +101,7 @@ function renderFooter() {
         <li><a href="/tasaciones/hipotecaria/">Hipotecaria</a></li>
         <li><a href="/tasaciones/locales-comerciales/">Locales Comerciales</a></li>
         <li><a href="/tasaciones/campos/">Campos y Estancias</a></li>
+        <li><a href="/tasaciones/franja-de-dominio/">Franja de Dominio</a></li>
       </ul>
     </nav>
     <nav aria-label="Sitio">
@@ -115,8 +127,9 @@ function renderFooter() {
 }
 
 // ------------------------------------------------------------------ wa menu
-function renderWaMenu(ctx) {
-  const options = WA_MENU.options.map((o, idx) => `<li><a class="wa-menu__option${idx === 0 ? ' wa-menu__option--current' : ''}" href="${waHref(o.text(ctx))}" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
+function renderWaMenu(ctx, page) {
+  const defaultOption = (page && page.hero && page.hero.primary && page.hero.primary.waOption) || 'informe';
+  const options = WA_MENU.options.map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waHref(waOptionText(o.id, ctx, page))}" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
           <span class="wa-menu__opt-title">${esc(o.label)}</span>
           <span class="wa-menu__opt-sub">${esc(o.sub)}</span>
         </a></li>`).join('\n        ');
@@ -133,7 +146,7 @@ function renderWaMenu(ctx) {
     <p class="wa-menu__foot">${ICON_WA}Se abre WhatsApp con el mensaje ya escrito.</p>
   </div>
 </div>
-<a class="wa-fab" href="${waOptionHref('informe', ctx)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="informe" data-wa-anchor="fab" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="Abrir WhatsApp" data-ev="wa_click" data-ev-loc="fab">${ICON_WA}</a>`;
+<a class="wa-fab" href="${waOptionHref(defaultOption, ctx, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${defaultOption}" data-wa-anchor="fab" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="Abrir WhatsApp" data-ev="wa_click" data-ev-loc="fab">${ICON_WA}</a>`;
 }
 
 // -------------------------------------------------------------------- blocks
@@ -172,11 +185,11 @@ function block(section, page) {
     }
 
     case 'lead':
-      return `<section class="section section--narrow">
+      return `<section class="section section--narrow"${section.id ? ` id="${section.id}"` : ''}>
   <div class="container">
     <h2>${esc(section.heading)}</h2>
     ${nl2p(section.body)}
-    ${section.cta ? `<p><a class="btn btn--primary" href="${section.cta.wa ? waOptionHref('informe', page.waContext) : section.cta.href}"${section.cta.wa ? ' target="_blank" rel="noopener"' : ''}>${esc(section.cta.label)}</a></p>` : ''}
+    ${section.cta ? `<p><a class="btn btn--primary" href="${section.cta.wa ? waOptionHref('informe', page.waContext, page) : section.cta.href}"${section.cta.wa ? ' target="_blank" rel="noopener"' : ''}>${esc(section.cta.label)}</a></p>` : ''}
   </div>
 </section>`;
 
@@ -191,11 +204,16 @@ function block(section, page) {
   </div>
 </section>`;
 
-    case 'priceBlock':
+    case 'priceBlock': {
+      const eyebrow = section.eyebrow || 'El informe oficial';
+      const ctaLabel = section.ctaLabel || 'Pedir mi informe por WhatsApp';
+      const waOption = section.waOption || 'informe';
+      const figureTxt = section.figure || PRECIO_TXT;
+      const note = section.note || 'según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
       return `<section class="price-panel" id="incluye">
   <div class="container">
     <div>
-      <span class="eyebrow">El informe oficial</span>
+      <span class="eyebrow">${esc(eyebrow)}</span>
       <h2>${esc(section.heading)}</h2>
       <ul class="price-panel__includes">
         ${section.includes.map((i) => `<li>${ICON_CHECK}${esc(i)}</li>`).join('\n        ')}
@@ -203,13 +221,83 @@ function block(section, page) {
     </div>
     <div class="price-panel__card">
       <span class="eyebrow eyebrow--dark">Precio</span>
-      <p class="price-panel__figure">${PRECIO_TXT.split(' a ').map(esc).join(' a<br>')}</p>
-      <p class="price-panel__note">según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita</p>
+      <p class="price-panel__figure">${figureTxt.split(' a ').map(esc).join(' a<br>')}</p>
+      <p class="price-panel__note">${esc(note)}</p>
       <ul class="price-panel__rows">
         ${section.rows.map((r) => `<li><span>${esc(r[0])}</span><span>${esc(r[1])}</span></li>`).join('\n        ')}
       </ul>
-      <a class="btn btn--onlight" href="${waOptionHref('informe', page.waContext)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="informe" data-ev="wa_click" data-ev-loc="price">${ICON_WA}Pedir mi informe por WhatsApp</a>
+      ${section.pie ? `<p class="price-panel__pie">${esc(section.pie)}</p>` : ''}
+      <a class="btn btn--onlight" href="${waOptionHref(waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${waOption}" data-ev="wa_click" data-ev-loc="price">${ICON_WA}${esc(ctaLabel)}</a>
     </div>
+  </div>
+</section>`;
+    }
+
+    case 'useCases':
+      return `<section class="section use-cases"${section.id ? ` id="${section.id}"` : ''}>
+  <div class="container">
+    <h2>${esc(section.heading)}</h2>
+    <div class="grid grid--3">
+      ${section.items.map((it) => `<a class="card${it.accent ? ' card--accent' : it.muted ? ' card--muted' : ''}" href="${it.href}">
+        <span class="eyebrow">${esc(it.eyebrow || it.title)}</span>
+        <p>${esc(it.body)}</p>
+      </a>`).join('\n      ')}
+    </div>
+  </div>
+</section>`;
+
+    case 'credentials':
+      return `<section class="section credentials">
+  <div class="container">
+    <h2>${esc(section.heading)}</h2>
+    <div class="grid grid--2">
+      <div class="card">
+        <h3>El Tasador Fernando Capurro</h3>
+        <ul class="list">
+          ${section.tasador.map((c) => `<li>${ICON_CHECK}${esc(c)}</li>`).join('\n          ')}
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Para crédito</h3>
+        <p>${esc(section.credito)}</p>
+      </div>
+    </div>
+    <p class="credentials__pie">${ICON_CHECK}Informe firmado en ${esc(section.plazo)} · ${esc(FACTURA_TXT)}</p>
+  </div>
+</section>`;
+
+    case 'pricingTiers':
+      return `<section class="section pricing-tiers" id="precios">
+  <div class="container">
+    <h2>${esc(section.heading)}</h2>
+    <div class="grid grid--3">
+      ${section.tiers.map((t) => `<div class="card pricing-tiers__card${t.highlight ? ' card--accent' : ''}">
+        <span class="eyebrow">${esc(t.eyebrow)}</span>
+        <h3>${esc(t.title)}</h3>
+        <p class="pricing-tiers__figure">${esc(t.price)} <span>${esc(IVA_TXT)}</span></p>
+        <p class="pricing-tiers__meta"><strong>Firma:</strong> ${esc(t.firma)}</p>
+        <p class="pricing-tiers__meta"><strong>Plazo:</strong> ${esc(t.plazo)}</p>
+        <ul class="list">
+          ${t.incluye.map((i) => `<li>${ICON_CHECK}${esc(i)}</li>`).join('\n          ')}
+        </ul>
+        ${t.nota ? `<p class="pricing-tiers__nota">${esc(t.nota)}</p>` : ''}
+        <a class="btn ${t.highlight ? 'btn--primary' : 'btn--ghost'}" href="${waOptionHref(t.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${t.waOption}" data-ev="wa_click" data-ev-loc="pricing_tier">${esc(t.cta)}</a>
+      </div>`).join('\n      ')}
+    </div>
+    ${section.pie ? `<p class="pricing-tiers__foot">${esc(section.pie)}</p>` : ''}
+  </div>
+</section>`;
+
+    case 'valueBlock':
+      return `<section class="section value-block">
+  <div class="container value-block__grid">
+    <div class="value-block__lede">
+      <h2>${esc(section.heading)}</h2>
+      ${section.lede && !section.short ? `<p class="lede">${esc(section.lede)}</p>` : ''}
+    </div>
+    <ol class="steps value-block__items">
+      ${(section.short ? section.items.slice(0, 3) : section.items).map((it) => `<li><span class="steps__n">${ICON_CHECK}</span><h3>${esc(it.title)}</h3><p>${esc(it.body)}</p></li>`).join('\n      ')}
+    </ol>
   </div>
 </section>`;
 
@@ -238,8 +326,8 @@ function block(section, page) {
       <p>${esc(section.body)}</p>
     </div>
     <div class="cta-band__actions">
-      <a class="btn btn--wa" href="${waOptionHref(section.primary.waOption, page.waContext)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${section.primary.waOption}" data-ev="wa_click" data-ev-loc="band">${ICON_WA}${esc(section.primary.label)}</a>
-      <a class="link" href="${waOptionHref(section.secondaryLink.waOption, page.waContext)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${section.secondaryLink.waOption}" data-ev="wa_click" data-ev-loc="band_secondary">${esc(section.secondaryLink.label)}</a>
+      <a class="btn btn--wa" href="${waOptionHref(section.primary.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${section.primary.waOption}" data-ev="wa_click" data-ev-loc="band">${ICON_WA}${esc(section.primary.label)}</a>
+      <a class="link" href="${waOptionHref(section.secondaryLink.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${section.secondaryLink.waOption}" data-ev="wa_click" data-ev-loc="band_secondary">${esc(section.secondaryLink.label)}</a>
     </div>
   </div>
 </section>`;
@@ -367,15 +455,16 @@ function heroPicture(img, eager, seal) {
 function renderChip(page) {
   if (page.kind === 'secondary-free') return '';
   if (page.showPriceChip) {
+    if (page.priceChip) return `<p class="offer-chip offer-chip--price"><strong>${esc(page.priceChip.strong)}</strong><span>${esc(page.priceChip.note)}</span></p>`;
     return `<p class="offer-chip offer-chip--price"><strong>Informe oficial: ${esc(PRECIO_TXT)}</strong><span>según tipo y tamaño del inmueble</span></p>`;
   }
   return `<p class="offer-chip"><strong>Informe oficial de tasación</strong><span>pago · firmado por el Tasador ${esc(TASADOR)}</span></p>`;
 }
 
 function renderHero(page) {
-  const h1Class = page.kind === 'vertical' ? ' class="h1--vertical"' : '';
+  const h1Class = page.kind === 'vertical' || page.kind === 'vertical-b2b' ? ' class="h1--vertical"' : '';
   const primary = page.hero.primary;
-  const primaryHref = waOptionHref(primary.waOption, page.waContext);
+  const primaryHref = waOptionHref(primary.waOption, page.waContext, page);
   const secondary = page.hero.secondary
     ? `<a class="btn btn--ghost" href="${page.hero.secondary.href}">${esc(page.hero.secondary.label)} ${ICON_ARROW}</a>`
     : '';
@@ -405,9 +494,9 @@ function renderHero(page) {
 
 function renderTrustRow() {
   const items = [
-    'Validez para bancos, juzgados y escribanías',
-    'Comparables reales de mercado, no promedios',
-    'Precio anclado antes de la visita',
+    CRED_CSJ,
+    `Informe firmado en ${PLAZO_TXT}`,
+    'Precio anclado por finalidad, antes de la visita',
   ];
   return `<div class="trustrow">
   <div class="container">
@@ -441,11 +530,59 @@ function faqJsonLd(page) {
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
 }
 
+function professionalServiceJsonLd() {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Tasación.com.py',
+    url: SITE,
+    telephone: `+${WA_NUMBER}`,
+    areaServed: ['Asunción', 'Gran Asunción'],
+    priceRange: 'Gs. 800.000 – 2.500.000',
+    founder: {
+      '@type': 'Person',
+      name: 'Fernando Capurro',
+      jobTitle: 'Perito Tasador',
+      hasCredential: [CRED_CSJ, CRED_ARQ],
+    },
+  };
+  return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
+}
+
+function serviceJsonLd(page) {
+  if (page.kind !== 'vertical' && page.kind !== 'vertical-b2b') return '';
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: page.h1,
+    provider: { '@type': 'ProfessionalService', name: 'Tasación.com.py' },
+    areaServed: ['Asunción', 'Gran Asunción'],
+  };
+  // vertical-b2b (franja de dominio): precio por proyecto, sin rango publicado.
+  if (page.kind === 'vertical') {
+    data.offers = [{ '@type': 'Offer', priceCurrency: 'PYG', priceSpecification: { '@type': 'PriceSpecification', minPrice: PRECIOS.compraventa.min, maxPrice: PRECIOS.compraventa.max, priceCurrency: 'PYG' } }];
+  }
+  return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
+}
+
+function breadcrumbJsonLd(page) {
+  const parts = page.slug.split('/').filter(Boolean);
+  if (parts.length < 2) return '';
+  const itemListElement = [{ '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE + '/' }];
+  let acc = '';
+  parts.forEach((p, idx) => {
+    acc += '/' + p;
+    itemListElement.push({ '@type': 'ListItem', position: idx + 2, name: p, item: SITE + acc + '/' });
+  });
+  const data = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement };
+  return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
+}
+
 // -------------------------------------------------------------------- page
 function renderPage(page, opts = {}) {
   const canonicalUrl = page.noindex ? `${SITE}/${page.slug}` : `${SITE}${page.slug}`;
   const body = page.sections.map((s) => block(s, page)).join('\n');
-  const trust = (page.kind === 'home' || page.kind === 'vertical') && page.heroImage ? renderTrustRow() : '';
+  const trust = !page.noindex ? renderTrustRow() : '';
   return `<!doctype html>
 <html lang="es-PY">
 <head>
@@ -469,18 +606,19 @@ ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <meta name="theme-color" content="#0F3D5C">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/css/site.css">
-${faqJsonLd(page)}</head>
+${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
 <body data-page-context="${attr(page.waContext)}">
-${renderNav(page.slug)}
+${renderNav(page.slug, page.waContext)}
 <main>
 ${renderHero(page)}
 ${trust}
 ${body}
 </main>
 ${renderFooter()}
-${renderWaMenu(page.waContext)}
+${renderWaMenu(page.waContext, page)}
 <script src="/assets/js/site.js"></script>
 </body>
 </html>
