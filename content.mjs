@@ -520,7 +520,11 @@ export const PAGES = [
         figure: PRECIO_CREDITO_TXT,
         note: 'incluye la firma del tasador inscripto en el BCP; te confirmamos el monto exacto por WhatsApp antes de la visita',
         includes: INCLUYE_INFORME,
-        rows: [['Vivienda', `${PRECIO_CREDITO_TXT} ${IVA_TXT}`], ['Inmuebles comerciales o grandes', `${PRECIO_CREDITO_TXT} ${IVA_TXT}`]],
+        rows: [
+          ['Crédito bancario', `${PRECIO_CREDITO_TXT} ${IVA_TXT}`],
+          ['Compra o venta', `${PRECIO_TXT} ${IVA_TXT}`],
+          ['Sucesiones y juicios', `${PRECIO_JUDICIAL_TXT} ${IVA_TXT}`],
+        ],
         pie: FACTURA_TXT,
       },
       valueBlockShort(),
