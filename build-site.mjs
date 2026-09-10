@@ -78,7 +78,7 @@ function renderFooter() {
     <div>
       <p class="ftr__brand">Tasación<span>.com.py</span></p>
       <p class="ftr__muted">Tasador responsable: ${esc(TASADOR)}</p>
-      <p class="ftr__muted">Informe oficial de tasación pago · Valoración gratis para vender</p>
+      <p class="ftr__muted">Informe oficial de tasación pago · Tasación para vender, costo cubierto por tu corredor</p>
     </div>
     <nav aria-label="Servicios">
       <p class="ftr__label">Tasaciones</p>
