@@ -44,6 +44,11 @@ try {
     await panel.waitFor({ state: 'visible' });
     ok('FAB abre el panel');
 
+    const options = page.locator('.wa-menu__option');
+    const count = await options.count();
+    if (count !== 5) fail(`el panel tiene ${count} opciones (debe tener 5)`);
+    else ok('el panel tiene 5 opciones');
+
     const current = page.locator('.wa-menu__option--current');
     await current.waitFor({ state: 'attached' });
     const isFocused = await current.evaluate((el) => el === document.activeElement);
@@ -56,6 +61,14 @@ try {
       fail('el texto de la opción 1 no menciona el contexto/oferta esperados: ' + decoded);
     } else ok('href de la opción 1 correcto: ' + decoded);
 
+    // stacking: el subtítulo debe quedar debajo del título, no al lado (§4 fix)
+    const first = options.first();
+    const titleBox = await first.locator('.wa-menu__opt-title').boundingBox();
+    const subBox = await first.locator('.wa-menu__opt-sub').boundingBox();
+    if (!titleBox || !subBox || subBox.y < titleBox.y + titleBox.height - 1) {
+      fail('título y subtítulo del menú WA no están apilados verticalmente');
+    } else ok('título y subtítulo apilados correctamente');
+
     await page.keyboard.press('Escape');
     await panel.waitFor({ state: 'hidden', timeout: 2000 }).catch(() => {});
     const stillOpen = await page.locator('.wa-menu.is-open').count();
@@ -66,6 +79,26 @@ try {
     await panel.waitFor({ state: 'visible' });
     ok('la pill del header abre el panel');
     await page.close();
+  }
+
+  // ------------------------------------------------------------- foco por página
+  {
+    const cases = [
+      { path: '/tasaciones/hipotecaria/', expected: 'credito' },
+      { path: '/tasaciones/franja-de-dominio/', expected: 'consulta' },
+      { path: '/', expected: 'informe' },
+    ];
+    for (const c of cases) {
+      const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+      await page.goto(BASE + c.path);
+      await page.locator('.wa-fab').click();
+      const current = page.locator('.wa-menu__option--current');
+      await current.waitFor({ state: 'attached' });
+      const dataOption = await current.getAttribute('data-wa-option');
+      if (dataOption !== c.expected) fail(`${c.path}: opción con foco es "${dataOption}", se esperaba "${c.expected}"`);
+      else ok(`${c.path}: opción con foco correcta (${c.expected})`);
+      await page.close();
+    }
   }
 
   // ------------------------------------------------------------- 390px
@@ -81,6 +114,24 @@ try {
     const box = await panel.boundingBox();
     if (box.width > 390) fail('el panel WA no cabe a 390px');
     else ok('el panel WA cabe a 390px');
+    const panelHeight = await panel.evaluate((el) => el.scrollHeight);
+    if (panelHeight > 844) fail(`el panel WA (${panelHeight}px) no cabe sin scroll interno en 390×844`);
+    else ok('el panel WA cabe sin scroll interno en 390×844');
+    await page.close();
+  }
+
+  // ------------------------------------------------------------- FAB vs. hero__freelink en móvil
+  {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await page.goto(BASE + '/');
+    const fabBox = await page.locator('.wa-fab').boundingBox();
+    const freelink = page.locator('.hero__freelink a');
+    if (await freelink.count()) {
+      const linkBox = await freelink.boundingBox();
+      const intersects = fabBox && linkBox && !(fabBox.x > linkBox.x + linkBox.width || fabBox.x + fabBox.width < linkBox.x || fabBox.y > linkBox.y + linkBox.height || fabBox.y + fabBox.height < linkBox.y);
+      if (intersects) fail('el FAB se superpone con la línea chica del hero en móvil');
+      else ok('el FAB no se superpone con la línea chica del hero en móvil');
+    }
     await page.close();
   }
 
