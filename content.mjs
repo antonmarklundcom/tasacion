@@ -14,7 +14,7 @@ export const PRECIO_NOTA = 'según tipo y tamaño del inmueble; te confirmamos e
 export const WA_MENU = {
   options: [
     { id: 'informe', label: 'Quiero un informe oficial de tasación', sub: 'Pago · con firma del tasador', text: (ctx) => `Hola, vengo de la página de ${ctx} y quiero un informe oficial de tasación.` },
-    { id: 'valoracion', label: 'Quiero una valoración gratis para vender', sub: 'Rango de mercado, sin costo', text: (ctx) => `Hola, vengo de la página de ${ctx} y quiero una valoración gratis para vender.` },
+    { id: 'valoracion', label: 'Quiero una tasación no oficial, para vender', sub: 'Sin validez legal ni bancaria', text: (ctx) => `Hola, vengo de la página de ${ctx} y quiero una tasación no oficial para vender mi propiedad.` },
     { id: 'consulta', label: 'Tengo otra consulta', sub: 'Escribinos lo que necesites', text: (ctx) => `Hola, vengo de la página de ${ctx} y tengo una consulta.` },
   ],
   fallback: (ctx) => `Hola, vengo de tasacion.com.py (${ctx}) y quiero información sobre una tasación.`,
@@ -59,7 +59,7 @@ const ctaBand = (heading, body) => ({
   heading,
   body,
   primary: { label: 'Solicitar informe oficial', waOption: 'informe' },
-  secondaryLink: { label: 'o pedir una valoración gratis para vender', waOption: 'valoracion' },
+  secondaryLink: { label: 'o pedir una tasación no oficial para vender', waOption: 'valoracion' },
 });
 
 export const NAV = [
