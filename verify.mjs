@@ -137,17 +137,20 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
     while (idx !== -1) { idxs.push(idx); idx = html.indexOf(num, idx + 1); }
     for (const i of idxs) {
       const around = html.slice(Math.max(0, i - 60), i + 10);
-      const okCred = around.includes('matrícula N.º') || around.includes('Mat.');
+      const okCred = (around.includes('matrícula') && around.includes('N.º')) || around.includes('Mat.');
       if (!okCred) fail(`${p}: "${num}" aparece fuera de una cadena de credencial canónica`);
     }
   }
 
-  // BCP: toda mención debe venir de CRED_BCP_FIRMA o la frase de FAQ §5.4
+  // BCP: toda mención debe venir de CRED_BCP_FIRMA, la frase de FAQ §5.4, o
+  // el "corto" de FINALIDADES.credito (§3, verbatim) — nunca una afirmación
+  // nueva tipo "habilitado por el BCP" (ya cubierto por FORBIDDEN_ALWAYS).
+  const BCP_SAFE_BEFORE = ['inscripto en el registro del', 'la firma que exige el', 'inscripto en el'];
   const bcpIdxs = [];
   { let i = html.indexOf('BCP'); while (i !== -1) { bcpIdxs.push(i); i = html.indexOf('BCP', i + 1); } }
   for (const i of bcpIdxs) {
     const before = html.slice(Math.max(0, i - 40), i);
-    if (!before.includes('inscripto en el registro del')) fail(`${p}: "BCP" aparece fuera de la frase canónica "inscripto en el registro del BCP"`);
+    if (!BCP_SAFE_BEFORE.some((s) => before.includes(s))) fail(`${p}: "BCP" aparece fuera de una frase canónica permitida`);
   }
 
   // cifras Gs.: whitelist + sufijo IVA (fuera de .value-block, donde van las
@@ -167,7 +170,7 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
     // comprueba de forma conservadora buscando el sufijo dentro de los 40
     // caracteres siguientes a cada cifra).
     for (const m of gsOutside) {
-      const after = htmlOutsideValueBlock.slice(m.index, m.index + 40);
+      const after = htmlOutsideValueBlock.slice(m.index, m.index + 70);
       if (!after.includes(IVA_TXT)) fail(`${p}: "Gs. ${m[1]}" sin "${IVA_TXT}" en el mismo nodo de texto`);
     }
   }

@@ -221,7 +221,7 @@ function block(section, page) {
     </div>
     <div class="price-panel__card">
       <span class="eyebrow eyebrow--dark">Precio</span>
-      <p class="price-panel__figure">${figureTxt.split(' a ').map(esc).join(' a<br>')}</p>
+      <p class="price-panel__figure">${figureTxt.split(' a ').map(esc).join(' a<br>')} <span class="price-panel__iva">${esc(IVA_TXT)}</span></p>
       <p class="price-panel__note">${esc(note)}</p>
       <ul class="price-panel__rows">
         ${section.rows.map((r) => `<li><span>${esc(r[0])}</span><span>${esc(r[1])}</span></li>`).join('\n        ')}
@@ -233,58 +233,79 @@ function block(section, page) {
 </section>`;
     }
 
-    case 'useCases':
+    case 'useCases': {
+      const TILE_ICON = {
+        compraventa: `<svg viewBox="0 0 22 22" fill="none"><path d="M3 10l8-6 8 6M5 9v9h12V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        credito: `<svg viewBox="0 0 22 22" fill="none"><path d="M3 8l8-5 8 5M4 8h14v9H4V8Zm3 0v9m4-9v9m4-9v9M3 19h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        judicial: `<svg viewBox="0 0 22 22" fill="none"><path d="M11 3v16M6 6l-3 5a3 3 0 0 0 6 0l-3-5Zm10 0l-3 5a3 3 0 0 0 6 0l-3-5ZM4 6h14M8 19h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        vender: `<svg viewBox="0 0 22 22" fill="none"><path d="M3 10l8-6 8 6M5 9v9h12V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+        franja: `<svg viewBox="0 0 22 22" fill="none"><path d="M2 19c3-9 5-14 9-14s6 5 9 14M2 19h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      };
       return `<section class="section use-cases"${section.id ? ` id="${section.id}"` : ''}>
   <div class="container">
     <h2>${esc(section.heading)}</h2>
     <div class="grid grid--3">
-      ${section.items.map((it) => `<a class="card${it.accent ? ' card--accent' : it.muted ? ' card--muted' : ''}" href="${it.href}">
-        <span class="eyebrow">${esc(it.eyebrow || it.title)}</span>
+      ${section.items.map((it) => `<a class="card${it.muted ? ' card--muted' : ''}" href="${it.href}">
+        <span class="use-cases__tile">${TILE_ICON[it.icon] || ICON_CHECK}</span>
+        <span class="eyebrow">${esc(it.eyebrow)}</span>
+        <h3>${esc(it.title)}</h3>
         <p>${esc(it.body)}</p>
+        <span class="link">${esc(it.label || 'Saber más')} ${ICON_ARROW}</span>
       </a>`).join('\n      ')}
     </div>
   </div>
 </section>`;
+    }
 
     case 'credentials':
       return `<section class="section credentials">
   <div class="container">
-    <h2>${esc(section.heading)}</h2>
     <div class="grid grid--2">
-      <div class="card">
-        <h3>El Tasador Fernando Capurro</h3>
+      <div>
+        <span class="eyebrow">Quién firma tu informe</span>
+        <h2>Tasador Fernando Capurro</h2>
+        <p>El mismo profesional que visita el inmueble firma el informe. Dos matrículas vigentes, publicadas para que las verifiques.</p>
+        <div class="credentials__rows">
+          ${section.tasador.map((c) => `<div class="credentials__row">${ICON_SEAL}<span><strong>${esc(c)}</strong></span></div>`).join('\n          ')}
+        </div>
+      </div>
+      <div class="credentials__card">
+        <span class="eyebrow">Para crédito</span>
+        <p>${esc(section.credito)}</p>
         <ul class="list">
-          ${section.tasador.map((c) => `<li>${ICON_CHECK}${esc(c)}</li>`).join('\n          ')}
+          <li>${ICON_CHECK}Informe firmado en ${esc(section.plazo)}</li>
+          <li>${ICON_CHECK}${esc(FACTURA_TXT)}</li>
+          <li>${ICON_CHECK}Precio anclado por finalidad, antes de la visita</li>
         </ul>
       </div>
-      <div class="card">
-        <h3>Para crédito</h3>
-        <p>${esc(section.credito)}</p>
-      </div>
     </div>
-    <p class="credentials__pie">${ICON_CHECK}Informe firmado en ${esc(section.plazo)} · ${esc(FACTURA_TXT)}</p>
   </div>
 </section>`;
 
     case 'pricingTiers':
-      return `<section class="section pricing-tiers" id="precios">
+      return `<section class="section pricing-tiers" id="${section.id || 'precios'}">
   <div class="container">
+    <span class="eyebrow">Precio por finalidad</span>
     <h2>${esc(section.heading)}</h2>
+    ${section.lede ? `<p class="lede">${esc(section.lede)}</p>` : ''}
     <div class="grid grid--3">
       ${section.tiers.map((t) => `<div class="card pricing-tiers__card${t.highlight ? ' card--accent' : ''}">
-        <span class="eyebrow">${esc(t.eyebrow)}</span>
+        ${t.highlight ? `<span class="pricing-tiers__chip">${esc(t.eyebrow)}</span>` : `<span class="eyebrow">${esc(t.eyebrow)}</span>`}
         <h3>${esc(t.title)}</h3>
-        <p class="pricing-tiers__figure">${esc(t.price)} <span>${esc(IVA_TXT)}</span></p>
-        <p class="pricing-tiers__meta"><strong>Firma:</strong> ${esc(t.firma)}</p>
-        <p class="pricing-tiers__meta"><strong>Plazo:</strong> ${esc(t.plazo)}</p>
+        <p>${esc(t.corto)}</p>
+        <div class="pricing-tiers__price">
+          <p class="pricing-tiers__figure">${esc(t.price)} <span>${esc(IVA_TXT)}</span></p>
+          <p class="pricing-tiers__nota">${esc(t.nota)}</p>
+        </div>
+        <p class="pricing-tiers__meta"><strong>Firma:</strong><span>${esc(t.firma)}</span></p>
+        <p class="pricing-tiers__meta"><strong>Plazo:</strong><span>${esc(t.plazo)}</span></p>
         <ul class="list">
           ${t.incluye.map((i) => `<li>${ICON_CHECK}${esc(i)}</li>`).join('\n          ')}
         </ul>
-        ${t.nota ? `<p class="pricing-tiers__nota">${esc(t.nota)}</p>` : ''}
-        <a class="btn ${t.highlight ? 'btn--primary' : 'btn--ghost'}" href="${waOptionHref(t.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${t.waOption}" data-ev="wa_click" data-ev-loc="pricing_tier">${esc(t.cta)}</a>
+        <a class="btn ${t.highlight ? 'btn--primary' : 'btn--ghost'}" href="${waOptionHref(t.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${t.waOption}" data-ev="wa_click" data-ev-loc="pricing_tier">${t.highlight ? ICON_WA : ''}${esc(t.cta)}</a>
       </div>`).join('\n      ')}
     </div>
-    ${section.pie ? `<p class="pricing-tiers__foot">${esc(section.pie)}</p>` : ''}
+    ${section.pie ? `<p class="pricing-tiers__foot">${section.pie.map((s) => `<span>${ICON_CHECK}${esc(s)}</span>`).join('')}</p>` : ''}
   </div>
 </section>`;
 
@@ -292,11 +313,12 @@ function block(section, page) {
       return `<section class="section value-block">
   <div class="container value-block__grid">
     <div class="value-block__lede">
+      <span class="eyebrow">Por qué conviene</span>
       <h2>${esc(section.heading)}</h2>
       ${section.lede && !section.short ? `<p class="lede">${esc(section.lede)}</p>` : ''}
     </div>
-    <ol class="steps value-block__items">
-      ${(section.short ? section.items.slice(0, 3) : section.items).map((it) => `<li><span class="steps__n">${ICON_CHECK}</span><h3>${esc(it.title)}</h3><p>${esc(it.body)}</p></li>`).join('\n      ')}
+    <ol class="value-block__items">
+      ${(section.short ? section.items.slice(0, 3) : section.items).map((it, idx) => `<li><span class="steps__n">${idx + 1}</span><div><h3>${esc(it.title)}</h3><p>${esc(it.body)}</p></div></li>`).join('\n      ')}
     </ol>
   </div>
 </section>`;
@@ -426,7 +448,7 @@ function block(section, page) {
       <label class="field">Nombre completo<input type="text" name="nombre" required></label>
       <label class="field">Número de WhatsApp<input type="tel" name="telefono" required></label>
       <label class="field">Email (opcional)<input type="email" name="email"></label>
-      ${radios ? `<div class="radios">\n          ${radios}\n        </div>` : ''}
+      ${radios ? `<fieldset class="radios">\n          <legend>¿Qué necesitás?</legend>\n          ${radios}\n        </fieldset>` : ''}
       <button class="btn btn--primary" type="submit">Enviar mis datos</button>
     </form>
   </div>
@@ -458,6 +480,7 @@ function renderChip(page) {
     if (page.priceChip) return `<p class="offer-chip offer-chip--price"><strong>${esc(page.priceChip.strong)}</strong><span>${esc(page.priceChip.note)}</span></p>`;
     return `<p class="offer-chip offer-chip--price"><strong>Informe oficial: ${esc(PRECIO_TXT)}</strong><span>según tipo y tamaño del inmueble</span></p>`;
   }
+  if (page.chipNote) return `<p class="offer-chip"><strong>Informe oficial de tasación</strong><span>${esc(page.chipNote)}</span></p>`;
   return `<p class="offer-chip"><strong>Informe oficial de tasación</strong><span>pago · firmado por el Tasador ${esc(TASADOR)}</span></p>`;
 }
 

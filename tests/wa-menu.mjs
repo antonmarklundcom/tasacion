@@ -61,11 +61,15 @@ try {
       fail('el texto de la opción 1 no menciona el contexto/oferta esperados: ' + decoded);
     } else ok('href de la opción 1 correcto: ' + decoded);
 
-    // stacking: el subtítulo debe quedar debajo del título, no al lado (§4 fix)
+    // stacking: el subtítulo debe quedar debajo del título, no al lado (§4 fix).
+    // El título puede envolver a 2 líneas (labels largos): se compara el INICIO
+    // del subtítulo contra el INICIO del título (no el bottom, que se solapa
+    // por line-height cuando el título envuelve) para detectar el bug real —
+    // título y subtítulo como dos columnas lado a lado (misma `y`).
     const first = options.first();
     const titleBox = await first.locator('.wa-menu__opt-title').boundingBox();
     const subBox = await first.locator('.wa-menu__opt-sub').boundingBox();
-    if (!titleBox || !subBox || subBox.y < titleBox.y + titleBox.height - 1) {
+    if (!titleBox || !subBox || subBox.y <= titleBox.y + 4 || subBox.x !== titleBox.x) {
       fail('título y subtítulo del menú WA no están apilados verticalmente');
     } else ok('título y subtítulo apilados correctamente');
 
