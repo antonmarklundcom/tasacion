@@ -4,7 +4,12 @@
 // opciones, cadenas canónicas de credenciales/plazo/IVA, sin datos inventados.
 import { execSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
-import { PRECIO_TXT, CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT } from './content.mjs';
+import { createHash } from 'node:crypto';
+import { PRECIO_TXT, CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS, FINALIDADES } from './content.mjs';
+
+const sha1_8 = (path) => createHash('sha1').update(readFileSync(path)).digest('hex').slice(0, 8);
+const CSS_HASH = sha1_8('assets/css/site.css');
+const JS_HASH = sha1_8('assets/js/site.js');
 
 let failures = 0;
 const fail = (msg) => { console.error('  FAIL  ' + msg); failures++; };
@@ -99,6 +104,21 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
 
   const menuOptionLinks = [...html.matchAll(/<a class="wa-menu__option[^"]*" href="([^"]*)"/g)].map((m) => m[1]);
   if (menuOptionLinks.length !== 5) fail(`${p}: el panel WA tiene ${menuOptionLinks.length} opciones (debe tener 5)`);
+
+  // audit 2026-09-11 §2.3: sin target=_blank, un click en desktop sacaba al
+  // visitante del sitio hacia WhatsApp Web en la misma pestaña.
+  const menuOptionTags = [...html.matchAll(/<a class="wa-menu__option[^"]*"[^>]*>/g)].map((m) => m[0]);
+  for (const tag of menuOptionTags) {
+    if (!tag.includes('target="_blank"') || !tag.includes('rel="noopener"')) {
+      fail(`${p}: una opción del menú WA no tiene target="_blank" rel="noopener"`);
+    }
+  }
+
+  // audit 2026-09-11 §0: el CDN de Hostinger cacheó site.css/site.js viejos
+  // por hasta 7 días detrás de un HTML fresco. El ?v= debe ser el hash del
+  // archivo tal como está en disco ahora mismo, o un rebuild quedó pendiente.
+  if (!html.includes(`/assets/css/site.css?v=${CSS_HASH}`)) fail(`${p}: site.css?v= no coincide con el hash actual del archivo (rebuild required)`);
+  if (!html.includes(`/assets/js/site.js?v=${JS_HASH}`)) fail(`${p}: site.js?v= no coincide con el hash actual del archivo (rebuild required)`);
   const ctx = (html.match(/data-page-context="([^"]*)"/) || [])[1] || '';
   for (const href of menuOptionLinks) {
     const text = decodeURIComponent(href.split('?text=')[1] || '');
@@ -145,7 +165,10 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
   // BCP: toda mención debe venir de CRED_BCP_FIRMA, la frase de FAQ §5.4, o
   // el "corto" de FINALIDADES.credito (§3, verbatim) — nunca una afirmación
   // nueva tipo "habilitado por el BCP" (ya cubierto por FORBIDDEN_ALWAYS).
-  const BCP_SAFE_BEFORE = ['inscripto en el registro del', 'la firma que exige el', 'inscripto en el'];
+  // "inscripto en el" solo, sin "registro del", dejaría pasar la paráfrasis
+  // que el audit 2026-09-11 encontró viva en hipotecaria (§2.4) — no listar
+  // ese prefijo suelto acá.
+  const BCP_SAFE_BEFORE = ['inscripto en el registro del', 'la firma que exige el'];
   const bcpIdxs = [];
   { let i = html.indexOf('BCP'); while (i !== -1) { bcpIdxs.push(i); i = html.indexOf('BCP', i + 1); } }
   for (const i of bcpIdxs) {
@@ -211,6 +234,37 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
     const firstPrimary = (html.match(/<main>[\s\S]*?class="btn btn--primary"[^>]*data-wa-open="([^"]*)"/) || [])[1];
     const expectedFirst = expectedFirstMap[p] || 'informe';
     if (firstPrimary && firstPrimary !== expectedFirst) fail(`${p}: el primer .btn--primary abre "${firstPrimary}", se esperaba "${expectedFirst}"`);
+  }
+
+  // audit 2026-09-11 §2.1/§2.2: el JSON-LD Service/Offer debe existir para
+  // toda página que publica un priceBlock, y sus cifras deben salir de
+  // PRECIOS (única fuente) — nunca del rango de otra finalidad.
+  const isVertical = r.kind === 'vertical' || (r.slug && r.slug.startsWith('/tasaciones/') && r.slug !== '/tasaciones/franja-de-dominio/' && r.slug !== '/tasaciones/');
+  const isInformesHub = p === 'informes-periciales/index.html';
+  if (isVertical || isInformesHub) {
+    const serviceMatches = [...rawHtml.matchAll(/<script type="application\/ld\+json">(\{"@context":"https:\/\/schema\.org","@type":"Service"[\s\S]*?)<\/script>/g)];
+    if (!serviceMatches.length) {
+      fail(`${p}: no emite JSON-LD Service/Offer`);
+    } else {
+      const service = JSON.parse(serviceMatches[0][1]);
+      const offers = service.offers || [];
+      if (!offers.length) fail(`${p}: el Service JSON-LD no tiene Offers`);
+      for (const o of offers) {
+        const f = FINALIDADES.find((x) => x.label === o.name);
+        const spec = o.priceSpecification || {};
+        const wantMax = f ? f.precio.max : undefined;
+        if (f && spec.minPrice !== f.precio.min) fail(`${p}: Offer "${o.name}" minPrice=${spec.minPrice}, se esperaba ${f.precio.min} (PRECIOS)`);
+        if (f && wantMax != null && spec.maxPrice !== wantMax) fail(`${p}: Offer "${o.name}" maxPrice=${spec.maxPrice}, se esperaba ${wantMax}`);
+        if (f && wantMax == null && spec.maxPrice != null) fail(`${p}: Offer "${o.name}" no debería tener maxPrice`);
+      }
+      if (p === 'tasaciones/hipotecaria/index.html') {
+        const creditOffer = offers.find((o) => o.name === 'Crédito bancario');
+        if (!creditOffer) fail(`${p}: falta el Offer de "Crédito bancario"`);
+        else if (creditOffer.priceSpecification.maxPrice === PRECIOS.compraventa.max) {
+          fail(`${p}: el Offer de crédito repite el maxPrice de compraventa (${PRECIOS.compraventa.max}) — bug del audit 2026-09-11 §2.2`);
+        }
+      }
+    }
   }
 }
 if (failures === 0) ok('todas las páginas pasan los checks estructurales');

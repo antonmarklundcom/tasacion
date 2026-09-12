@@ -1,11 +1,20 @@
 // build-site.mjs — genera las 13 páginas + 404.html + gracias.html desde
 // content.mjs. node build-site.mjs
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { createHash } from 'node:crypto';
 import {
   PAGES, EXTRAS, NAV, WA_NUMBER, SITE, TASADOR, PRECIO_TXT, WA_MENU,
-  CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS,
+  CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS, FINALIDADES,
 } from './content.mjs';
+
+// Cache-busting: el CDN de Hostinger cachea site.css/site.js hasta 7 días por
+// URL; sin un ?v= que cambie con el contenido, un deploy puede quedar detrás
+// del edge (visto en vivo el 2026-09-11). El hash se recalcula en cada build.
+const ASSET_V = {
+  css: createHash('sha1').update(readFileSync('assets/css/site.css')).digest('hex').slice(0, 8),
+  js: createHash('sha1').update(readFileSync('assets/js/site.js')).digest('hex').slice(0, 8),
+};
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
@@ -129,7 +138,7 @@ function renderFooter() {
 // ------------------------------------------------------------------ wa menu
 function renderWaMenu(ctx, page) {
   const defaultOption = (page && page.hero && page.hero.primary && page.hero.primary.waOption) || 'informe';
-  const options = WA_MENU.options.map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waHref(waOptionText(o.id, ctx, page))}" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
+  const options = WA_MENU.options.map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waHref(waOptionText(o.id, ctx, page))}" target="_blank" rel="noopener" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
           <span class="wa-menu__opt-title">${esc(o.label)}</span>
           <span class="wa-menu__opt-sub">${esc(o.sub)}</span>
         </a></li>`).join('\n        ');
@@ -572,18 +581,38 @@ function professionalServiceJsonLd() {
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
 }
 
+// Offer por finalidad, siempre desde PRECIOS (única fuente) — nunca cifras
+// tipeadas a mano en el JSON-LD, para que no pueda desalinearse del precio
+// visible en la página (audit 2026-09-11 §2.2: hipotecaria mostraba el rango
+// de compraventa en el rich result mientras la página publica "desde 1.500.000").
+function offerFor(finalidadId) {
+  const f = FINALIDADES.find((x) => x.id === finalidadId);
+  const precio = f ? f.precio : PRECIOS[finalidadId];
+  const spec = { '@type': 'PriceSpecification', minPrice: precio.min, priceCurrency: 'PYG' };
+  if (precio.max != null) spec.maxPrice = precio.max;
+  return { '@type': 'Offer', name: f ? f.label : finalidadId, priceCurrency: 'PYG', priceSpecification: spec };
+}
+
+// Qué finalidades emitir por página: hipotecaria es predominantemente crédito
+// (sin maxPrice); el resto de las verticales + el hub de informes muestran las
+// tres finalidades en su priceBlock, así que emiten las tres Offers.
+function offersFor(page) {
+  if (page.slug === '/tasaciones/hipotecaria/') return [offerFor('credito')];
+  return [offerFor('compraventa'), offerFor('judicial'), offerFor('credito')];
+}
+
 function serviceJsonLd(page) {
-  if (page.kind !== 'vertical' && page.kind !== 'vertical-b2b') return '';
+  if (page.kind !== 'vertical' && page.kind !== 'vertical-b2b' && page.kind !== 'primary-report') return '';
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    serviceType: page.h1,
+    serviceType: page.kind === 'primary-report' ? 'Informe pericial de tasación' : page.h1,
     provider: { '@type': 'ProfessionalService', name: 'Tasación.com.py' },
     areaServed: ['Asunción', 'Gran Asunción'],
   };
   // vertical-b2b (franja de dominio): precio por proyecto, sin rango publicado.
-  if (page.kind === 'vertical') {
-    data.offers = [{ '@type': 'Offer', priceCurrency: 'PYG', priceSpecification: { '@type': 'PriceSpecification', minPrice: PRECIOS.compraventa.min, maxPrice: PRECIOS.compraventa.max, priceCurrency: 'PYG' } }];
+  if (page.kind === 'vertical' || page.kind === 'primary-report') {
+    data.offers = offersFor(page);
   }
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
 }
@@ -631,7 +660,7 @@ ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/site.css?v=${ASSET_V.css}">
 ${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
 <body data-page-context="${attr(page.waContext)}">
 ${renderNav(page.slug, page.waContext)}
@@ -642,7 +671,7 @@ ${body}
 </main>
 ${renderFooter()}
 ${renderWaMenu(page.waContext, page)}
-<script src="/assets/js/site.js"></script>
+<script src="/assets/js/site.js?v=${ASSET_V.js}"></script>
 </body>
 </html>
 `;

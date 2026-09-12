@@ -79,6 +79,23 @@ try {
     if (stillOpen) fail('Escape no cierra el panel');
     else ok('Escape cierra el panel');
 
+    // audit 2026-09-11 §2.3: en desktop, click en una opción del menú abría
+    // WhatsApp Web en la misma pestaña y sacaba al visitante del sitio.
+    await fab.click();
+    await panel.waitFor({ state: 'visible' });
+    const [popup] = await Promise.all([
+      page.context().waitForEvent('page', { timeout: 3000 }).catch(() => null),
+      options.first().click(),
+    ]);
+    if (!popup) fail('un click en la opción 1 del menú WA no abre pestaña nueva (falta target="_blank")');
+    else {
+      const popupUrl = popup.url();
+      if (!popupUrl.startsWith('https://wa.me/') && !popupUrl.startsWith('https://api.whatsapp.com/')) {
+        fail('la pestaña nueva del menú WA no apunta a WhatsApp: ' + popupUrl);
+      } else ok('la opción del menú WA abre en pestaña nueva: ' + popupUrl);
+      await popup.close();
+    }
+
     await page.locator('.wa-pill').click();
     await panel.waitFor({ state: 'visible' });
     ok('la pill del header abre el panel');
@@ -135,6 +152,25 @@ try {
       const intersects = fabBox && linkBox && !(fabBox.x > linkBox.x + linkBox.width || fabBox.x + fabBox.width < linkBox.x || fabBox.y > linkBox.y + linkBox.height || fabBox.y + fabBox.height < linkBox.y);
       if (intersects) fail('el FAB se superpone con la línea chica del hero en móvil');
       else ok('el FAB no se superpone con la línea chica del hero en móvil');
+    }
+    await page.close();
+  }
+
+  // ------------------------------------------------------------- hipotecaria: hero móvil sobre el fold
+  {
+    const page = await browser.newPage({ viewport: { width: 375, height: 812 } });
+    await page.goto(BASE + '/tasaciones/hipotecaria/');
+    const primary = page.locator('.hero [data-ev-loc="hero"]').first();
+    const primaryBox = await primary.boundingBox();
+    const fabBox = await page.locator('.wa-fab').boundingBox();
+    if (!primaryBox) fail('/tasaciones/hipotecaria/: no se encontró el botón primario del hero');
+    else {
+      if (primaryBox.y + primaryBox.height > 812 - 72) {
+        fail(`/tasaciones/hipotecaria/: el botón primario del hero termina en y=${Math.round(primaryBox.y + primaryBox.height)}, debería quedar sobre el fold (<= 740) a 375×812`);
+      } else ok('/tasaciones/hipotecaria/: el botón primario del hero queda sobre el fold a 375×812');
+      const intersects = fabBox && !(fabBox.x > primaryBox.x + primaryBox.width || fabBox.x + fabBox.width < primaryBox.x || fabBox.y > primaryBox.y + primaryBox.height || fabBox.y + fabBox.height < primaryBox.y);
+      if (intersects) fail('/tasaciones/hipotecaria/: el FAB se superpone con el botón primario del hero a 375×812');
+      else ok('/tasaciones/hipotecaria/: el FAB no se superpone con el botón primario del hero');
     }
     await page.close();
   }

@@ -40,15 +40,31 @@ En hPanel → Node/PHP → Environment (o un include fuera de `public_html/`):
 - El ID de analítica (`ANALYTICS_ID`) no es una env var: es la línea
   `var ANALYTICS_ID = '';` en `build-site.mjs` — ponerla ahí y regenerar (§9.3 de `plan.md`).
 
-## 4. Verificar después de subir
+## 4. Después de subir el zip: purgar el CDN
+
+**Paso obligatorio, no opcional.** hPanel → Websites → tasacion.com.py → Performance → CDN →
+*Purge cache* (o desactivar/reactivar el CDN). El 2026-09-11 el CDN de Hostinger sirvió un
+`site.css` de 6 días de antigüedad sobre un HTML recién publicado (`max-age=604800` por URL),
+dejando el sitio roto (íconos gigantes, menú de WhatsApp en dos columnas) para todo visitante real
+mientras `curl` sin User-Agent mostraba el sitio perfecto. Desde entonces `build-site.mjs`
+versiona `site.css`/`site.js` con `?v=<hash>` — un deploy nuevo siempre pide un archivo con URL
+distinta — pero **purgar sigue siendo el paso que confirma que el edge no tiene nada viejo
+cacheado bajo la URL vieja** para quien ya tenía la página abierta.
+
+Verificar en una ventana de incógnito (nunca en una pestaña que ya tenía el sitio abierto):
+- El menú de WhatsApp muestra el subtítulo debajo del título, no al lado.
+- Las tarjetas "Quién firma" tienen checks de tamaño normal, no íconos de 400+ px.
+- El FAB (esquina inferior derecha, móvil) no tapa el botón primario del hero.
+
+## 5. Verificar después de subir
 
 - `https://tasacion.com.py/tasaciones/terrenos/` muestra el chip "Informe oficial de tasación" y
   el panel de precio a mitad de página.
 - El FAB (esquina inferior derecha) abre el menú de WhatsApp con la opción 1 preseleccionada.
 - El formulario de `/contacto/` hace POST a `/lead-forward.php` y redirige a `/gracias.html`.
-- `https://tasacion.com.py/sitemap.xml` responde con las 13 URLs.
+- `https://tasacion.com.py/sitemap.xml` responde con las 15 URLs.
 
-## 5. Rollback
+## 6. Rollback
 
 Hostinger no versiona `public_html/` automáticamente. Antes de extraer un zip nuevo sobre una
 versión en producción, descargar un backup de `public_html/` desde el File Manager (o usar el

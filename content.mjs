@@ -491,7 +491,7 @@ export const PAGES = [
     title: 'Tasación hipotecaria en Paraguay | Tasación.com.py',
     description: `Tasación para crédito hipotecario o fiduciario. Para crédito, ${CRED_BCP_FIRMA}. Visita y relevamiento a cargo del Tasador Fernando Capurro, ${CRED_CSJ}.`,
     h1: 'Tasación para crédito hipotecario o fiduciario',
-    subcopy: `Tu banco o cooperativa te pide una tasación para aprobar la carpeta. Para crédito, ${CRED_BCP_FIRMA}; la visita y el relevamiento los hace el Tasador Fernando Capurro, ${CRED_CSJ}. ${CRED_BCP_BANCOS}`,
+    subcopy: 'Tu banco o cooperativa te pide una tasación para aprobar la carpeta. Nosotros hacemos la visita y el relevamiento, y el informe sale con la firma que tu entidad exige.',
     sections: [
       {
         type: 'lead',
@@ -518,7 +518,7 @@ export const PAGES = [
         ctaLabel: 'Pedir mi tasación para crédito',
         waOption: 'credito',
         figure: PRECIO_CREDITO_TXT,
-        note: 'incluye la firma del tasador inscripto en el BCP; te confirmamos el monto exacto por WhatsApp antes de la visita',
+        note: `incluye la firma: ${CRED_BCP_FIRMA}; te confirmamos el monto exacto por WhatsApp antes de la visita`,
         includes: INCLUYE_INFORME,
         rows: [
           ['Crédito bancario', `${PRECIO_CREDITO_TXT} ${IVA_TXT}`],
