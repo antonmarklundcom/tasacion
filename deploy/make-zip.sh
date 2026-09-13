@@ -44,6 +44,7 @@ SHIP=(
   nosotros
   preguntas-frecuentes
   contacto
+  privacidad
 )
 
 for item in "${SHIP[@]}"; do
