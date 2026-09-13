@@ -33,10 +33,17 @@ Nunca incluye: `docs/`, `prompts/`, `tests/`, `deploy/`, `.git*`, `content.mjs`,
 
 ## 3. Variables de entorno (opcionales, nunca bloquean el sitio)
 
-En hPanel → Node/PHP → Environment (o un include fuera de `public_html/`):
+Si el hosting permite variables de entorno, se pueden usar; tienen prioridad sobre el archivo de configuración:
 
 - `VENDERCRM_URL` / `VENDERCRM_API_KEY` — sin esto, los leads quedan solo en `leads.log`
   (ver `lead-forward.php`).
+  En Hostinger sin menú de variables de entorno, copiar `deploy/vendercrm-config.example.php`
+  como `/home/USUARIO/domains/tasacion.com.py/vendercrm-config.php` (sustituir `USUARIO`
+  por el usuario de hosting). La ubicación exacta relativa al handler es
+  `__DIR__ . '/../vendercrm-config.php'`: un nivel por encima de `public_html`, a su lado,
+  **no dentro** de `public_html`. Completar `url` y `api_key` en ese archivo privado.
+  El ejemplo no se incluye en el ZIP; subir la configuración por separado a esa carpeta.
+  Si falta el archivo y no hay variables de entorno, los leads solo se guardan en `leads.log`.
 - El ID de analítica (`ANALYTICS_ID`) no es una env var: es la línea
   `var ANALYTICS_ID = '';` en `build-site.mjs` — ponerla ahí y regenerar (§9.3 de `plan.md`).
 

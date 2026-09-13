@@ -642,6 +642,7 @@ function renderPage(page) {
 <html lang="es-PY">
 <head>
 <meta charset="utf-8">
+<script src="https://crm.clientes.com.py/vc-attribution.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>var WA_NUMBER = '${WA_NUMBER}';</script>
 <script>var ANALYTICS_ID = '';</script>

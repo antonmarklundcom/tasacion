@@ -16,7 +16,14 @@ declare(strict_types=1);
 // define(), no const: una constante declarada con `const` no admite una
 // llamada a función en su valor (fatal en tiempo de compilación). Mismo
 // nombre, mismo comportamiento, valor resuelto en runtime.
-define('VENDERCRM_URL', getenv('VENDERCRM_URL') ?: '');
+$vendercrmConfig = [];
+if (file_exists(__DIR__ . '/../vendercrm-config.php')) {
+    $vendercrmConfig = require __DIR__ . '/../vendercrm-config.php';
+}
+if (!is_array($vendercrmConfig)) {
+    $vendercrmConfig = [];
+}
+define('VENDERCRM_URL', getenv('VENDERCRM_URL') ?: ($vendercrmConfig['url'] ?? ''));
 
 const SITE_SOURCE   = 'site:tasacion';
 const THANK_YOU     = '/gracias.html';
@@ -126,7 +133,7 @@ if (VENDERCRM_URL !== '' && function_exists('curl_init')) {
         CURLOPT_CONNECTTIMEOUT => 5,
         CURLOPT_HTTPHEADER     => [
             'Content-Type: application/json',
-            'X-Api-Key: ' . (getenv('VENDERCRM_API_KEY') ?: ''),
+            'X-Api-Key: ' . (getenv('VENDERCRM_API_KEY') ?: ($vendercrmConfig['api_key'] ?? '')),
         ],
         CURLOPT_POSTFIELDS => json_encode($payload, JSON_FLAGS),
     ]);
