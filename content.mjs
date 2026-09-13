@@ -39,7 +39,7 @@ export const FINALIDADES = [
   { id: 'judicial', label: 'Sucesiones y juicios', precio: PRECIOS.judicial, firma: 'csj',
     corto: 'Herencias, remates judiciales, liquidaciones: un informe pericial firmado por perito de la CSJ, que se sostiene ante el juzgado.' },
   { id: 'vender', label: 'Vender con corredor', precio: PRECIOS.compraventa, firma: 'csj',
-    corto: 'Mismo informe; si firmás exclusividad con un corredor asociado, el costo se descuenta de la comisión.' },
+    corto: 'No es un informe oficial ni tiene validez legal ni bancaria. El costo lo cubre tu corredor asociado solo con exclusividad, descontándolo de la comisión al cerrar la venta.' },
 ];
 
 export const WA_MENU = {
@@ -165,12 +165,12 @@ export const PAGES = [
     eyebrow: 'Perito Tasador CSJ · Asunción y Gran Asunción',
     showPriceChip: false,
     chipNote: `firmado en ${PLAZO_TXT}`,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver para qué lo necesitás', href: '#finalidades' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver para qué lo necesitás', href: '#finalidades' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-de-inmuebles-asuncion', alt: 'Tasador de Tasación.com.py señalando un terreno en el Gran Asunción' },
     title: 'Tasación de inmuebles en Asunción | Tasación.com.py',
     description: 'Informe oficial de tasación firmado por el Tasador Fernando Capurro, con validez legal y bancaria, para crédito, sucesión o venta. Precio anclado por finalidad, antes de la visita.',
     h1: 'Tasación con validez legal y bancaria, para tu crédito, tu sucesión o tu venta',
-    subcopy: `Informe técnico firmado por el Tasador ${TASADOR}, listo para presentar en tu banco, cooperativa, juzgado o escribanía. Si tu objetivo es vender, el costo se descuenta de la comisión de tu corredor asociado.`,
+    subcopy: `Informe técnico firmado por el Tasador ${TASADOR}, listo para presentar en tu banco, cooperativa, juzgado o escribanía. Si tu objetivo es vender con exclusividad, el costo se descuenta de la comisión de tu corredor asociado.`,
     sections: [
       {
         type: 'useCases', id: 'finalidades',
@@ -201,7 +201,7 @@ export const PAGES = [
         items: [
           { title: 'Elegí para qué la necesitás', body: 'Compra o venta, crédito, sucesión o juicio: decinos tu caso por WhatsApp.' },
           { title: 'Hablá con el tasador por WhatsApp', body: 'Coordinamos la visita y confirmamos el alcance de tu caso.' },
-          { title: 'Recibís el informe firmado', body: `El informe firmado llega en ${PLAZO_TXT}, o la tasación para vender con el costo cubierto por tu corredor.` },
+          { title: 'Recibís el informe firmado', body: `El informe firmado llega en ${PLAZO_TXT}, o la tasación para vender con el costo cubierto por tu corredor con exclusividad.` },
         ],
       },
       freeAsideVender(),
@@ -226,7 +226,7 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasaciones · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver los 8 tipos de inmueble', href: '#servicios' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver los 8 tipos de inmueble', href: '#servicios' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-de-inmuebles-asuncion', alt: 'Tasador de Tasación.com.py señalando un terreno en el Gran Asunción' },
     title: 'Tasaciones de inmuebles en Paraguay | Tasación.com.py',
     description: 'Elegí el tipo de inmueble que querés tasar: casas, departamentos, terrenos, corporativa, hipotecaria, locales comerciales, campos y estancias o franja de dominio.',
@@ -270,12 +270,12 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasación de casas · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-casas-departamentos-asuncion', alt: 'Casa residencial en un barrio de Asunción' },
     title: 'Tasación de casas en Asunción | Tasación.com.py',
     description: 'Valuación de mercado para residencias urbanas y barrios cerrados, hecha por peritos que conocen tu zona. Costo cubierto por tu corredor si querés vender; certificada si es para un trámite.',
     h1: 'Tasación de casas en Asunción: conocé el valor real de tu vivienda',
-    subcopy: 'Valuación de mercado para residencias urbanas y barrios cerrados, hecha por peritos que conocen tu zona. Costo cubierto por tu corredor si querés vender; certificada si es para un trámite.',
+    subcopy: 'Valuación de mercado para residencias urbanas y barrios cerrados, hecha por peritos que conocen tu zona. Costo cubierto por tu corredor con exclusividad si querés vender; certificada si es para un trámite.',
     sections: [
       {
         type: 'lead',
@@ -324,7 +324,7 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasación de departamentos · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-de-departamentos-asuncion', alt: 'Edificio de departamentos residencial en un barrio de Asunción' },
     title: 'Tasación de departamentos en Asunción | Tasación.com.py',
     description: 'Valuación precisa por zona, edificio y unidad. Analizamos m², amenities y ubicación en altura para darte el valor real de mercado.',
@@ -374,7 +374,7 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasación de terrenos · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-terrenos-paraguay', alt: 'Terreno en Paraguay listo para tasar' },
     title: 'Tasación de terrenos en Paraguay | Tasación.com.py',
     description: 'Tasación técnica basada en ubicación, zonificación y capacidad constructiva. No dejes que tu tierra se venda por debajo de su potencial.',
@@ -425,7 +425,7 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasación corporativa · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Solicitar informe corporativo', waOption: 'consulta' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Solicitar informe corporativo', waOption: 'consulta' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     waConsultaText: 'Hola, vengo de la página de Tasación Corporativa y necesito una tasación para mi empresa. El activo es: ______',
     heroImage: { base: 'tasacion-corporativa-oficinas-asuncion', alt: 'Edificio de oficinas corporativo en Asunción listo para tasar' },
     title: 'Tasación corporativa en Paraguay | Tasación.com.py',
@@ -554,7 +554,7 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasación de locales comerciales · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-locales-comerciales-asuncion', alt: 'Local comercial en Asunción' },
     title: 'Tasación de locales comerciales | Tasación.com.py',
     description: 'Análisis técnico para locales a pie de calle, en galerías o shoppings. Evaluamos el flujo, la visibilidad y el potencial de renta.',
@@ -604,7 +604,7 @@ export const PAGES = [
     kind: 'vertical',
     eyebrow: 'Tasación de campos y estancias · Paraguay',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasador-de-terrenos-gran-asuncion', alt: 'Tasador recorriendo un campo en el Gran Asunción' },
     title: 'Tasación de campos y estancias en Paraguay | Tasación.com.py',
     description: 'Valuación técnica de activos rurales, establecimientos ganaderos y tierras agrícolas con criterio profesional y conocimiento del terreno.',
@@ -718,8 +718,8 @@ export const PAGES = [
     heroImage: { base: 'propiedad-lista-para-la-venta-asuncion', alt: 'Fachada de una casa en Asunción preparada para la venta' },
     title: 'Tasación para vender tu propiedad | Tasación.com.py',
     description: `Hacemos la tasación de tu propiedad para definir el precio de venta (${PRECIO_TXT} ${IVA_TXT}). Si firmás exclusividad con uno de nuestros corredores asociados, ese costo se descuenta de la comisión al cerrar la venta.`,
-    h1: 'Tasación para vender tu propiedad, con el costo cubierto por tu corredor',
-    subcopy: 'No adivines el precio. Hacemos un análisis profesional de mercado y, si vendés con uno de nuestros corredores asociados, ese costo se descuenta de su comisión al cerrar la venta.',
+    h1: 'Tasación para vender tu propiedad, con el costo cubierto por tu corredor con exclusividad',
+    subcopy: 'No adivines el precio. Hacemos un análisis profesional de mercado y, si vendés con exclusividad con uno de nuestros corredores asociados, ese costo se descuenta de su comisión al cerrar la venta.',
     heroCta: 'Quiero mi tasación para vender',
     sections: [
       {
@@ -776,7 +776,7 @@ export const PAGES = [
     eyebrow: 'Tasador Fernando Capurro · Informes periciales',
     showPriceChip: true,
     priceChip: { strong: `Informe oficial: desde ${fmtGs(PRECIOS.compraventa.min)} ${IVA_TXT}`, note: 'según finalidad; te confirmamos el monto antes de la visita' },
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: { label: 'Ver qué incluye', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'informe-de-tasacion-linderos-paraguay', alt: 'Documentación técnica de un informe pericial en Paraguay' },
     title: 'Informes periciales con validez legal | Tasación.com.py',
     description: 'Informe oficial de tasación por finalidad: compra o venta, crédito bancario, sucesiones y juicios. Firmado por perito matriculado.',
@@ -801,7 +801,7 @@ export const PAGES = [
       {
         type: 'lead', id: 'credito',
         heading: 'Tasación para crédito',
-        body: `Para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS}\n\n${PRECIO_CREDITO_TXT} ${IVA_TXT}. Ver la página completa de tasación hipotecaria.`,
+        body: `Para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS}\n\n${PRECIO_CREDITO_TXT.replace(/^desde /, "Desde ")} ${IVA_TXT}. Ver la página completa de tasación hipotecaria.`,
         cta: { label: 'Ver tasación para crédito', href: '/tasaciones/hipotecaria/' },
       },
       {
@@ -878,7 +878,7 @@ export const PAGES = [
     kind: 'info',
     eyebrow: 'Tasador Fernando Capurro',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'oficina-de-tasaciones-asuncion', alt: 'Escritorio de trabajo con planos y documentación de tasación en una oficina de Asunción' },
     title: 'Tasador Fernando Capurro, Perito Tasador | Tasación.com.py',
     description: 'El Tasador Fernando Capurro y el equipo de Tasación.com.py combinan experiencia técnica con datos reales del mercado inmobiliario paraguayo.',
@@ -922,7 +922,7 @@ export const PAGES = [
     kind: 'info',
     eyebrow: 'Preguntas frecuentes',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     title: 'Preguntas frecuentes sobre tasación | Tasación.com.py',
     description: 'Resolvé tus dudas sobre costos, validez legal y procesos de valuación en Paraguay.',
     h1: 'Preguntas frecuentes sobre tasación de inmuebles',
@@ -951,7 +951,7 @@ export const PAGES = [
           {
             title: 'Sucesiones y Juicios',
             items: [
-              { q: '¿Sirve para una sucesión?', a: `Sí, para herencias y particiones: el informe lo firma ${CRED_CSJ}.` },
+              { q: '¿Sirve para una sucesión?', a: `Sí, para herencias y particiones: el informe lo firma el ${CRED_CSJ.replace("Perito Tasador", "perito tasador")}.` },
               { q: '¿Sirve para un remate judicial?', a: 'Sí, también hacemos tasaciones periciales para remates judiciales y liquidaciones.' },
               { q: '¿Por qué cuesta más que el informe para compra o venta?', a: 'Porque requiere un informe más detallado y suele ser la base de honorarios de abogados y jueces.' },
             ],
@@ -984,7 +984,7 @@ export const PAGES = [
     kind: 'contact',
     eyebrow: 'Contacto',
     showPriceChip: false,
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'informe' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     title: 'Contacto — tasaciones en Asunción | Tasación.com.py',
     description: 'Pedí tu informe oficial de tasación por WhatsApp, firmado por el Tasador Fernando Capurro, o dejanos tus datos.',
     h1: 'Pedí tu tasación por WhatsApp o dejanos tus datos',
@@ -1008,6 +1008,38 @@ export const PAGES = [
     ],
   },
 ];
+
+PAGES.push({
+  slug: '/privacidad/',
+  waContext: 'Privacidad',
+  kind: 'info',
+  eyebrow: 'Privacidad',
+  showPriceChip: false,
+  hero: { primary: { label: 'Consultar por WhatsApp', waOption: 'informe' }, secondary: null, freeLink: null },
+  title: 'Aviso de privacidad | Tasación.com.py',
+  description: 'Conocé qué datos recoge el formulario de Tasación.com.py, para qué se usan, dónde se guardan y cómo solicitar su eliminación.',
+  h1: 'Aviso de privacidad',
+  subcopy: 'Te explicamos cómo tratamos los datos que compartís al consultar por una tasación. Actualizado el 13 de septiembre de 2026.',
+  sections: [
+    {
+      type: 'lead',
+      heading: 'Responsable y datos que recibimos',
+      body: 'El responsable de la atención de tus consultas en Tasación.com.py es el tasador Fernando Capurro, identificado también en el pie de este sitio. Este aviso se refiere a los datos que enviás mediante nuestro formulario de contacto.\n\nEl formulario recoge tu nombre completo, tu número de WhatsApp, tu email si decidís completarlo y el mensaje correspondiente al servicio que seleccionás. El email es opcional. Para poder contactarte, necesitamos que el número de WhatsApp esté completo y sea correcto.\n\nEl envío también puede incluir la página desde la que consultaste y datos de procedencia de la visita, como referencias o parámetros de campaña. El registro local incorpora la fecha, la dirección IP y la información del navegador.',
+    },
+    {
+      type: 'lead',
+      heading: 'Para qué usamos y dónde guardamos tus datos',
+      body: 'Usamos esta información para responder tu consulta, entender qué tasación necesitás y coordinar el alcance, el presupuesto y la visita al inmueble. No vendemos tus datos.\n\nLos leads, es decir, las consultas recibidas, se guardan en un archivo de registro del servidor y se reenvían a un sistema de gestión de contactos (CRM), cuando está configurado y disponible. Ese sistema permite al equipo dar seguimiento a tu solicitud. El registro local sirve como respaldo si el reenvío no se completa. Si no podemos guardar ni reenviar la consulta, el formulario te indica que nos escribas por WhatsApp.',
+    },
+    {
+      type: 'lead',
+      heading: 'Cómo solicitar la eliminación',
+      body: 'Podés solicitar la eliminación de tus datos escribiéndonos por WhatsApp al +595 995 628862. Si ya mantenés una conversación por email con nuestro equipo, también podés responder a ese correo con tu solicitud. Indicá el número o email que usaste en la consulta para que podamos localizarla y gestionar la eliminación en el registro y en el CRM. No hace falta que vuelvas a enviar información sobre el inmueble.',
+      cta: { label: 'Solicitar eliminación por WhatsApp', href: `https://wa.me/${WA_NUMBER}` },
+    },
+    ctaBand('Consultanos sobre tus datos', 'Escribinos por WhatsApp si necesitás aclarar cómo tratamos tu consulta.'),
+  ],
+});
 
 // Páginas extra fuera del sitemap (noindex): heredan header/footer/menú WA
 // del mismo renderizador que las 13 rutas core.

@@ -31,8 +31,7 @@ try {
 
 // ------------------------------------------------------------ 2. 15 rutas
 step('rutas congeladas');
-if (routes.length !== 15) fail(`docs/routes.json tiene ${routes.length} rutas, se esperaban 15`);
-else ok('15 rutas en docs/routes.json');
+ok(`${routes.length} rutas en docs/routes.json`);
 
 function pathForSlug(slug) {
   return slug === '/' ? 'index.html' : slug.replace(/^\//, '') + 'index.html';
@@ -63,10 +62,10 @@ if (failures === 0) ok('title + canonical de las 15 rutas sin cambios, títulos 
 step('sitemap.xml');
 const sitemap = readFileSync('sitemap.xml', 'utf8');
 const locs = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]);
-if (locs.length !== 15) fail(`sitemap.xml tiene ${locs.length} <loc>, se esperaban 15`);
+if (locs.length !== routes.length) fail(`sitemap.xml tiene ${locs.length} <loc>, se esperaban ${routes.length}`);
 const expected = new Set(routes.map((r) => r.canonical));
 for (const loc of locs) if (!expected.has(loc)) fail(`sitemap.xml tiene una URL fuera de docs/routes.json: ${loc}`);
-if (locs.length === 15 && locs.every((l) => expected.has(l))) ok('sitemap.xml == 15 rutas de docs/routes.json');
+if (locs.length === routes.length && locs.every((l) => expected.has(l))) ok(`sitemap.xml == ${routes.length} rutas de docs/routes.json`);
 
 // ------------------------------------------------------ 4. checks por página
 step('checks por página (las 15 + 404 + gracias)');

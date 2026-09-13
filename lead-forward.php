@@ -10,7 +10,7 @@ declare(strict_types=1);
      VENDERCRM_API_KEY   clave del sitio (vc_live_…)
      VENDERCRM_URL       base del CRM, ej: https://crm.midominio.com
                          Todavía no hay dominio → queda vacío y el lead
-                         se guarda solo en leads.log. Nada se pierde.
+                         se intenta guardar solo en leads.log.
    ═══════════════════════════════════════════════════════════════════════ */
 
 // define(), no const: una constante declarada con `const` no admite una
@@ -33,8 +33,8 @@ function redirect_and_exit(string $to): void
    flag el lead se perdía (línea vacía en el log, cuerpo vacío al CRM). */
 const JSON_FLAGS = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE;
 
-/* Nunca se pierde un lead, pase lo que pase con el CRM. */
-function append_log(array $row): void
+/* El guardado local devuelve si se escribió la entrada completa. */
+function append_log(array $row): bool
 {
     $line = json_encode($row, JSON_FLAGS);
     if ($line === false) {
@@ -42,7 +42,8 @@ function append_log(array $row): void
         $line = '{"ts":"' . gmdate('c') . '","json_error":"' . addslashes(json_last_error_msg())
               . '","raw":"' . addslashes(print_r($row, true)) . '"}';
     }
-    @file_put_contents(LOG_FILE, $line . PHP_EOL, FILE_APPEND | LOCK_EX);
+    $entry = $line . PHP_EOL;
+    return @file_put_contents(LOG_FILE, $entry, FILE_APPEND | LOCK_EX) === strlen($entry);
 }
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
@@ -59,7 +60,7 @@ $phone = trim((string)($_POST['telefono'] ?? ''));
 // strlen, no mb_strlen: un teléfono es ASCII y así el handler no depende de
 // que mbstring esté habilitado en el hosting.
 if ($phone === '' || strlen($phone) < 6) {
-    redirect_and_exit('/?error=telefono#contacto');
+    redirect_and_exit('/contacto/?error=telefono');
 }
 
 $name    = trim((string)($_POST['nombre'] ?? ''));
@@ -103,7 +104,7 @@ $payload = [
 $payload = array_filter($payload, static fn($v) => $v !== null && $v !== '');
 
 /* 5. Fallback SIEMPRE, antes de tocar la red. */
-append_log([
+$logged = append_log([
     'ts'      => gmdate('c'),
     'ip'      => $_SERVER['REMOTE_ADDR'] ?? '',
     'ua'      => $_SERVER['HTTP_USER_AGENT'] ?? '',
@@ -111,6 +112,7 @@ append_log([
 ]);
 
 /* 6. Reenvío al CRM. Sin dominio configurado no se intenta. */
+$forwarded = false;
 $status   = 0;
 $response = '';
 $curlErr  = '';
@@ -128,18 +130,19 @@ if (VENDERCRM_URL !== '' && function_exists('curl_init')) {
         ],
         CURLOPT_POSTFIELDS => json_encode($payload, JSON_FLAGS),
     ]);
-    $response = (string)curl_exec($ch);
+    $response = curl_exec($ch);
     $status   = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $curlErr  = curl_error($ch);
     curl_close($ch);
 
-    if ($status !== 201 && $status !== 200) {
+    $forwarded = $response !== false && ($status === 201 || $status === 200);
+    if (!$forwarded) {
         error_log(sprintf('[tasacion] venderCRM lead falló [%d] %s %s', $status, $response, $curlErr));
         append_log(['ts' => gmdate('c'), 'crm_error' => ['status' => $status, 'body' => $response, 'curl' => $curlErr]]);
     }
 } else {
-    error_log('[tasacion] VENDERCRM_URL sin configurar — lead guardado solo en leads.log');
+    error_log('[tasacion] CRM no disponible; guardado local: ' . ($logged ? 'correcto' : 'fallido'));
 }
 
-/* 7. Nunca se bloquea al visitante: gracias en cualquier caso. */
-redirect_and_exit(THANK_YOU);
+/* 7. Confirmar solo si el log o el CRM aceptó el lead. */
+redirect_and_exit($logged || $forwarded ? THANK_YOU : '/contacto/?error=envio');

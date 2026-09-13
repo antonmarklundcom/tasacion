@@ -98,7 +98,7 @@ function renderFooter() {
     <div>
       <p class="ftr__brand">Tasación<span>.com.py</span></p>
       <p class="ftr__muted">Tasador responsable: Fernando Capurro · ${esc(CRED_CSJ)}</p>
-      <p class="ftr__muted">Informe oficial de tasación pago · Tasación para vender, costo cubierto por tu corredor</p>
+      <p class="ftr__muted">Informe oficial de tasación pago · Tasación para vender, costo cubierto por tu corredor con exclusividad</p>
     </div>
     <nav aria-label="Servicios">
       <p class="ftr__label">Tasaciones</p>
@@ -121,6 +121,7 @@ function renderFooter() {
         <li><a href="/nosotros/">Nosotros</a></li>
         <li><a href="/preguntas-frecuentes/">Preguntas Frecuentes</a></li>
         <li><a href="/contacto/">Contacto</a></li>
+        <li><a href="/privacidad/">Privacidad</a></li>
       </ul>
     </nav>
     <div>
@@ -130,7 +131,7 @@ function renderFooter() {
     </div>
   </div>
   <div class="container ftr__base">
-    <p>© <span id="yr"></span> Tasación.com.py — Asunción, Paraguay.</p>
+    <p>© <span id="yr">${new Date().getFullYear()}</span> Tasación.com.py — Asunción, Paraguay.</p>
   </div>
 </footer>`;
 }
@@ -217,7 +218,7 @@ function block(section, page) {
       const eyebrow = section.eyebrow || 'El informe oficial';
       const ctaLabel = section.ctaLabel || 'Pedir mi informe por WhatsApp';
       const waOption = section.waOption || 'informe';
-      const figureTxt = section.figure || PRECIO_TXT;
+      const figureTxt = (section.figure || PRECIO_TXT).replace(/^desde Gs\./, 'Desde Gs.');
       const note = section.note || 'según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
       return `<section class="price-panel" id="incluye">
   <div class="container">
@@ -303,7 +304,7 @@ function block(section, page) {
         <h3>${esc(t.title)}</h3>
         <p>${esc(t.corto)}</p>
         <div class="pricing-tiers__price">
-          <p class="pricing-tiers__figure">${esc(t.price)} <span>${esc(IVA_TXT)}</span></p>
+          <p class="pricing-tiers__figure">${esc(t.price.replace(/^desde Gs\./, 'Desde Gs.'))} <span>${esc(IVA_TXT)}</span></p>
           <p class="pricing-tiers__nota">${esc(t.nota)}</p>
         </div>
         <p class="pricing-tiers__meta"><strong>Firma:</strong><span>${esc(t.firma)}</span></p>
@@ -455,10 +456,11 @@ function block(section, page) {
       <input type="hidden" name="page_url" id="page_url">
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
       <label class="field">Nombre completo<input type="text" name="nombre" required></label>
-      <label class="field">Número de WhatsApp<input type="tel" name="telefono" required></label>
+      <label class="field">Número de WhatsApp<input type="tel" name="telefono" minlength="6" required></label>
       <label class="field">Email (opcional)<input type="email" name="email"></label>
       ${radios ? `<fieldset class="radios">\n          <legend>¿Qué necesitás?</legend>\n          ${radios}\n        </fieldset>` : ''}
       <button class="btn btn--primary" type="submit">Enviar mis datos</button>
+      <p>Conocé cómo usamos tus datos en el <a href="/privacidad/">aviso de privacidad</a>.</p>
     </form>
   </div>
 </section>`;
