@@ -6,7 +6,6 @@ export const WA_NUMBER = '595995628862';
 export const SITE = 'https://tasacion.com.py';
 
 export const TASADOR = 'Fernando Capurro';
-export const PRECIO = { min: 800000, max: 1500000 };
 export const fmtGs = (n) => 'Gs. ' + n.toLocaleString('es-PY').replace(/ /g, '.');
 const rango = (r) => (r.max ? `${fmtGs(r.min)} a ${fmtGs(r.max)}` : `desde ${fmtGs(r.min)}`);
 
@@ -16,7 +15,6 @@ const rango = (r) => (r.max ? `${fmtGs(r.min)} a ${fmtGs(r.max)}` : `desde ${fmt
 export const CRED_CSJ = 'Perito Tasador matriculado ante la Corte Suprema de Justicia, matrícula N.º 4.168';
 export const CRED_CSJ_CORTA = 'Perito Tasador CSJ · Mat. 4.168';
 export const CRED_ARQ = 'Arquitecto, matrícula profesional N.º 3.738';
-export const CRED_SELLO_CORTA = 'Fernando Capurro · CSJ Mat. 4.168 · Arq. Mat. 3.738';
 export const CRED_BCP_FIRMA = 'el informe lo firma un tasador inscripto en el registro del BCP';
 export const CRED_BCP_BANCOS = 'Trabajamos con todos los bancos y cooperativas: al gestionar tu carpeta coordinamos la firma que tu entidad requiere.';
 export const PLAZO_TXT = '3 a 5 días hábiles después de la visita';
@@ -489,7 +487,7 @@ export const PAGES = [
     hero: { primary: { label: 'Pedir mi tasación para crédito', waOption: 'credito' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: null },
     heroImage: { base: 'tasacion-hipotecaria-documentacion-paraguay', alt: 'Documentación de tasación hipotecaria sobre un escritorio junto a llaves de una vivienda' },
     title: 'Tasación hipotecaria en Paraguay | Tasación.com.py',
-    description: `Tasación para crédito hipotecario o fiduciario. Para crédito, ${CRED_BCP_FIRMA}. Visita y relevamiento a cargo del Tasador Fernando Capurro, ${CRED_CSJ}.`,
+    description: 'Tasación hipotecaria con el formato y la firma que exige tu banco o cooperativa. Coordiná tu informe para crédito en Paraguay por WhatsApp.',
     h1: 'Tasación para crédito hipotecario o fiduciario',
     subcopy: 'Tu banco o cooperativa te pide una tasación para aprobar la carpeta. Nosotros hacemos la visita y el relevamiento, y el informe sale con la firma que tu entidad exige.',
     sections: [
@@ -717,7 +715,7 @@ export const PAGES = [
     hero: { primary: { label: 'Quiero mi tasación para vender', waOption: 'valoracion' }, secondary: null, freeLink: { label: '¿Necesitás validez legal o bancaria? Pedí el informe oficial →', href: '/informes-periciales/' } },
     heroImage: { base: 'propiedad-lista-para-la-venta-asuncion', alt: 'Fachada de una casa en Asunción preparada para la venta' },
     title: 'Tasación para vender tu propiedad | Tasación.com.py',
-    description: `Hacemos la tasación de tu propiedad para definir el precio de venta (${PRECIO_TXT} ${IVA_TXT}). Si firmás exclusividad con uno de nuestros corredores asociados, ese costo se descuenta de la comisión al cerrar la venta.`,
+    description: 'Tasación para vender: el costo se descuenta de la comisión al cerrar con un corredor asociado y exclusividad. Definí tu precio con datos reales.',
     h1: 'Tasación para vender tu propiedad, con el costo cubierto por tu corredor con exclusividad',
     subcopy: 'No adivines el precio. Hacemos un análisis profesional de mercado y, si vendés con exclusividad con uno de nuestros corredores asociados, ese costo se descuenta de su comisión al cerrar la venta.',
     heroCta: 'Quiero mi tasación para vender',
@@ -997,6 +995,12 @@ export const PAGES = [
           { label: 'WhatsApp', value: '+595 995 628862', note: 'Respuesta inmediata en horario comercial.' },
           { label: 'Horario de Atención', value: 'Lunes a Viernes 08:00–18:00, Sábados 08:00–12:00' },
         ],
+      },
+      {
+        type: 'lead',
+        heading: 'Cómo preparar tu consulta',
+        body: "Atendemos Asunción, Gran Asunción y todo Paraguay. Si tu inmueble está en el interior, coordinamos el traslado por WhatsApp: contanos la localidad y cómo se llega para acordar la visita y confirmar el presupuesto antes de agendar.\n\nEn horario comercial, la respuesta por WhatsApp suele ser inmediata. Atendemos de lunes a viernes de 08:00 a 18:00 y los sábados de 08:00 a 12:00. Si escribís fuera de ese horario, dejanos tu consulta para retomarla al volver a la atención.\n\nTené a mano la dirección del inmueble y explicanos para qué necesitás la tasación: vender, comprar, solicitar un crédito o presentar un informe en un trámite judicial. Si contás con una escritura o un plano, avisános; ayudan a identificar la propiedad y sus superficies. También indicá si hay una fecha límite o requisitos del banco o del juzgado, así podemos revisar el alcance desde el primer mensaje.",
+        cta: { label: 'Consultá cómo tratamos tus datos en el aviso de privacidad.', href: '/privacidad/' },
       },
       {
         type: 'contactForm',

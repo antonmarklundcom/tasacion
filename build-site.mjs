@@ -12,6 +12,7 @@ import {
 // URL; sin un ?v= que cambie con el contenido, un deploy puede quedar detrás
 // del edge (visto en vivo el 2026-09-11). El hash se recalcula en cada build.
 const ASSET_V = {
+  fonts: createHash('sha1').update(readFileSync('assets/fonts/fonts.css')).digest('hex').slice(0, 8),
   css: createHash('sha1').update(readFileSync('assets/css/site.css')).digest('hex').slice(0, 8),
   js: createHash('sha1').update(readFileSync('assets/js/site.js')).digest('hex').slice(0, 8),
 };
@@ -610,7 +611,7 @@ function serviceJsonLd(page) {
     '@type': 'Service',
     serviceType: page.kind === 'primary-report' ? 'Informe pericial de tasación' : page.h1,
     provider: { '@type': 'ProfessionalService', name: 'Tasación.com.py' },
-    areaServed: ['Asunción', 'Gran Asunción'],
+    areaServed: ['Asunción', 'Gran Asunción', { '@type': 'Country', name: 'Paraguay' }],
   };
   // vertical-b2b (franja de dominio): precio por proyecto, sin rango publicado.
   if (page.kind === 'vertical' || page.kind === 'primary-report') {
@@ -633,7 +634,7 @@ function breadcrumbJsonLd(page) {
 }
 
 // -------------------------------------------------------------------- page
-function renderPage(page, opts = {}) {
+function renderPage(page) {
   const canonicalUrl = page.noindex ? `${SITE}/${page.slug}` : `${SITE}${page.slug}`;
   const body = page.sections.map((s) => block(s, page)).join('\n');
   const trust = !page.noindex ? renderTrustRow() : '';
@@ -658,10 +659,9 @@ ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F3D5C'/%3E%3Cpath d='M8 20.5h16M8 20.5 16 8l8 12.5' stroke='%23FAF9F7' stroke-width='2.1' fill='none' stroke-linejoin='round'/%3E%3Cpath d='M6 25h20' stroke='%23A98B57' stroke-width='2'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#0F3D5C">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap"></noscript>
+<link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/libre-baskerville-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/fonts/fonts.css?v=${ASSET_V.fonts}">
 <link rel="stylesheet" href="/assets/css/site.css?v=${ASSET_V.css}">
 ${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
 <body data-page-context="${attr(page.waContext)}">
@@ -673,7 +673,7 @@ ${body}
 </main>
 ${renderFooter()}
 ${renderWaMenu(page.waContext, page)}
-<script src="/assets/js/site.js?v=${ASSET_V.js}"></script>
+<script defer src="/assets/js/site.js?v=${ASSET_V.js}"></script>
 </body>
 </html>
 `;
@@ -690,3 +690,37 @@ for (const page of EXTRAS) {
   writeFileSync(page.slug, renderPage(page));
   console.log('wrote', page.slug);
 }
+
+// Sitemap generado desde PAGES; las páginas noindex quedan excluidas.
+const sitemapPriorities = {
+  "/": "1.0",
+  "/tasaciones/": "0.95",
+  "/tasaciones/casas/": "0.9",
+  "/tasaciones/departamentos/": "0.9",
+  "/tasaciones/terrenos/": "0.9",
+  "/tasaciones/corporativa/": "0.8",
+  "/tasaciones/hipotecaria/": "0.8",
+  "/tasaciones/locales-comerciales/": "0.8",
+  "/tasaciones/campos/": "0.8",
+  "/tasaciones/franja-de-dominio/": "0.7",
+  "/valuacion-para-vender/": "0.9",
+  "/informes-periciales/": "0.9",
+  "/nosotros/": "0.6",
+  "/preguntas-frecuentes/": "0.6",
+  "/contacto/": "0.6",
+  "/privacidad/": "0.3"
+};
+const buildDate = new Date().toISOString().slice(0, 10);
+const sitemapPages = PAGES.filter((page) => !page.noindex);
+const sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
+  '<!-- ' + sitemapPages.length + ' URLs. 404.html y gracias.html excluidas a propósito. -->',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  ...sitemapPages.map((page) => ['  <url>',
+    '    <loc>' + esc(SITE + page.slug) + '</loc>',
+    '    <lastmod>' + esc(page.lastmod ?? buildDate) + '</lastmod>',
+    '    <changefreq>monthly</changefreq>',
+    '    <priority>' + (sitemapPriorities[page.slug] ?? '0.6') + '</priority>',
+    '  </url>'].join('\n')),
+  '</urlset>', ''].join('\n');
+writeFileSync('sitemap.xml', sitemap);
+console.log('wrote sitemap.xml');
