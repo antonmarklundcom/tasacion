@@ -93,7 +93,7 @@ PNG originales borrados de la carpeta de deploy, como estaba pedido.
 | `VENDERCRM_API_KEY` | **No generada.** Falta crear el registro del sitio en venderCRM → *Sitios*, con el slug `tasacion`, y generar la clave. |
 | Mientras tanto | El handler **no se rompe**: guarda cada envío en `leads.log` y siempre manda al visitante a `/gracias.html`. No se pierde ningún lead. |
 | `source` | Fijo en `site:tasacion`. |
-| `vc-attribution.js` | **No incluido**, porque depende del dominio del CRM. El handler ya lee la cookie `vc_attr` si algún día aparece. Agregar `<script src="{CRM_URL}/vc-attribution.js" defer>` cuando exista el dominio. |
+| `vc-attribution.js` | **Cableado, falta el dominio.** `build-site.mjs` tiene la constante `CRM_URL` (vacía) junto a `WA_NUMBER`; si se completa y se corre `node build-site.mjs`, el `<script src="{CRM_URL}/vc-attribution.js" defer>` aparece en las 17 páginas sin tocar markup. El handler ya lee la cookie `vc_attr` si algún día aparece. |
 | Verificación de ida y vuelta | **Pendiente**: no se puede probar contacto + deal en el CRM hasta que haya URL y clave. Lo que sí está probado localmente: honeypot, teléfono obligatorio, redirección 303, log de fallback y clave de idempotencia estable. |
 
 ## 7. Analítica

@@ -7,6 +7,13 @@ import {
   CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS,
 } from './content.mjs';
 
+// venderCRM — dominio del CRM, para el snippet de atribución de primer toque
+// (vc-attribution.js) en cada página. Vacío hasta que exista el sitio en
+// venderCRM (ver docs/DEPLOY.md §3 / PLACEHOLDERS.md). Debe coincidir con
+// VENDERCRM_URL en el entorno de lead-forward.php. Poner el valor acá y
+// regenerar (`node build-site.mjs`) cuando el dominio exista.
+const CRM_URL = '';
+
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
 const waHref = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
@@ -632,7 +639,7 @@ ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/css/site.css">
-${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
+${CRM_URL ? `<script src="${CRM_URL}/vc-attribution.js" defer></script>\n` : ''}${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
 <body data-page-context="${attr(page.waContext)}">
 ${renderNav(page.slug, page.waContext)}
 <main>

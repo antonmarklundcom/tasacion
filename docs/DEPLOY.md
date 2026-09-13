@@ -39,6 +39,10 @@ En hPanel → Node/PHP → Environment (o un include fuera de `public_html/`):
   (ver `lead-forward.php`).
 - El ID de analítica (`ANALYTICS_ID`) no es una env var: es la línea
   `var ANALYTICS_ID = '';` en `build-site.mjs` — ponerla ahí y regenerar (§9.3 de `plan.md`).
+- El snippet de atribución (`vc-attribution.js`) tampoco es una env var: es la constante
+  `CRM_URL = ''` en `build-site.mjs`, junto a `WA_NUMBER`. Debe tener el mismo valor que
+  `VENDERCRM_URL`. Ponerla y correr `node build-site.mjs` para que el `<script>` aparezca
+  en las 17 páginas.
 
 ## 4. Verificar después de subir
 
