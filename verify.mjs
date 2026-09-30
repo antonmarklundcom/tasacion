@@ -279,6 +279,14 @@ try {
   fail('tools/check-contact.mjs falló');
 }
 
+// ------------------------------------------------- links internos / redirects
+step('tools/link-check.mjs');
+try {
+  execSync('node tools/link-check.mjs', { stdio: 'inherit' });
+} catch {
+  fail('tools/link-check.mjs falló');
+}
+
 // --------------------------------------------------------------- resultado
 console.log('');
 if (failures > 0) {
