@@ -47,3 +47,14 @@ RedirectMatch 301 ^/servicios/tasacion-online/?$ /valuacion-para-vender/
 RedirectMatch 301 ^/zonas/.*$ /
 RedirectMatch 301 ^/cotizador/?$ /contacto/
 RedirectMatch 301 ^/guias/.*$ /preguntas-frecuentes/
+
+# Hardening post-audit 2026-09-11: el CDN de Hostinger cacheó un site.css
+# viejo durante días por URL (7d de default) mientras el HTML ya era v3.
+# build-site.mjs ahora versiona /assets/css/site.css y /assets/js/site.js
+# con ?v=<hash-del-contenido>, así que un max-age corto acá solo acota el
+# daño en el caso raro de que un deploy quede sin el ?v= actualizado.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=300, must-revalidate"
+  </FilesMatch>
+</IfModule>

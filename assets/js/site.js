@@ -32,6 +32,25 @@
     a.href = 'tel:+' + n;
   });
 
+  var contactForm = document.querySelector('form[action="/lead-forward.php"]');
+  if (/^\/contacto(?:\/|\/index\.html)?$/.test(location.pathname) && contactForm) {
+    var error = new URLSearchParams(location.search).get('error');
+    if (error === 'telefono' || error === 'envio') {
+      var alert = document.createElement('p');
+      alert.setAttribute('role', 'alert');
+      alert.textContent = error === 'telefono'
+        ? 'El número es demasiado corto. Ingresá tu número completo de WhatsApp, con al menos 6 caracteres.'
+        : 'No pudimos enviar tus datos. Escribinos por WhatsApp para coordinar tu tasación: ';
+      if (error === 'envio') {
+        var link = document.createElement('a');
+        link.href = 'https://wa.me/' + n;
+        link.textContent = 'Escribinos por WhatsApp';
+        alert.appendChild(link);
+      }
+      contactForm.before(alert);
+    }
+  }
+
   var pu = document.getElementById('page_url');
   if (pu) pu.value = location.href;
 

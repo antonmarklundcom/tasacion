@@ -1,11 +1,30 @@
 // build-site.mjs — genera las 13 páginas + 404.html + gracias.html desde
 // content.mjs. node build-site.mjs
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { createHash } from 'node:crypto';
 import {
   PAGES, EXTRAS, NAV, WA_NUMBER, SITE, TASADOR, PRECIO_TXT, WA_MENU,
-  CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS,
+  CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS, FINALIDADES,
 } from './content.mjs';
+
+// Cache-busting: el CDN de Hostinger cachea site.css/site.js hasta 7 días por
+// URL; sin un ?v= que cambie con el contenido, un deploy puede quedar detrás
+// del edge (visto en vivo el 2026-09-11). El hash se recalcula en cada build.
+// Se quita \r antes de hashear: un checkout Windows (CRLF) y uno Linux (LF)
+// tienen que dar el mismo ?v=, si no verify.mjs falla en CI.
+const assetHash = (f) => createHash('sha1').update(readFileSync(f, 'utf8').replace(/\r/g, '')).digest('hex').slice(0, 8);
+const ASSET_V = {
+  fonts: assetHash('assets/fonts/fonts.css'),
+  css: assetHash('assets/css/site.css'),
+  js: assetHash('assets/js/site.js'),
+};
+
+// <lastmod> del sitemap: fecha fija, nunca la del día del build (si no, el
+// HTML/sitemap commiteado deja de coincidir con el rebuild al día siguiente).
+// Subirla a mano cuando cambia el contenido; una página puede fijar su propio
+// `lastmod` en content.mjs.
+const SITE_LASTMOD = '2026-09-13';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
@@ -89,7 +108,7 @@ function renderFooter() {
     <div>
       <p class="ftr__brand">Tasación<span>.com.py</span></p>
       <p class="ftr__muted">Tasador responsable: Fernando Capurro · ${esc(CRED_CSJ)}</p>
-      <p class="ftr__muted">Informe oficial de tasación pago · Tasación para vender, costo cubierto por tu corredor</p>
+      <p class="ftr__muted">Informe oficial de tasación pago · Tasación para vender, costo cubierto por tu corredor con exclusividad</p>
     </div>
     <nav aria-label="Servicios">
       <p class="ftr__label">Tasaciones</p>
@@ -112,6 +131,7 @@ function renderFooter() {
         <li><a href="/nosotros/">Nosotros</a></li>
         <li><a href="/preguntas-frecuentes/">Preguntas Frecuentes</a></li>
         <li><a href="/contacto/">Contacto</a></li>
+        <li><a href="/privacidad/">Privacidad</a></li>
       </ul>
     </nav>
     <div>
@@ -121,7 +141,7 @@ function renderFooter() {
     </div>
   </div>
   <div class="container ftr__base">
-    <p>© <span id="yr"></span> Tasación.com.py — Asunción, Paraguay.</p>
+    <p>© <span id="yr">${SITE_LASTMOD.slice(0, 4)}</span> Tasación.com.py — Asunción, Paraguay.</p>
   </div>
 </footer>`;
 }
@@ -129,7 +149,7 @@ function renderFooter() {
 // ------------------------------------------------------------------ wa menu
 function renderWaMenu(ctx, page) {
   const defaultOption = (page && page.hero && page.hero.primary && page.hero.primary.waOption) || 'informe';
-  const options = WA_MENU.options.map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waHref(waOptionText(o.id, ctx, page))}" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
+  const options = WA_MENU.options.map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waHref(waOptionText(o.id, ctx, page))}" target="_blank" rel="noopener" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
           <span class="wa-menu__opt-title">${esc(o.label)}</span>
           <span class="wa-menu__opt-sub">${esc(o.sub)}</span>
         </a></li>`).join('\n        ');
@@ -208,7 +228,7 @@ function block(section, page) {
       const eyebrow = section.eyebrow || 'El informe oficial';
       const ctaLabel = section.ctaLabel || 'Pedir mi informe por WhatsApp';
       const waOption = section.waOption || 'informe';
-      const figureTxt = section.figure || PRECIO_TXT;
+      const figureTxt = (section.figure || PRECIO_TXT).replace(/^desde Gs\./, 'Desde Gs.');
       const note = section.note || 'según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
       return `<section class="price-panel" id="incluye">
   <div class="container">
@@ -294,7 +314,7 @@ function block(section, page) {
         <h3>${esc(t.title)}</h3>
         <p>${esc(t.corto)}</p>
         <div class="pricing-tiers__price">
-          <p class="pricing-tiers__figure">${esc(t.price)} <span>${esc(IVA_TXT)}</span></p>
+          <p class="pricing-tiers__figure">${esc(t.price.replace(/^desde Gs\./, 'Desde Gs.'))} <span>${esc(IVA_TXT)}</span></p>
           <p class="pricing-tiers__nota">${esc(t.nota)}</p>
         </div>
         <p class="pricing-tiers__meta"><strong>Firma:</strong><span>${esc(t.firma)}</span></p>
@@ -446,10 +466,11 @@ function block(section, page) {
       <input type="hidden" name="page_url" id="page_url">
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
       <label class="field">Nombre completo<input type="text" name="nombre" required></label>
-      <label class="field">Número de WhatsApp<input type="tel" name="telefono" required></label>
+      <label class="field">Número de WhatsApp<input type="tel" name="telefono" minlength="6" required></label>
       <label class="field">Email (opcional)<input type="email" name="email"></label>
       ${radios ? `<fieldset class="radios">\n          <legend>¿Qué necesitás?</legend>\n          ${radios}\n        </fieldset>` : ''}
       <button class="btn btn--primary" type="submit">Enviar mis datos</button>
+      <p>Conocé cómo usamos tus datos en el <a href="/privacidad/">aviso de privacidad</a>.</p>
     </form>
   </div>
 </section>`;
@@ -572,18 +593,38 @@ function professionalServiceJsonLd() {
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
 }
 
+// Offer por finalidad, siempre desde PRECIOS (única fuente) — nunca cifras
+// tipeadas a mano en el JSON-LD, para que no pueda desalinearse del precio
+// visible en la página (audit 2026-09-11 §2.2: hipotecaria mostraba el rango
+// de compraventa en el rich result mientras la página publica "desde 1.500.000").
+function offerFor(finalidadId) {
+  const f = FINALIDADES.find((x) => x.id === finalidadId);
+  const precio = f ? f.precio : PRECIOS[finalidadId];
+  const spec = { '@type': 'PriceSpecification', minPrice: precio.min, priceCurrency: 'PYG' };
+  if (precio.max != null) spec.maxPrice = precio.max;
+  return { '@type': 'Offer', name: f ? f.label : finalidadId, priceCurrency: 'PYG', priceSpecification: spec };
+}
+
+// Qué finalidades emitir por página: hipotecaria es predominantemente crédito
+// (sin maxPrice); el resto de las verticales + el hub de informes muestran las
+// tres finalidades en su priceBlock, así que emiten las tres Offers.
+function offersFor(page) {
+  if (page.slug === '/tasaciones/hipotecaria/') return [offerFor('credito')];
+  return [offerFor('compraventa'), offerFor('judicial'), offerFor('credito')];
+}
+
 function serviceJsonLd(page) {
-  if (page.kind !== 'vertical' && page.kind !== 'vertical-b2b') return '';
+  if (page.kind !== 'vertical' && page.kind !== 'vertical-b2b' && page.kind !== 'primary-report') return '';
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    serviceType: page.h1,
+    serviceType: page.kind === 'primary-report' ? 'Informe pericial de tasación' : page.h1,
     provider: { '@type': 'ProfessionalService', name: 'Tasación.com.py' },
-    areaServed: ['Asunción', 'Gran Asunción'],
+    areaServed: ['Asunción', 'Gran Asunción', { '@type': 'Country', name: 'Paraguay' }],
   };
   // vertical-b2b (franja de dominio): precio por proyecto, sin rango publicado.
-  if (page.kind === 'vertical') {
-    data.offers = [{ '@type': 'Offer', priceCurrency: 'PYG', priceSpecification: { '@type': 'PriceSpecification', minPrice: PRECIOS.compraventa.min, maxPrice: PRECIOS.compraventa.max, priceCurrency: 'PYG' } }];
+  if (page.kind === 'vertical' || page.kind === 'primary-report') {
+    data.offers = offersFor(page);
   }
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
 }
@@ -602,7 +643,7 @@ function breadcrumbJsonLd(page) {
 }
 
 // -------------------------------------------------------------------- page
-function renderPage(page, opts = {}) {
+function renderPage(page) {
   const canonicalUrl = page.noindex ? `${SITE}/${page.slug}` : `${SITE}${page.slug}`;
   const body = page.sections.map((s) => block(s, page)).join('\n');
   const trust = !page.noindex ? renderTrustRow() : '';
@@ -610,6 +651,7 @@ function renderPage(page, opts = {}) {
 <html lang="es-PY">
 <head>
 <meta charset="utf-8">
+<script src="https://crm.clientes.com.py/vc-attribution.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>var WA_NUMBER = '${WA_NUMBER}';</script>
 <script>var ANALYTICS_ID = '';</script>
@@ -627,11 +669,10 @@ ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F3D5C'/%3E%3Cpath d='M8 20.5h16M8 20.5 16 8l8 12.5' stroke='%23FAF9F7' stroke-width='2.1' fill='none' stroke-linejoin='round'/%3E%3Cpath d='M6 25h20' stroke='%23A98B57' stroke-width='2'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#0F3D5C">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@700&display=swap"></noscript>
-<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/libre-baskerville-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/fonts/fonts.css?v=${ASSET_V.fonts}">
+<link rel="stylesheet" href="/assets/css/site.css?v=${ASSET_V.css}">
 ${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
 <body data-page-context="${attr(page.waContext)}">
 ${renderNav(page.slug, page.waContext)}
@@ -642,7 +683,7 @@ ${body}
 </main>
 ${renderFooter()}
 ${renderWaMenu(page.waContext, page)}
-<script src="/assets/js/site.js"></script>
+<script defer src="/assets/js/site.js?v=${ASSET_V.js}"></script>
 </body>
 </html>
 `;
@@ -659,3 +700,36 @@ for (const page of EXTRAS) {
   writeFileSync(page.slug, renderPage(page));
   console.log('wrote', page.slug);
 }
+
+// Sitemap generado desde PAGES; las páginas noindex quedan excluidas.
+const sitemapPriorities = {
+  "/": "1.0",
+  "/tasaciones/": "0.95",
+  "/tasaciones/casas/": "0.9",
+  "/tasaciones/departamentos/": "0.9",
+  "/tasaciones/terrenos/": "0.9",
+  "/tasaciones/corporativa/": "0.8",
+  "/tasaciones/hipotecaria/": "0.8",
+  "/tasaciones/locales-comerciales/": "0.8",
+  "/tasaciones/campos/": "0.8",
+  "/tasaciones/franja-de-dominio/": "0.7",
+  "/valuacion-para-vender/": "0.9",
+  "/informes-periciales/": "0.9",
+  "/nosotros/": "0.6",
+  "/preguntas-frecuentes/": "0.6",
+  "/contacto/": "0.6",
+  "/privacidad/": "0.3"
+};
+const sitemapPages = PAGES.filter((page) => !page.noindex);
+const sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
+  '<!-- ' + sitemapPages.length + ' URLs. 404.html y gracias.html excluidas a propósito. -->',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  ...sitemapPages.map((page) => ['  <url>',
+    '    <loc>' + esc(SITE + page.slug) + '</loc>',
+    '    <lastmod>' + esc(page.lastmod ?? SITE_LASTMOD) + '</lastmod>',
+    '    <changefreq>monthly</changefreq>',
+    '    <priority>' + (sitemapPriorities[page.slug] ?? '0.6') + '</priority>',
+    '  </url>'].join('\n')),
+  '</urlset>', ''].join('\n');
+writeFileSync('sitemap.xml', sitemap);
+console.log('wrote sitemap.xml');

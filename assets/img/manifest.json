@@ -1,0 +1,270 @@
+{
+  "generated_at": "2026-09-05T12:40:21.504Z",
+  "images": [
+    {
+      "filename_base": "tasacion-de-departamentos-asuncion",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_349VrHjTFIpx9q71lpfpAXcLXvR/hf_20260905_123555_5ac41644-91ce-4ace-96e8-43f91ae200d2.png",
+      "prompt": "apartment building Asuncion",
+      "alt_text": "Edificio de departamentos residencial en un barrio de Asunción",
+      "naming_source": "fallback",
+      "aspect_ratio": "4:3",
+      "files": [
+        {
+          "file": "tasacion-de-departamentos-asuncion-640.avif",
+          "format": "avif",
+          "width": 640,
+          "height": 480,
+          "kb": 22.9
+        },
+        {
+          "file": "tasacion-de-departamentos-asuncion-640.webp",
+          "format": "webp",
+          "width": 640,
+          "height": 480,
+          "kb": 30.9
+        },
+        {
+          "file": "tasacion-de-departamentos-asuncion-1280.avif",
+          "format": "avif",
+          "width": 1280,
+          "height": 960,
+          "kb": 65.4
+        },
+        {
+          "file": "tasacion-de-departamentos-asuncion-1280.webp",
+          "format": "webp",
+          "width": 1280,
+          "height": 960,
+          "kb": 97.5
+        },
+        {
+          "file": "tasacion-de-departamentos-asuncion-1920.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1440,
+          "kb": 113.9
+        },
+        {
+          "file": "tasacion-de-departamentos-asuncion-1920.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1440,
+          "kb": 184.7
+        }
+      ],
+      "html_snippet": "<picture>\n  <source type=\"image/avif\" srcset=\"assets/img/tasacion-de-departamentos-asuncion-640.avif 640w, assets/img/tasacion-de-departamentos-asuncion-1280.avif 1280w, assets/img/tasacion-de-departamentos-asuncion-1920.avif 1920w\">\n  <source type=\"image/webp\" srcset=\"assets/img/tasacion-de-departamentos-asuncion-640.webp 640w, assets/img/tasacion-de-departamentos-asuncion-1280.webp 1280w, assets/img/tasacion-de-departamentos-asuncion-1920.webp 1920w\">\n  <img src=\"assets/img/tasacion-de-departamentos-asuncion-1280.webp\" alt=\"Edificio de departamentos residencial en un barrio de Asunción\" width=\"1280\" height=\"960\" loading=\"lazy\" decoding=\"async\">\n</picture>"
+    },
+    {
+      "filename_base": "tasacion-corporativa-oficinas-asuncion",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_349VrHjTFIpx9q71lpfpAXcLXvR/hf_20260905_123558_803159e7-6a71-4d10-a03c-594481fca66c.png",
+      "prompt": "corporate office building Asuncion",
+      "alt_text": "Edificio de oficinas corporativo en Asunción listo para tasar",
+      "naming_source": "fallback",
+      "aspect_ratio": "4:3",
+      "files": [
+        {
+          "file": "tasacion-corporativa-oficinas-asuncion-640.avif",
+          "format": "avif",
+          "width": 640,
+          "height": 480,
+          "kb": 15.6
+        },
+        {
+          "file": "tasacion-corporativa-oficinas-asuncion-640.webp",
+          "format": "webp",
+          "width": 640,
+          "height": 480,
+          "kb": 25.2
+        },
+        {
+          "file": "tasacion-corporativa-oficinas-asuncion-1280.avif",
+          "format": "avif",
+          "width": 1280,
+          "height": 960,
+          "kb": 60.3
+        },
+        {
+          "file": "tasacion-corporativa-oficinas-asuncion-1280.webp",
+          "format": "webp",
+          "width": 1280,
+          "height": 960,
+          "kb": 94.8
+        },
+        {
+          "file": "tasacion-corporativa-oficinas-asuncion-1920.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1440,
+          "kb": 126.9
+        },
+        {
+          "file": "tasacion-corporativa-oficinas-asuncion-1920.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1440,
+          "kb": 204.4
+        }
+      ],
+      "html_snippet": "<picture>\n  <source type=\"image/avif\" srcset=\"assets/img/tasacion-corporativa-oficinas-asuncion-640.avif 640w, assets/img/tasacion-corporativa-oficinas-asuncion-1280.avif 1280w, assets/img/tasacion-corporativa-oficinas-asuncion-1920.avif 1920w\">\n  <source type=\"image/webp\" srcset=\"assets/img/tasacion-corporativa-oficinas-asuncion-640.webp 640w, assets/img/tasacion-corporativa-oficinas-asuncion-1280.webp 1280w, assets/img/tasacion-corporativa-oficinas-asuncion-1920.webp 1920w\">\n  <img src=\"assets/img/tasacion-corporativa-oficinas-asuncion-1280.webp\" alt=\"Edificio de oficinas corporativo en Asunción listo para tasar\" width=\"1280\" height=\"960\" loading=\"lazy\" decoding=\"async\">\n</picture>"
+    },
+    {
+      "filename_base": "oficina-de-tasaciones-asuncion",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_349VrHjTFIpx9q71lpfpAXcLXvR/hf_20260905_123602_313d1a66-a5f8-4d68-8a56-87a0cdcb9d60.png",
+      "prompt": "appraisal office desk",
+      "alt_text": "Escritorio de trabajo con planos y documentación de tasación en una oficina de Asunción",
+      "naming_source": "fallback",
+      "aspect_ratio": "4:3",
+      "files": [
+        {
+          "file": "oficina-de-tasaciones-asuncion-640.avif",
+          "format": "avif",
+          "width": 640,
+          "height": 480,
+          "kb": 9.6
+        },
+        {
+          "file": "oficina-de-tasaciones-asuncion-640.webp",
+          "format": "webp",
+          "width": 640,
+          "height": 480,
+          "kb": 16.4
+        },
+        {
+          "file": "oficina-de-tasaciones-asuncion-1280.avif",
+          "format": "avif",
+          "width": 1280,
+          "height": 960,
+          "kb": 19.2
+        },
+        {
+          "file": "oficina-de-tasaciones-asuncion-1280.webp",
+          "format": "webp",
+          "width": 1280,
+          "height": 960,
+          "kb": 39.7
+        },
+        {
+          "file": "oficina-de-tasaciones-asuncion-1920.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1440,
+          "kb": 29.2
+        },
+        {
+          "file": "oficina-de-tasaciones-asuncion-1920.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1440,
+          "kb": 66.4
+        }
+      ],
+      "html_snippet": "<picture>\n  <source type=\"image/avif\" srcset=\"assets/img/oficina-de-tasaciones-asuncion-640.avif 640w, assets/img/oficina-de-tasaciones-asuncion-1280.avif 1280w, assets/img/oficina-de-tasaciones-asuncion-1920.avif 1920w\">\n  <source type=\"image/webp\" srcset=\"assets/img/oficina-de-tasaciones-asuncion-640.webp 640w, assets/img/oficina-de-tasaciones-asuncion-1280.webp 1280w, assets/img/oficina-de-tasaciones-asuncion-1920.webp 1920w\">\n  <img src=\"assets/img/oficina-de-tasaciones-asuncion-1280.webp\" alt=\"Escritorio de trabajo con planos y documentación de tasación en una oficina de Asunción\" width=\"1280\" height=\"960\" loading=\"lazy\" decoding=\"async\">\n</picture>"
+    },
+    {
+      "filename_base": "tasacion-hipotecaria-documentacion-paraguay",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_349VrHjTFIpx9q71lpfpAXcLXvR/hf_20260905_123605_4772e946-f5d1-4b7d-9450-bcbdf63ffe5f.png",
+      "prompt": "mortgage appraisal documents keys",
+      "alt_text": "Documentación de tasación hipotecaria sobre un escritorio junto a llaves de una vivienda",
+      "naming_source": "fallback",
+      "aspect_ratio": "4:3",
+      "files": [
+        {
+          "file": "tasacion-hipotecaria-documentacion-paraguay-640.avif",
+          "format": "avif",
+          "width": 640,
+          "height": 480,
+          "kb": 5.7
+        },
+        {
+          "file": "tasacion-hipotecaria-documentacion-paraguay-640.webp",
+          "format": "webp",
+          "width": 640,
+          "height": 480,
+          "kb": 9.9
+        },
+        {
+          "file": "tasacion-hipotecaria-documentacion-paraguay-1280.avif",
+          "format": "avif",
+          "width": 1280,
+          "height": 960,
+          "kb": 12.3
+        },
+        {
+          "file": "tasacion-hipotecaria-documentacion-paraguay-1280.webp",
+          "format": "webp",
+          "width": 1280,
+          "height": 960,
+          "kb": 24.5
+        },
+        {
+          "file": "tasacion-hipotecaria-documentacion-paraguay-1920.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1440,
+          "kb": 19.6
+        },
+        {
+          "file": "tasacion-hipotecaria-documentacion-paraguay-1920.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1440,
+          "kb": 43.4
+        }
+      ],
+      "html_snippet": "<picture>\n  <source type=\"image/avif\" srcset=\"assets/img/tasacion-hipotecaria-documentacion-paraguay-640.avif 640w, assets/img/tasacion-hipotecaria-documentacion-paraguay-1280.avif 1280w, assets/img/tasacion-hipotecaria-documentacion-paraguay-1920.avif 1920w\">\n  <source type=\"image/webp\" srcset=\"assets/img/tasacion-hipotecaria-documentacion-paraguay-640.webp 640w, assets/img/tasacion-hipotecaria-documentacion-paraguay-1280.webp 1280w, assets/img/tasacion-hipotecaria-documentacion-paraguay-1920.webp 1920w\">\n  <img src=\"assets/img/tasacion-hipotecaria-documentacion-paraguay-1280.webp\" alt=\"Documentación de tasación hipotecaria sobre un escritorio junto a llaves de una vivienda\" width=\"1280\" height=\"960\" loading=\"lazy\" decoding=\"async\">\n</picture>"
+    },
+    {
+      "filename_base": "propiedad-lista-para-la-venta-asuncion",
+      "source": "https://d8j0ntlcm91z4.cloudfront.net/user_349VrHjTFIpx9q71lpfpAXcLXvR/hf_20260905_123609_ea0f209e-50e5-4f71-b0a7-0f1515e09395.png",
+      "prompt": "house facade for sale Asuncion",
+      "alt_text": "Fachada de una casa en Asunción preparada para la venta",
+      "naming_source": "fallback",
+      "aspect_ratio": "4:3",
+      "files": [
+        {
+          "file": "propiedad-lista-para-la-venta-asuncion-640.avif",
+          "format": "avif",
+          "width": 640,
+          "height": 480,
+          "kb": 22.8
+        },
+        {
+          "file": "propiedad-lista-para-la-venta-asuncion-640.webp",
+          "format": "webp",
+          "width": 640,
+          "height": 480,
+          "kb": 31.5
+        },
+        {
+          "file": "propiedad-lista-para-la-venta-asuncion-1280.avif",
+          "format": "avif",
+          "width": 1280,
+          "height": 960,
+          "kb": 78.9
+        },
+        {
+          "file": "propiedad-lista-para-la-venta-asuncion-1280.webp",
+          "format": "webp",
+          "width": 1280,
+          "height": 960,
+          "kb": 114.2
+        },
+        {
+          "file": "propiedad-lista-para-la-venta-asuncion-1920.avif",
+          "format": "avif",
+          "width": 1920,
+          "height": 1440,
+          "kb": 163.3
+        },
+        {
+          "file": "propiedad-lista-para-la-venta-asuncion-1920.webp",
+          "format": "webp",
+          "width": 1920,
+          "height": 1440,
+          "kb": 251.2
+        }
+      ],
+      "html_snippet": "<picture>\n  <source type=\"image/avif\" srcset=\"assets/img/propiedad-lista-para-la-venta-asuncion-640.avif 640w, assets/img/propiedad-lista-para-la-venta-asuncion-1280.avif 1280w, assets/img/propiedad-lista-para-la-venta-asuncion-1920.avif 1920w\">\n  <source type=\"image/webp\" srcset=\"assets/img/propiedad-lista-para-la-venta-asuncion-640.webp 640w, assets/img/propiedad-lista-para-la-venta-asuncion-1280.webp 1280w, assets/img/propiedad-lista-para-la-venta-asuncion-1920.webp 1920w\">\n  <img src=\"assets/img/propiedad-lista-para-la-venta-asuncion-1280.webp\" alt=\"Fachada de una casa en Asunción preparada para la venta\" width=\"1280\" height=\"960\" loading=\"lazy\" decoding=\"async\">\n</picture>"
+    }
+  ]
+}

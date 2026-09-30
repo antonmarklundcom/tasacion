@@ -60,52 +60,6 @@ if (await exists('new-img/n8.png')) {
   console.log('skip  og-tasacion-com-py.jpg  (falta new-img/n8.png)');
 }
 
-// ---- cableado de las tres paginas de zona (PLACEHOLDERS §10.10) ----------
-// Hasta que existan los motivos propios de cada zona, esas tres paginas
-// reutilizan imagenes genericas de terrenos/casas/locales. Cuando el job de
-// arriba genero el asset de la zona, este paso reapunta el `<picture>` y
-// corrige el `alt` para que describa lo que realmente se ve. Es idempotente:
-// si ya esta cableado no encuentra nada que reemplazar.
-const WIRING = [
-  {
-    page: 'zonas/luque/index.html',
-    from: 'tasador-de-terrenos-gran-asuncion',
-    to:   'tasacion-de-inmuebles-luque',
-    altFrom: 'Terreno en un loteamiento del Gran Asunción, con la calle sin asfaltar al frente',
-    altTo:   'Terreno sin construir en un loteamiento de Luque, con la calle de tierra al frente',
-  },
-  {
-    page: 'zonas/san-lorenzo/index.html',
-    from: 'tasacion-casas-departamentos-asuncion',
-    to:   'tasacion-de-inmuebles-san-lorenzo',
-    altFrom: 'Vivienda familiar en una calle residencial de San Lorenzo',
-    altTo:   'Casas familiares de una planta en una calle residencial de San Lorenzo',
-  },
-  {
-    page: 'zonas/fernando-de-la-mora/index.html',
-    from: 'tasacion-locales-comerciales-asuncion',
-    to:   'tasacion-de-inmuebles-fernando-de-la-mora',
-    altFrom: 'Local comercial sobre una avenida de Fernando de la Mora',
-    altTo:   'Local comercial en planta baja sobre una avenida de Fernando de la Mora',
-  },
-];
-
-for (const w of WIRING) {
-  const ready = (await Promise.all(
-    WIDTHS.flatMap((px) => [`${w.to}-${px}.avif`, `${w.to}-${px}.webp`])
-      .map((f) => exists(path.join(OUT, f)))
-  )).every(Boolean);
-  if (!ready) { console.log(`wire  ${w.page}  pendiente (falta ${w.to})`); continue; }
-
-  const html = await readFile(w.page, 'utf8');
-  const next = html
-    .replaceAll(`/assets/img/${w.from}-`, `/assets/img/${w.to}-`)
-    .replace(w.altFrom, w.altTo);
-  if (next === html) { console.log(`wire  ${w.page}  ya cableado`); continue; }
-  await writeFile(w.page, next);
-  console.log(`wire  ${w.page}  -> ${w.to}`);
-}
-
 const files = (await readdir(OUT)).sort();
 let total = 0;
 for (const f of files) {

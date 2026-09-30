@@ -75,6 +75,11 @@
       "slug": "/contacto/",
       "title": "Contacto — tasaciones en Asunción | Tasación.com.py",
       "canonical": "https://tasacion.com.py/contacto/"
+    },
+    {
+      "slug": "/privacidad/",
+      "title": "Aviso de privacidad | Tasación.com.py",
+      "canonical": "https://tasacion.com.py/privacidad/"
     }
   ]
 }
