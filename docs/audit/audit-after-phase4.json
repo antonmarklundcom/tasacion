@@ -1,0 +1,3724 @@
+{
+  "generated": "2026-09-30T15:02:49.995Z",
+  "source": "http://127.0.0.1:4322",
+  "summary": {
+    "pages": 18,
+    "sitemapUrls": 16,
+    "brokenInternal": [],
+    "waNumbers": [
+      "595992279599"
+    ],
+    "telLinks": [
+      "tel:+595992279599"
+    ],
+    "waLinksTotal": 242,
+    "waLinksEmptyText": 0,
+    "waDistinctTexts": 127
+  },
+  "pages": [
+    {
+      "url": "https://tasacion.com.py/",
+      "path": "/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 96,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-de-inmuebles-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 27885,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación de inmuebles en Asunción | Tasación.com.py",
+      "titleLen": 51,
+      "metaDescription": "Informe oficial de tasación firmado por el Tasador Fernando Capurro, con validez legal y bancaria, para crédito, sucesión o venta. Precio anclado por finalidad, antes de la visita.",
+      "metaDescriptionLen": 180,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/",
+      "h1": [
+        "Tasación con validez legal y bancaria, para tu crédito, tu sucesión o tu venta"
+      ],
+      "h2": [
+        "¿Para qué necesitás la tasación?",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Especialistas en cada tipo de inmueble",
+        "Tasador Fernando Capurro",
+        "Tu tasación en 3 pasos simples",
+        "Preguntas frecuentes",
+        "Pedí tu informe oficial de tasación"
+      ],
+      "wordCountMain": 895,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Person",
+        "ProfessionalService"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página principal de Tasación.com.py. Necesito el informe oficial de tasación de un inmueble para una compra o venta. El inmueble es (casa, depto, terreno) y queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página principal de Tasación.com.py. Necesito el informe oficial de tasación de un inmueble para una compra o venta. El inmueble es (casa, depto, terreno) y queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página principal de Tasación.com.py. Necesito el informe oficial de tasación de un inmueble para una compra o venta. El inmueble es (casa, depto, terreno) y queda en: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página principal de Tasación.com.py. Necesito el informe oficial de tasación de un inmueble para una compra o venta. El inmueble es (casa, depto, terreno) y queda en: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi en la página principal la tasación para vender. Quiero vender mi inmueble con un corredor, con exclusividad. Queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde el sitio Tasación.com.py. Quiero consultar por una tasación de: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página principal de Tasación.com.py. Necesito el informe oficial de tasación de un inmueble para una compra o venta. El inmueble es (casa, depto, terreno) y queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página principal. El banco me pide una tasación para un crédito hipotecario. El inmueble queda en: ___ y el banco es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, entré a Tasación.com.py porque necesito tasar un inmueble para un crédito que no es hipotecario (fiduciario o de cooperativa). La entidad es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página principal. Necesito tasar un inmueble para una sucesión o un juicio. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi en la página principal la tasación para vender. Quiero vender mi inmueble con un corredor, con exclusividad. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página principal de Tasación.com.py y tengo una consulta sobre tasaciones: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página principal de Tasación.com.py. Necesito el informe oficial de tasación de un inmueble para una compra o venta. El inmueble es (casa, depto, terreno) y queda en: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 68,
+          "tag": "P",
+          "src": null,
+          "text": "Informe técnico firmado por el Tasador Fernando Capurro, lis"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 27885,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/",
+      "path": "/tasaciones/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 88,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-de-inmuebles-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 27885,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasaciones de inmuebles en Paraguay | Tasación.com.py",
+      "titleLen": 53,
+      "metaDescription": "Elegí el tipo de inmueble que querés tasar: casas, departamentos, terrenos, corporativa, hipotecaria, locales comerciales, campos y estancias o franja de dominio.",
+      "metaDescriptionLen": 162,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/",
+      "h1": [
+        "Tasaciones de inmuebles, para cada tipo de propiedad"
+      ],
+      "h2": [
+        "Elegí el tipo de inmueble",
+        "Especialistas en cada tipo de inmueble",
+        "¿Para qué necesitás la tasación?",
+        "Preguntas frecuentes",
+        "Pedí tu informe oficial de tasación"
+      ],
+      "wordCountMain": 499,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Country",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo los tipos de tasación. Necesito el informe oficial para comprar o vender un inmueble. El tipo de inmueble es: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo los tipos de tasación. Necesito el informe oficial para comprar o vender un inmueble. El tipo de inmueble es: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo los tipos de tasación. Necesito el informe oficial para comprar o vender un inmueble. El tipo de inmueble es: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo los tipos de tasación. Necesito el informe oficial para comprar o vender un inmueble. El tipo de inmueble es: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi los tipos de tasación y quiero tasar para vender con un corredor de ustedes, con exclusividad. Tipo de inmueble: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo del listado de tasaciones del sitio. Quiero saber qué tasación necesito para: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo los tipos de tasación. Necesito el informe oficial para comprar o vender un inmueble. El tipo de inmueble es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, revisé el listado de tasaciones y necesito una para mi crédito hipotecario. Tipo de inmueble y zona: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, en la página de tipos de tasación no encontré mi caso: es para un crédito fiduciario o de cooperativa. Tipo de inmueble: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo del listado de tasaciones. Necesito tasar uno o varios inmuebles de una sucesión. Cuántos son y dónde quedan: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi los tipos de tasación y quiero tasar para vender con un corredor de ustedes, con exclusividad. Tipo de inmueble: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tipos de tasación y no sé cuál me corresponde. Mi caso es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo los tipos de tasación. Necesito el informe oficial para comprar o vender un inmueble. El tipo de inmueble es: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 60,
+          "tag": "P",
+          "src": null,
+          "text": "Cada tipo de inmueble tiene su propia lógica de valuación. E"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 27885,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/casas/",
+      "path": "/tasaciones/casas/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 100,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-casas-departamentos-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 22917,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación de casas en Asunción | Tasación.com.py",
+      "titleLen": 47,
+      "metaDescription": "Valuación de mercado para residencias urbanas y barrios cerrados, hecha por peritos que conocen tu zona. Costo cubierto por tu corredor si querés vender; certificada si es para un trámite.",
+      "metaDescriptionLen": 188,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/casas/",
+      "h1": [
+        "Tasación de casas en Asunción: conocé el valor real de tu vivienda"
+      ],
+      "h2": [
+        "Poner mal el precio de tu casa te cuesta caro",
+        "Qué miramos para tasar tu casa",
+        "Qué incluye el informe de tasación de tu casa",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Zonas de cobertura",
+        "Preguntas frecuentes",
+        "Otras tasaciones",
+        "Informe oficial de tasación de tu casa"
+      ],
+      "wordCountMain": 735,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "BreadcrumbList",
+        "Country",
+        "FAQPage",
+        "ListItem",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación de casas. Necesito el informe oficial de una casa para una compra o venta. Queda en (barrio y ciudad): ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación de casas. Necesito el informe oficial de una casa para una compra o venta. Queda en (barrio y ciudad): ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación de casas. Necesito el informe oficial de una casa para una compra o venta. Queda en (barrio y ciudad): ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación de casas. Necesito el informe oficial de una casa para una compra o venta. Queda en (barrio y ciudad): ___",
+          "loc": "price"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación de casas. Necesito el informe oficial de una casa para una compra o venta. Queda en (barrio y ciudad): ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender mi casa con un corredor y me interesa la tasación con exclusividad. Queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página de casas. Quiero consultar por la tasación de una casa en: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación de casas. Necesito el informe oficial de una casa para una compra o venta. Queda en (barrio y ciudad): ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de tasación de casas. El banco me pide la tasación de una casa para un crédito hipotecario. Queda en: ___ y el banco es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de casas. Necesito tasar una casa como garantía de un crédito de cooperativa o fiduciario. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de casas. Necesito tasar una casa que forma parte de una sucesión. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender mi casa con un corredor y me interesa la tasación con exclusividad. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí la página de tasación de casas y tengo una duda sobre mi casa: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación de casas. Necesito el informe oficial de una casa para una compra o venta. Queda en (barrio y ciudad): ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 72,
+          "tag": "P",
+          "src": null,
+          "text": "Valuación de mercado para residencias urbanas y barrios cerr"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 22917,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/departamentos/",
+      "path": "/tasaciones/departamentos/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 92,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-de-departamentos-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 23410,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación de departamentos en Asunción | Tasación.com.py",
+      "titleLen": 55,
+      "metaDescription": "Valuación precisa por zona, edificio y unidad. Analizamos m², amenities y ubicación en altura para darte el valor real de mercado.",
+      "metaDescriptionLen": 130,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/departamentos/",
+      "h1": [
+        "Tasación de departamentos en Asunción, edificio por edificio"
+      ],
+      "h2": [
+        "El valor de un departamento es multifactorial",
+        "Qué analizamos en un departamento",
+        "Qué incluye el informe de tasación de tu departamento",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Preguntas frecuentes",
+        "Otras tasaciones",
+        "Informe oficial de tasación de tu departamento"
+      ],
+      "wordCountMain": 697,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "BreadcrumbList",
+        "Country",
+        "FAQPage",
+        "ListItem",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de departamentos. Necesito el informe oficial de un departamento para una compra o venta. Edificio y barrio: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de departamentos. Necesito el informe oficial de un departamento para una compra o venta. Edificio y barrio: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de departamentos. Necesito el informe oficial de un departamento para una compra o venta. Edificio y barrio: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de departamentos. Necesito el informe oficial de un departamento para una compra o venta. Edificio y barrio: ___",
+          "loc": "price"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de departamentos. Necesito el informe oficial de un departamento para una compra o venta. Edificio y barrio: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender mi departamento con un corredor de ustedes, con exclusividad, y tasarlo primero. Edificio y barrio: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página de departamentos. Quiero consultar por la tasación de un departamento en: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de departamentos. Necesito el informe oficial de un departamento para una compra o venta. Edificio y barrio: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de tasación de departamentos. Mi banco pide tasar un departamento para el crédito hipotecario. Edificio y barrio: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de departamentos. Necesito tasar un departamento para un crédito de cooperativa o fiduciario. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de departamentos. Hay un departamento en una sucesión y necesito tasarlo. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender mi departamento con un corredor de ustedes, con exclusividad, y tasarlo primero. Edificio y barrio: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí la página de tasación de departamentos y tengo una consulta: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de departamentos. Necesito el informe oficial de un departamento para una compra o venta. Edificio y barrio: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 76,
+          "tag": "H1",
+          "src": null,
+          "text": "Tasación de departamentos en Asunción, edificio por edificio"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 23410,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/terrenos/",
+      "path": "/tasaciones/terrenos/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 92,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-terrenos-paraguay-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 19763,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación de terrenos en Paraguay | Tasación.com.py",
+      "titleLen": 50,
+      "metaDescription": "Tasación técnica basada en ubicación, zonificación y capacidad constructiva. No dejes que tu tierra se venda por debajo de su potencial.",
+      "metaDescriptionLen": 136,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/terrenos/",
+      "h1": [
+        "Tasación de terrenos: lotes, fracciones y potencial real de desarrollo"
+      ],
+      "h2": [
+        "Un terreno mal valuado es una oportunidad perdida",
+        "Qué analizamos en un terreno",
+        "Qué incluye el informe de tasación de tu terreno",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Preguntas frecuentes",
+        "Otras tasaciones",
+        "Informe oficial de tasación de tu terreno"
+      ],
+      "wordCountMain": 676,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "BreadcrumbList",
+        "Country",
+        "FAQPage",
+        "ListItem",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo la página de terrenos. Necesito el informe oficial de un terreno para comprar o vender. Está en: ___ y mide aprox.: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo la página de terrenos. Necesito el informe oficial de un terreno para comprar o vender. Está en: ___ y mide aprox.: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo la página de terrenos. Necesito el informe oficial de un terreno para comprar o vender. Está en: ___ y mide aprox.: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo la página de terrenos. Necesito el informe oficial de un terreno para comprar o vender. Está en: ___ y mide aprox.: ___",
+          "loc": "price"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo la página de terrenos. Necesito el informe oficial de un terreno para comprar o vender. Está en: ___ y mide aprox.: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender un terreno con un corredor, con exclusividad, y saber cuánto vale. Está en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página de terrenos. Quiero consultar por la tasación de un terreno en: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo la página de terrenos. Necesito el informe oficial de un terreno para comprar o vender. Está en: ___ y mide aprox.: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, necesito la tasación de un terreno para presentar en un crédito hipotecario. El terreno está en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de terrenos. Quiero tasar un lote para usarlo como garantía de un crédito de cooperativa o fiduciario. Está en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de terrenos. Tenemos un terreno en una sucesión y necesitamos la tasación. Está en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender un terreno con un corredor, con exclusividad, y saber cuánto vale. Está en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación de terrenos y tengo una pregunta sobre mi lote: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy viendo la página de terrenos. Necesito el informe oficial de un terreno para comprar o vender. Está en: ___ y mide aprox.: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 76,
+          "tag": "H1",
+          "src": null,
+          "text": "Tasación de terrenos: lotes, fracciones y potencial real de "
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 19763,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/corporativa/",
+      "path": "/tasaciones/corporativa/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 104,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-corporativa-oficinas-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 16019,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación corporativa en Paraguay | Tasación.com.py",
+      "titleLen": 50,
+      "metaDescription": "Soluciones de valuación para activos corporativos, industriales y logísticos. Precisión técnica para decisiones empresariales, garantías y estados contables.",
+      "metaDescriptionLen": 157,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/corporativa/",
+      "h1": [
+        "Tasación corporativa: informes oficiales para tu empresa"
+      ],
+      "h2": [
+        "Valuación estratégica de activos",
+        "Qué tasamos en el sector corporativo",
+        "Qué incluye el informe corporativo",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Por qué elegirnos",
+        "Preguntas frecuentes",
+        "Servicios relacionados",
+        "Informe oficial para tu empresa"
+      ],
+      "wordCountMain": 686,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "BreadcrumbList",
+        "Country",
+        "FAQPage",
+        "ListItem",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa y necesito tasar activos inmobiliarios de mi empresa. Los activos son: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa y necesito tasar activos inmobiliarios de mi empresa. Los activos son: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa y necesito tasar activos inmobiliarios de mi empresa. Los activos son: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa. Mi empresa necesita el informe oficial de un inmueble para comprarlo o venderlo. El inmueble es: ___",
+          "loc": "price"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa y necesito tasar activos inmobiliarios de mi empresa. Los activos son: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa. Mi empresa necesita el informe oficial de un inmueble para comprarlo o venderlo. El inmueble es: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página corporativa. Mi empresa quiere consultar por una tasación de: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa. Mi empresa necesita el informe oficial de un inmueble para comprarlo o venderlo. El inmueble es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página corporativa. La empresa necesita tasar un inmueble para un crédito hipotecario. El inmueble y el banco: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página corporativa. La empresa necesita tasar un inmueble como garantía de un crédito que no es hipotecario. El inmueble es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página corporativa. Necesitamos tasar un inmueble de la empresa para un proceso judicial o una sucesión. El caso es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, desde la página corporativa: la empresa quiere vender un inmueble con un corredor, con exclusividad. El inmueble es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa y necesito tasar activos inmobiliarios de mi empresa. Los activos son: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación corporativa y necesito tasar activos inmobiliarios de mi empresa. Los activos son: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 80,
+          "tag": "P",
+          "src": null,
+          "text": "Soluciones de valuación para activos corporativos, industria"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 16019,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/hipotecaria/",
+      "path": "/tasaciones/hipotecaria/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 96,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-hipotecaria-documentacion-paraguay-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 5850,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación hipotecaria en Paraguay | Tasación.com.py",
+      "titleLen": 50,
+      "metaDescription": "Tasación hipotecaria con el formato y la firma que exige tu banco o cooperativa. Coordiná tu informe para crédito en Paraguay por WhatsApp.",
+      "metaDescriptionLen": 139,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/hipotecaria/",
+      "h1": [
+        "Tasación para crédito hipotecario o fiduciario"
+      ],
+      "h2": [
+        "Por qué el banco te pide una tasación",
+        "Qué revisa el banco en el informe",
+        "Qué incluye el informe hipotecario",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Preguntas frecuentes",
+        "Servicios relacionados",
+        "Informe oficial para tu carpeta bancaria"
+      ],
+      "wordCountMain": 595,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "BreadcrumbList",
+        "Country",
+        "FAQPage",
+        "ListItem",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación hipotecaria. Estoy tramitando un crédito hipotecario y necesito la tasación. El banco es: ___ y el inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación hipotecaria. Estoy tramitando un crédito hipotecario y necesito la tasación. El banco es: ___ y el inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación hipotecaria. Estoy tramitando un crédito hipotecario y necesito la tasación. El banco es: ___ y el inmueble queda en: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación hipotecaria. Estoy tramitando un crédito hipotecario y necesito la tasación. El banco es: ___ y el inmueble queda en: ___",
+          "loc": "price"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación hipotecaria. Estoy tramitando un crédito hipotecario y necesito la tasación. El banco es: ___ y el inmueble queda en: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación hipotecaria, pero lo que necesito es el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página hipotecaria. Quiero consultar por una tasación para el banco: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación hipotecaria, pero lo que necesito es el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación hipotecaria. Estoy tramitando un crédito hipotecario y necesito la tasación. El banco es: ___ y el inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de tasación hipotecaria. Mi crédito es fiduciario o de cooperativa, no hipotecario. La entidad es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página hipotecaria. Necesito tasar un inmueble de una sucesión que tiene una hipoteca. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página hipotecaria. Quiero vender un inmueble que todavía tiene hipoteca, con un corredor y exclusividad. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí la página de tasación hipotecaria y tengo una duda sobre el trámite con el banco: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación hipotecaria. Estoy tramitando un crédito hipotecario y necesito la tasación. El banco es: ___ y el inmueble queda en: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 64,
+          "tag": "P",
+          "src": null,
+          "text": "Tu banco o cooperativa te pide una tasación para aprobar la "
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 5850,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/locales-comerciales/",
+      "path": "/tasaciones/locales-comerciales/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 96,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-locales-comerciales-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 17978,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación de locales comerciales | Tasación.com.py",
+      "titleLen": 49,
+      "metaDescription": "Análisis técnico para locales a pie de calle, en galerías o shoppings. Evaluamos el flujo, la visibilidad y el potencial de renta.",
+      "metaDescriptionLen": 130,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/locales-comerciales/",
+      "h1": [
+        "Tasación de locales comerciales: valor por rentabilidad y ubicación"
+      ],
+      "h2": [
+        "Un local comercial se valúa distinto a una vivienda",
+        "Qué analizamos en un local",
+        "Qué incluye el informe de tasación de tu local",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Preguntas frecuentes",
+        "Otras tasaciones",
+        "Informe oficial de tasación de tu local"
+      ],
+      "wordCountMain": 645,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "BreadcrumbList",
+        "Country",
+        "FAQPage",
+        "ListItem",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de locales comerciales. Necesito el informe oficial de un local para una compra o venta. Queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de locales comerciales. Necesito el informe oficial de un local para una compra o venta. Queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de locales comerciales. Necesito el informe oficial de un local para una compra o venta. Queda en: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de locales comerciales. Necesito el informe oficial de un local para una compra o venta. Queda en: ___",
+          "loc": "price"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de locales comerciales. Necesito el informe oficial de un local para una compra o venta. Queda en: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender un local comercial con un corredor, con exclusividad, y tasarlo antes. Queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página de locales. Quiero consultar por la tasación de un local en: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de locales comerciales. Necesito el informe oficial de un local para una compra o venta. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de locales comerciales. El banco me pide tasar un local para un crédito hipotecario. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de locales. Necesito tasar un local comercial para un crédito de cooperativa o fiduciario. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de locales comerciales. Hay un local en una sucesión y necesitamos su tasación. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender un local comercial con un corredor, con exclusividad, y tasarlo antes. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí la página de tasación de locales comerciales y tengo una consulta: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de locales comerciales. Necesito el informe oficial de un local para una compra o venta. Queda en: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 76,
+          "tag": "H1",
+          "src": null,
+          "text": "Tasación de locales comerciales: valor por rentabilidad y ub"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 17978,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/campos/",
+      "path": "/tasaciones/campos/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 80,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasador-de-terrenos-gran-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 8657,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación de campos y estancias en Paraguay | Tasación.com.py",
+      "titleLen": 60,
+      "metaDescription": "Valuación técnica de activos rurales, establecimientos ganaderos y tierras agrícolas con criterio profesional y conocimiento del terreno.",
+      "metaDescriptionLen": 137,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/campos/",
+      "h1": [
+        "Tasación de Campos y Estancias en Paraguay"
+      ],
+      "h2": [
+        "Análisis profundo del valor rural",
+        "Qué evaluamos",
+        "Qué incluye el informe de tasación de tu campo",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Por qué elegirnos",
+        "Preguntas frecuentes",
+        "Otras Tasaciones",
+        "Informe oficial de tasación de tu campo"
+      ],
+      "wordCountMain": 729,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "BreadcrumbList",
+        "Country",
+        "FAQPage",
+        "ListItem",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de campos. Necesito el informe oficial de un campo o estancia para comprar o vender. Departamento y superficie aprox.: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de campos. Necesito el informe oficial de un campo o estancia para comprar o vender. Departamento y superficie aprox.: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de campos. Necesito el informe oficial de un campo o estancia para comprar o vender. Departamento y superficie aprox.: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de campos. Necesito el informe oficial de un campo o estancia para comprar o vender. Departamento y superficie aprox.: ___",
+          "loc": "price"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de campos. Necesito el informe oficial de un campo o estancia para comprar o vender. Departamento y superficie aprox.: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender un campo con un corredor, con exclusividad, y saber cuánto vale. Departamento: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página de campos. Quiero consultar por la tasación de un campo en: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de campos. Necesito el informe oficial de un campo o estancia para comprar o vender. Departamento y superficie aprox.: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de campos. Necesito tasar un inmueble rural para un crédito hipotecario. Departamento y banco: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de campos. Necesito tasar un campo como garantía de un crédito agrícola, de cooperativa o fiduciario. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de campos. Tenemos un campo en una sucesión y necesitamos la tasación. Queda en el departamento de: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero vender un campo con un corredor, con exclusividad, y saber cuánto vale. Departamento: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí la página de tasación de campos y tengo una pregunta sobre mi inmueble rural: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de campos. Necesito el informe oficial de un campo o estancia para comprar o vender. Departamento y superficie aprox.: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 72,
+          "tag": "P",
+          "src": null,
+          "text": "Valuación técnica de activos rurales, establecimientos ganad"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 8657,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/tasaciones/franja-de-dominio/",
+      "path": "/tasaciones/franja-de-dominio/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 100,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/tasacion-terrenos-paraguay-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 19763,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Franja de dominio: relevamiento edilicio | Tasación.com.py",
+      "titleLen": 58,
+      "metaDescription": "Relevamiento y avaluación edilicia en franja de dominio para proyectos viales: mediciones, cómputo y valor de mercado por lote.",
+      "metaDescriptionLen": 127,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/tasaciones/franja-de-dominio/",
+      "h1": [
+        "Relevamiento y avaluación edilicia en franja de dominio de proyectos viales"
+      ],
+      "h2": [
+        "Qué incluye",
+        "Cómo se cotiza",
+        "Tasador Fernando Capurro",
+        "Preguntas frecuentes",
+        "Otras tasaciones",
+        "Pedí tu presupuesto para franja de dominio"
+      ],
+      "wordCountMain": 452,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "BreadcrumbList",
+        "Country",
+        "FAQPage",
+        "ListItem",
+        "Person",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Necesitamos relevamiento y avaluación para un proyecto vial. Cantidad aproximada de lotes afectados: ___ y zona: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Necesitamos relevamiento y avaluación para un proyecto vial. Cantidad aproximada de lotes afectados: ___ y zona: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Necesitamos relevamiento y avaluación para un proyecto vial. Cantidad aproximada de lotes afectados: ___ y zona: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Necesitamos relevamiento y avaluación para un proyecto vial. Cantidad aproximada de lotes afectados: ___ y zona: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de franja de dominio, pero necesito el informe oficial de un inmueble para una compra o venta. Queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página de franja de dominio. Quiero consultar por un relevamiento en la zona de: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de franja de dominio, pero necesito el informe oficial de un inmueble para una compra o venta. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Necesito tasar para un crédito hipotecario un inmueble cercano a una ruta. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Necesito tasar un inmueble para un crédito que no es hipotecario. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Hay un inmueble afectado por una obra vial dentro de una sucesión. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de franja de dominio. Quiero vender con un corredor, con exclusividad, un inmueble sobre una ruta. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Necesitamos relevamiento y avaluación para un proyecto vial. Cantidad aproximada de lotes afectados: ___ y zona: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de franja de dominio. Necesitamos relevamiento y avaluación para un proyecto vial. Cantidad aproximada de lotes afectados: ___ y zona: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 80,
+          "tag": "P",
+          "src": null,
+          "text": "La franja de dominio es la faja que ocupa la ruta y que hay "
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 19763,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/valuacion-para-vender/",
+      "path": "/valuacion-para-vender/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 80,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/propiedad-lista-para-la-venta-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 23364,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasación para vender tu propiedad | Tasación.com.py",
+      "titleLen": 51,
+      "metaDescription": "Tasación para vender: el costo se descuenta de la comisión al cerrar con un corredor asociado y exclusividad. Definí tu precio con datos reales.",
+      "metaDescriptionLen": 144,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/valuacion-para-vender/",
+      "h1": [
+        "Tasación para vender tu propiedad, con el costo cubierto por tu corredor con exclusividad"
+      ],
+      "h2": [
+        "El costo se cubre si vendés con nosotros",
+        "Mucho más que un precio: Vendemos tu propiedad",
+        "¿Buscás inversores extranjeros?",
+        "Diferencia entre Tasación para Vender y Peritaje",
+        "Preguntas frecuentes",
+        "¿Necesitás validez legal o bancaria?"
+      ],
+      "wordCountMain": 459,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "FAQPage",
+        "Person",
+        "ProfessionalService",
+        "Question"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación para vender. Quiero vender mi inmueble con un corredor de ustedes, con exclusividad, y saber cuánto vale. Tipo de inmueble y zona: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación para vender. Quiero vender mi inmueble con un corredor de ustedes, con exclusividad, y saber cuánto vale. Tipo de inmueble y zona: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación para vender. Quiero vender mi inmueble con un corredor de ustedes, con exclusividad, y saber cuánto vale. Tipo de inmueble y zona: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación para vender, pero necesito el informe oficial con firma para una compra o venta. El inmueble queda en: ___",
+          "loc": null
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación para vender, pero necesito el informe oficial con firma para una compra o venta. El inmueble queda en: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación para vender. Quiero vender mi inmueble con un corredor de ustedes, con exclusividad, y saber cuánto vale. Tipo de inmueble y zona: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página para vender. Quiero saber cuánto vale mi inmueble en: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de tasación para vender, pero necesito el informe oficial con firma para una compra o venta. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página para vender. El comprador va a pedir un crédito hipotecario y necesita la tasación para el banco. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página para vender. Necesito tasar mi inmueble para un crédito de cooperativa o fiduciario. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página para vender. Queremos vender un inmueble de una sucesión y primero hay que tasarlo. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación para vender. Quiero vender mi inmueble con un corredor de ustedes, con exclusividad, y saber cuánto vale. Tipo de inmueble y zona: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí cómo funciona la tasación para vender y tengo una duda sobre la exclusividad: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de tasación para vender. Quiero vender mi inmueble con un corredor de ustedes, con exclusividad, y saber cuánto vale. Tipo de inmueble y zona: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 88,
+          "tag": "H1",
+          "src": null,
+          "text": "Tasación para vender tu propiedad, con el costo cubierto por"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 23364,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/informes-periciales/",
+      "path": "/informes-periciales/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 100,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/informe-de-tasacion-linderos-paraguay-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 21485,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Informes periciales con validez legal | Tasación.com.py",
+      "titleLen": 55,
+      "metaDescription": "Informe oficial de tasación por finalidad: compra o venta, crédito bancario, sucesiones y juicios. Firmado por perito matriculado.",
+      "metaDescriptionLen": 130,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/informes-periciales/",
+      "h1": [
+        "Informes periciales con validez jurídica y bancaria"
+      ],
+      "h2": [
+        "Casos donde necesitás un informe oficial",
+        "Tasación pericial para sucesiones y juicios",
+        "Tasación para crédito",
+        "Tres informes, un precio claro para cada uno",
+        "El informe no es un gasto: es lo que destraba la operación",
+        "Tasador Fernando Capurro",
+        "Preguntas frecuentes",
+        "Informes por tipo de inmueble",
+        "Pedí tu informe oficial de tasación"
+      ],
+      "wordCountMain": 1129,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "Country",
+        "FAQPage",
+        "Offer",
+        "Person",
+        "PriceSpecification",
+        "ProfessionalService",
+        "Question",
+        "Service"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de informes periciales. Necesito un informe oficial firmado para una compra o venta. El inmueble es (tipo y zona): ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de informes periciales. Necesito un informe oficial firmado para una compra o venta. El inmueble es (tipo y zona): ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de informes periciales. Necesito un informe oficial firmado para una compra o venta. El inmueble es (tipo y zona): ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de informes periciales. Necesito un informe oficial firmado para una compra o venta. El inmueble es (tipo y zona): ___",
+          "loc": "pricing_tier"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de informes periciales. Necesito el informe para el banco por un crédito hipotecario. Banco y zona del inmueble: ___",
+          "loc": "pricing_tier"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de informes periciales. Necesito un informe pericial para una sucesión o un juicio. Juzgado o etapa del proceso: ___",
+          "loc": "pricing_tier"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de informes periciales. Necesito un informe oficial firmado para una compra o venta. El inmueble es (tipo y zona): ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí sobre los informes periciales, pero solo quiero vender con un corredor, con exclusividad. El inmueble queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde la página de informes periciales. Necesito un informe firmado para: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de informes periciales. Necesito un informe oficial firmado para una compra o venta. El inmueble es (tipo y zona): ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi la página de informes periciales. Necesito el informe para el banco por un crédito hipotecario. Banco y zona del inmueble: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de informes periciales. Necesito un informe para un crédito de cooperativa o fiduciario. La entidad es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de informes periciales. Necesito un informe pericial para una sucesión o un juicio. Juzgado o etapa del proceso: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí sobre los informes periciales, pero solo quiero vender con un corredor, con exclusividad. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de informes periciales y quiero saber qué incluye el informe para mi caso: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de informes periciales. Necesito un informe oficial firmado para una compra o venta. El inmueble es (tipo y zona): ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 84,
+          "tag": "H1",
+          "src": null,
+          "text": "Informes periciales con validez jurídica y bancaria"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 21485,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/nosotros/",
+      "path": "/nosotros/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 72,
+          "tag": "IMG",
+          "src": "http://127.0.0.1:4322/assets/img/oficina-de-tasaciones-asuncion-640.avif",
+          "text": null
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 9843,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "title": "Tasador Fernando Capurro, Perito Tasador | Tasación.com.py",
+      "titleLen": 58,
+      "metaDescription": "El Tasador Fernando Capurro y el equipo de Tasación.com.py combinan experiencia técnica con datos reales del mercado inmobiliario paraguayo.",
+      "metaDescriptionLen": 140,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/nosotros/",
+      "h1": [
+        "Tasador Fernando Capurro y el equipo de Tasación.com.py"
+      ],
+      "h2": [
+        "Quién firma tus informes",
+        "Tasador Fernando Capurro",
+        "Quiénes somos",
+        "Nuestros pilares",
+        "Pedí tu informe oficial de tasación"
+      ],
+      "wordCountMain": 405,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Person",
+        "ProfessionalService"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, leí sobre el tasador en la página Nosotros. Necesito su informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí sobre el tasador en la página Nosotros. Necesito su informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí sobre el tasador en la página Nosotros. Necesito su informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí sobre el tasador en la página Nosotros. Necesito su informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página Nosotros. Quiero vender un inmueble con un corredor de ustedes, con exclusividad. Queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo después de leer la página Nosotros. Quiero consultar por una tasación de: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí sobre el tasador en la página Nosotros. Necesito su informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página Nosotros. Necesito una tasación para un crédito hipotecario. El banco es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página Nosotros. Necesito una tasación para un crédito de cooperativa o fiduciario. La entidad es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vi en Nosotros que el tasador es perito matriculado ante la Corte. Necesito una tasación para una sucesión o un juicio: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página Nosotros. Quiero vender un inmueble con un corredor de ustedes, con exclusividad. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí la página Nosotros y quiero consultar algo sobre el trabajo del tasador: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí sobre el tasador en la página Nosotros. Necesito su informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 68,
+          "tag": "P",
+          "src": null,
+          "text": "Combinamos la experiencia técnica del tasador responsable co"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 9843,
+        "fontBytes": 68692,
+        "requests": 7
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/preguntas-frecuentes/",
+      "path": "/preguntas-frecuentes/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 84,
+          "tag": "H1",
+          "src": null,
+          "text": "Preguntas frecuentes sobre tasación de inmuebles"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "title": "Preguntas frecuentes sobre tasación | Tasación.com.py",
+      "titleLen": 53,
+      "metaDescription": "Resolvé tus dudas sobre costos, validez legal y procesos de valuación en Paraguay.",
+      "metaDescriptionLen": 82,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/preguntas-frecuentes/",
+      "h1": [
+        "Preguntas frecuentes sobre tasación de inmuebles"
+      ],
+      "h2": [
+        "Informe Oficial",
+        "Crédito Bancario",
+        "Sucesiones y Juicios",
+        "Para Vender",
+        "General",
+        "Pedí tu informe oficial de tasación"
+      ],
+      "wordCountMain": 260,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Answer",
+        "FAQPage",
+        "Person",
+        "ProfessionalService",
+        "Question"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, leí las preguntas frecuentes y ya sé que necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí las preguntas frecuentes y ya sé que necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí las preguntas frecuentes y ya sé que necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí las preguntas frecuentes y ya sé que necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí en las preguntas frecuentes cómo funciona la tasación con exclusividad y quiero vender mi inmueble. Queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde las preguntas frecuentes. Mi pregunta es: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí las preguntas frecuentes y ya sé que necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de las preguntas frecuentes. Necesito una tasación para mi crédito hipotecario. El banco es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, en las preguntas frecuentes no encontré mi caso: necesito tasar para un crédito de cooperativa o fiduciario. La entidad es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de las preguntas frecuentes. Necesito una tasación para una sucesión o un juicio. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí en las preguntas frecuentes cómo funciona la tasación con exclusividad y quiero vender mi inmueble. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí las preguntas frecuentes y me quedó una duda: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí las preguntas frecuentes y ya sé que necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 60,
+          "tag": "H1",
+          "src": null,
+          "text": "Preguntas frecuentes sobre tasación de inmuebles"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/contacto/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/contacto/",
+      "path": "/contacto/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 92,
+          "tag": "H1",
+          "src": null,
+          "text": "Pedí tu tasación por WhatsApp o dejanos tus datos"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "title": "Contacto — tasaciones en Asunción | Tasación.com.py",
+      "titleLen": 51,
+      "metaDescription": "Pedí tu informe oficial de tasación por WhatsApp, firmado por el Tasador Fernando Capurro, o dejanos tus datos.",
+      "metaDescriptionLen": 111,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/contacto/",
+      "h1": [
+        "Pedí tu tasación por WhatsApp o dejanos tus datos"
+      ],
+      "h2": [
+        "Nuestros canales",
+        "Cómo preparar tu consulta",
+        "¿Preferís que te escribamos?",
+        "Pedí tu informe oficial de tasación"
+      ],
+      "wordCountMain": 411,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Person",
+        "ProfessionalService"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de contacto. Prefiero escribir por acá: necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de contacto. Prefiero escribir por acá: necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de contacto. Prefiero escribir por acá: necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de contacto. Prefiero escribir por acá: necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de contacto. Quiero vender con un corredor de ustedes, con exclusividad, y tasar antes. Queda en: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde el pie de la página de contacto. Quiero hablar con alguien sobre: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de contacto. Prefiero escribir por acá: necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de contacto. Necesito una tasación para un crédito hipotecario. Banco y zona del inmueble: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de contacto. Necesito una tasación para un crédito de cooperativa o fiduciario. La entidad es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de contacto. Necesito una tasación para una sucesión o un juicio. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo de la página de contacto. Quiero vender con un corredor de ustedes, con exclusividad, y tasar antes. Queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de contacto y prefiero consultar por WhatsApp. Mi consulta es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estoy en la página de contacto. Prefiero escribir por acá: necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [
+        {
+          "action": "/lead-forward.php",
+          "fields": [
+            "page_url",
+            "website",
+            "nombre",
+            "telefono",
+            "email",
+            "mensaje",
+            "mensaje",
+            "mensaje",
+            "mensaje",
+            "mensaje",
+            "mensaje"
+          ]
+        }
+      ],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 72,
+          "tag": "P",
+          "src": null,
+          "text": "Escribinos por WhatsApp para el informe oficial firmado por "
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/privacidad/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/privacidad/",
+      "path": "/privacidad/",
+      "inSitemap": true,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 72,
+          "tag": "H1",
+          "src": null,
+          "text": "Aviso de privacidad"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "title": "Aviso de privacidad | Tasación.com.py",
+      "titleLen": 37,
+      "metaDescription": "Conocé qué datos recoge el formulario de Tasación.com.py, para qué se usan, dónde se guardan y cómo solicitar su eliminación.",
+      "metaDescriptionLen": 125,
+      "robots": null,
+      "canonical": "https://tasacion.com.py/privacidad/",
+      "h1": [
+        "Aviso de privacidad"
+      ],
+      "h2": [
+        "Responsable y datos que recibimos",
+        "Para qué usamos y dónde guardamos tus datos",
+        "Cómo solicitar la eliminación",
+        "Consultanos sobre tus datos"
+      ],
+      "wordCountMain": 419,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Person",
+        "ProfessionalService"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, estaba leyendo el aviso de privacidad. Necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estaba leyendo el aviso de privacidad. Necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estaba leyendo el aviso de privacidad. Necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, quiero pedir que eliminen los datos que envié por el formulario. Mi nombre y el número desde el que escribí: ___",
+          "loc": null
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estaba leyendo el aviso de privacidad. Necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "band"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo del aviso de privacidad. Quiero vender con un corredor, con exclusividad: ___",
+          "loc": "band_secondary"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde el aviso de privacidad. Quiero consultar: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estaba leyendo el aviso de privacidad. Necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo del aviso de privacidad. Necesito una tasación para un crédito hipotecario. El banco es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo del aviso de privacidad. Necesito una tasación para un crédito de cooperativa o fiduciario: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo del aviso de privacidad. Necesito una tasación para una sucesión o un juicio: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, vengo del aviso de privacidad. Quiero vender con un corredor, con exclusividad: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, leí el aviso de privacidad y tengo una pregunta sobre mis datos: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, estaba leyendo el aviso de privacidad. Necesito el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 72,
+          "tag": "P",
+          "src": null,
+          "text": "Te explicamos cómo tratamos los datos que compartís al consu"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "internalLinksIn": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/valuacion-para-vender/",
+        "/informes-periciales/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/404.html",
+        "/gracias.html"
+      ]
+    },
+    {
+      "url": "https://tasacion.com.py/404.html",
+      "path": "/404.html",
+      "inSitemap": false,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 64,
+          "tag": "H1",
+          "src": null,
+          "text": "Esta página no existe"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "title": "Página no encontrada | Tasación.com.py",
+      "titleLen": 38,
+      "metaDescription": "La página que buscás no existe o fue movida. Encontrá servicios de tasación y contacto desde acá.",
+      "metaDescriptionLen": 97,
+      "robots": "noindex,nofollow",
+      "canonical": "https://tasacion.com.py/404.html",
+      "h1": [
+        "Esta página no existe"
+      ],
+      "h2": [
+        "Elegí por dónde seguir"
+      ],
+      "wordCountMain": 136,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Person",
+        "ProfessionalService"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, llegué a una página que no existe en su sitio. Busco el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, llegué a una página que no existe en su sitio. Busco el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, llegué a una página que no existe en su sitio. Busco el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, les escribo desde una página que no se encontró. Busco información sobre: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, llegué a una página que no existe en su sitio. Busco el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, no encontré la página que buscaba. Necesito una tasación para un crédito hipotecario. El banco es: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, una página del sitio no cargó. Busco una tasación para un crédito de cooperativa o fiduciario: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, no encontré la página que buscaba. Necesito una tasación para una sucesión o un juicio: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, no encontré la página que buscaba. Quiero vender un inmueble con un corredor, con exclusividad: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, llegué a una página que no existe en Tasación.com.py. Estaba buscando: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, llegué a una página que no existe en su sitio. Busco el informe oficial para una compra o venta. El inmueble queda en: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 68,
+          "tag": "P",
+          "src": null,
+          "text": "Puede que el enlace esté viejo o que hayamos movido la págin"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "internalLinksIn": []
+    },
+    {
+      "url": "https://tasacion.com.py/gracias.html",
+      "path": "/gracias.html",
+      "inSitemap": false,
+      "status": 200,
+      "vp1366": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 92,
+          "tag": "H1",
+          "src": null,
+          "text": "Gracias, ya recibimos tus datos"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "title": "Gracias — te respondemos por WhatsApp | Tasación.com.py",
+      "titleLen": 55,
+      "metaDescription": "Recibimos tu consulta de tasación. Te respondemos por WhatsApp al número que dejaste.",
+      "metaDescriptionLen": 85,
+      "robots": "noindex,nofollow",
+      "canonical": "https://tasacion.com.py/gracias.html",
+      "h1": [
+        "Gracias, ya recibimos tus datos"
+      ],
+      "h2": [],
+      "wordCountMain": 41,
+      "internalLinksOut": [
+        "/",
+        "/tasaciones/",
+        "/tasaciones/casas/",
+        "/tasaciones/departamentos/",
+        "/tasaciones/terrenos/",
+        "/tasaciones/corporativa/",
+        "/tasaciones/hipotecaria/",
+        "/tasaciones/locales-comerciales/",
+        "/tasaciones/campos/",
+        "/tasaciones/franja-de-dominio/",
+        "/informes-periciales/",
+        "/valuacion-para-vender/",
+        "/nosotros/",
+        "/preguntas-frecuentes/",
+        "/contacto/",
+        "/privacidad/"
+      ],
+      "externalLinks": [
+        "https://wa.me"
+      ],
+      "imagesWithoutAlt": [],
+      "imagesEmptyAlt": [],
+      "schemaTypes": [
+        "Person",
+        "ProfessionalService"
+      ],
+      "schemaParseErrors": 0,
+      "ogImage": "https://tasacion.com.py/assets/img/og-tasacion-com-py.jpg",
+      "lang": "es-PY",
+      "waLinks": [
+        {
+          "number": "595992279599",
+          "text": "Hola, recién envié el formulario pidiendo el informe oficial para una compra o venta. Quiero adelantarlo por acá. Mi nombre: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, recién envié el formulario pidiendo el informe oficial para una compra o venta. Quiero adelantarlo por acá. Mi nombre: ___",
+          "loc": "header"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, recién envié el formulario pidiendo el informe oficial para una compra o venta. Quiero adelantarlo por acá. Mi nombre: ___",
+          "loc": "hero"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, ya envié el formulario del sitio y les escribo para confirmar que llegó. Mi nombre: ___",
+          "loc": "footer"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, recién envié el formulario pidiendo el informe oficial para una compra o venta. Quiero adelantarlo por acá. Mi nombre: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, acabo de mandar el formulario por la tasación para mi crédito hipotecario. Les adelanto el banco: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, envié el formulario por una tasación para un crédito de cooperativa o fiduciario. Les adelanto la entidad: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, recién completé el formulario por la tasación para una sucesión o un juicio. Les adelanto el caso: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, envié el formulario porque quiero vender con un corredor, con exclusividad. Les adelanto la zona: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, acabo de enviar una consulta por el formulario y quiero seguir por WhatsApp. Mi nombre: ___",
+          "loc": "menu"
+        },
+        {
+          "number": "595992279599",
+          "text": "Hola, recién envié el formulario pidiendo el informe oficial para una compra o venta. Quiero adelantarlo por acá. Mi nombre: ___",
+          "loc": "fab"
+        }
+      ],
+      "telLinks": [
+        "tel:+595992279599"
+      ],
+      "forms": [],
+      "vp390": {
+        "hScroll": false,
+        "brokenImages": [],
+        "lcp": {
+          "t": 60,
+          "tag": "P",
+          "src": null,
+          "text": "El Tasador Fernando Capurro te escribe por WhatsApp al númer"
+        },
+        "fontsLoaded": [
+          "Inter 400 600",
+          "Libre Baskerville 700"
+        ],
+        "consoleErrors": [
+          "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED"
+        ],
+        "failed": [
+          {
+            "url": "https://crm.clientes.com.py/vc-attribution.js",
+            "error": "net::ERR_TUNNEL_CONNECTION_FAILED"
+          }
+        ],
+        "jsBytes": 6386,
+        "cssBytes": 27311,
+        "imgBytes": 0,
+        "fontBytes": 68692,
+        "requests": 6
+      },
+      "internalLinksIn": []
+    }
+  ]
+}
