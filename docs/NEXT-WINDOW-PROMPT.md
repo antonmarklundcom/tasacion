@@ -4,6 +4,25 @@ Model: **Opus 5.5, effort medium** as director. Subagents: **Sonnet 5.5** at the
 
 ---
 
+## Status on 2026-09-30 (read first; skip what is done)
+
+- **Done: Phase 0.**
+  - The live host and the keyword-library MCP were both unreachable from the cloud sandbox. The keyword map is in `docs/audit/keyword-map-2026-09-30.md`.
+  - **Phase 6 (new pages) stays skipped** until a session with the MCP connected confirms Paraguay volume.
+- **Done: Phase 1** (PR #18, merged). master = live branch + deterministic build (`SITE_LASTMOD` in `build-site.mjs`, CRLF-safe hashes) + `.gitignore` for vendercrm-config.
+- **Done: Phase 2** (PR #19).
+  - New number everywhere.
+  - `content/wa-messages.mjs` holds 130 messages. Purpose ids: compraventa, hipotecaria, credito, sucesion, venta, empresa, franja, consulta.
+  - `tools/check-contact.mjs` runs in `verify.mjs`.
+  - Any new WhatsApp CTA must add its text to the map; the check fails otherwise.
+- **Next: Phase 3.** No QA-tooling PR existed, so build it.
+- **Then:** Phase 4 → Phase 5 → Phase 7.
+- **Before merging anything:** check the Q answers Anton gave in the previous chat (Q1–Q7) and ask again for those still open.
+- **Deploy:** until Anton confirms Hostinger deploys master (Q1), merges to master do **not** reach the live site. Note this in each PR rather than blocking on it.
+- **When you bump content:** set `SITE_LASTMOD` in `build-site.mjs` to the day of the content change, or add a per-page `lastmod`. Rebuild and commit.
+
+---
+
 You are the director for the tasacion.com.py improvement build. You execute `docs/IMPROVE-PLAN.md` end to end:
 - write specs and the copy that carries legal or price wording
 - review every subagent diff
