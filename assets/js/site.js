@@ -44,13 +44,26 @@
     }
   }
 
-  var gw = document.querySelector('[data-gracias-wa]');
-  if (gw) {
-    try {
-      var gp = new URLSearchParams(location.search).get('p');
-      var gmap = JSON.parse(gw.getAttribute('data-wa-map') || '{}');
-      if (gp && Object.prototype.hasOwnProperty.call(gmap, gp)) gw.href = gmap[gp];
-    } catch (err) { /* queda el href por defecto */ }
+  var gws = document.querySelectorAll('[data-gracias-wa]');
+  if (gws.length) {
+    var gp = null;
+    try { gp = new URLSearchParams(location.search).get('p'); } catch (err) { /* sin ?p= */ }
+    Array.prototype.forEach.call(gws, function (gw) {
+      try {
+        var gmap = JSON.parse(gw.getAttribute('data-wa-map') || '{}');
+        if (gp && Object.prototype.hasOwnProperty.call(gmap, gp)) gw.href = gmap[gp];
+      } catch (err) { /* queda el href por defecto */ }
+    });
+    var gpl = document.querySelector('[data-gracias-purpose]');
+    if (gpl && gp) {
+      try {
+        var labels = JSON.parse(gpl.getAttribute('data-labels') || '{}');
+        if (Object.prototype.hasOwnProperty.call(labels, gp)) {
+          gpl.textContent = 'Tu consulta: ' + labels[gp];
+          gpl.hidden = false;
+        }
+      } catch (err) { /* sin etiqueta */ }
+    }
   }
 
   var pu = document.getElementById('page_url');

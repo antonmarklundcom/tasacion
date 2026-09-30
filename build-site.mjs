@@ -468,37 +468,76 @@ function block(section, page) {
   </div>
 </section>`;
 
-    case 'contactForm': {
-      const opts = Object.keys(PURPOSES).map((id, idx) => `<option value="${id}"${idx === 0 ? ' selected' : ''}>${esc(PURPOSES[id].label)}</option>`).join('\n          ');
-      return `<section class="section section--narrow">
-  <div class="container">
-    <h2>${esc(section.heading)}</h2>
-    <p>${esc(section.body)}</p>
-    <form class="form" action="/lead-forward.php" method="post" data-wa-error="${attr(waLink('/contacto/', 'error'))}">
-      <input type="hidden" name="page_url" id="page_url">
-      <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-      <label class="field">Nombre completo<input type="text" name="nombre" required></label>
-      <label class="field">Número de WhatsApp<input type="tel" name="telefono" minlength="6" required></label>
-      <label class="field">Email (opcional)<input type="email" name="email"></label>
-      <label class="field">¿Para qué necesitás la tasación?<select name="purpose" required>
-          ${opts}
-        </select></label>
-      <label class="field">Ciudad o barrio del inmueble (opcional)<input type="text" name="ciudad" autocomplete="address-level2" maxlength="120"></label>
-      <button class="btn btn--primary" type="submit">Enviar mis datos</button>
-      <p>Conocé cómo usamos tus datos en el <a href="/privacidad/">aviso de privacidad</a>.</p>
-    </form>
+    case 'contactSplit': {
+      const opts = Object.keys(PURPOSES).map((id, idx) => `<option value="${id}"${idx === 0 ? ' selected' : ''}>${esc(PURPOSES[id].label)}</option>`).join('\n            ');
+      const a = section.aside;
+      return `<section class="section contact-split" id="formulario">
+  <div class="container contact-split__grid">
+    <div class="contact-split__form">
+      <h2>${esc(section.heading)}</h2>
+      <p>${esc(section.body)}</p>
+      <form class="form form--wide" action="/lead-forward.php" method="post" data-wa-error="${attr(waLink('/contacto/', 'error'))}">
+        <input type="hidden" name="page_url" id="page_url">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <div class="form__row">
+          <label class="field">Nombre completo<input type="text" name="nombre" autocomplete="name" required></label>
+          <label class="field">Número de WhatsApp<input type="tel" name="telefono" autocomplete="tel" inputmode="tel" placeholder="0981 123 456" minlength="6" required></label>
+        </div>
+        <label class="field">¿Para qué necesitás la tasación?<select name="purpose" required>
+            ${opts}
+          </select></label>
+        <div class="form__row">
+          <label class="field">Ciudad o barrio del inmueble (opcional)<input type="text" name="ciudad" autocomplete="address-level2" maxlength="120"></label>
+          <label class="field">Email (opcional)<input type="email" name="email" autocomplete="email"></label>
+        </div>
+        <label class="field">Mensaje (opcional)<textarea name="mensaje" rows="4" maxlength="2000" placeholder="${attr(section.messageHint)}"></textarea></label>
+        <button class="btn btn--primary" type="submit">Enviar mi consulta</button>
+        <p class="form__note">Te respondemos por WhatsApp. Conocé cómo usamos tus datos en el <a href="/privacidad/">aviso de privacidad</a>.</p>
+      </form>
+    </div>
+    <aside class="contact-split__aside">
+      <h2 class="contact-split__aside-h">${esc(a.heading)}</h2>
+      <p>${esc(a.body)}</p>
+      <a class="btn btn--wa" href="${waOptionHref('compraventa', page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="compraventa" data-ev="wa_click" data-ev-loc="contact_aside">${ICON_WA}${esc(a.waLabel)}</a>
+      <a class="contact-split__tel" href="${TEL_HREF}" data-ev="tel_click" data-ev-loc="contact_aside">${ICON_PHONE}Llamar al ${esc(WA_DISPLAY)}</a>
+      <ul class="contact-split__facts">
+        ${a.facts.map((f) => `<li><strong>${esc(f.label)}</strong><span>${esc(f.value)}</span></li>`).join('\n        ')}
+      </ul>
+    </aside>
   </div>
 </section>`;
     }
 
+    case 'graciasNext':
+      return `<section class="section gracias-next">
+  <div class="container">
+    <p class="gracias-next__purpose" data-gracias-purpose data-labels="${attr(JSON.stringify(Object.fromEntries(Object.keys(PURPOSES).map((id) => [id, PURPOSES[id].label]))))}" hidden></p>
+    <h2>${esc(section.heading)}</h2>
+    <ol class="steps">
+      ${section.steps.map((it, idx) => `<li><span class="steps__n">${idx + 1}</span><h3>${esc(it.title)}</h3><p>${esc(it.body)}</p></li>`).join('\n      ')}
+    </ol>
+    <div class="gracias-next__card">
+      <div>
+        <h3>${esc(section.prep.heading)}</h3>
+        <ul class="gracias-next__list">
+          ${section.prep.items.map((i) => `<li>${ICON_CHECK}${esc(i)}</li>`).join('\n          ')}
+        </ul>
+      </div>
+      <div class="gracias-next__actions">
+        <p>${esc(section.prep.body)}</p>
+        ${graciasWaAnchor('btn btn--wa', 'gracias', section.prep.waLabel)}
+        <a class="contact-split__tel" href="${TEL_HREF}" data-ev="tel_click" data-ev-loc="gracias">${ICON_PHONE}Llamar al ${esc(WA_DISPLAY)}</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+
     case 'graciasWa': {
-      const map = {};
-      for (const id of Object.keys(PURPOSES)) map[id] = waLink('gracias.html', id);
       return `<section class="section section--narrow">
   <div class="container">
     <h2>${esc(section.heading)}</h2>
     <p>${esc(section.body)}</p>
-    <a class="btn btn--wa" href="${waLink('gracias.html', 'compraventa')}" target="_blank" rel="noopener" data-gracias-wa data-wa-map="${attr(JSON.stringify(map))}" data-ev="wa_click" data-ev-loc="gracias">${ICON_WA}${esc(section.label)}</a>
+    ${graciasWaAnchor('btn btn--wa', 'gracias_bottom', section.label)}
   </div>
 </section>`;
     }
@@ -506,6 +545,14 @@ function block(section, page) {
     default:
       return '';
   }
+}
+
+// WhatsApp de gracias.html: el href por defecto es compraventa; site.js lo
+// cambia a la finalidad de ?p= usando data-wa-map.
+function graciasWaAnchor(cls, loc, label) {
+  const map = {};
+  for (const id of Object.keys(PURPOSES)) map[id] = waLink('gracias.html', id);
+  return `<a class="${cls}" href="${waLink('gracias.html', 'compraventa')}" target="_blank" rel="noopener" data-gracias-wa data-wa-map="${attr(JSON.stringify(map))}" data-ev="wa_click" data-ev-loc="${loc}">${ICON_WA}${esc(label)}</a>`;
 }
 
 // -------------------------------------------------------------------- hero
@@ -549,13 +596,16 @@ function renderHero(page) {
     <p class="hero__sub">${esc(page.subcopy)}</p>
     ${renderChip(page)}
     <div class="hero__actions">
-      <a class="btn btn--primary" href="${primaryHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${primary.waOption}" data-ev="wa_click" data-ev-loc="hero">${ICON_WA}${esc(primary.label)}</a>
+      ${primary.gracias
+        ? graciasWaAnchor('btn btn--wa', 'hero', primary.label)
+        : `<a class="btn btn--primary" href="${primaryHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${primary.waOption}" data-ev="wa_click" data-ev-loc="hero">${ICON_WA}${esc(primary.label)}</a>`}
       ${secondary}
     </div>
     ${freeLink}
   </div>`;
   const pic = page.heroImage ? heroPicture(page.heroImage, true, seal) : '';
-  return `<section class="hero${page.heroImage ? ' hero--split' : ''}">
+  const compact = page.kind === 'contact' || page.slug === 'gracias.html' ? ' hero--compact' : '';
+  return `<section class="hero${page.heroImage ? ' hero--split' : ''}${compact}">
   <div class="container hero__row">
     ${text}
     ${pic}
