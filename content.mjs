@@ -218,6 +218,12 @@ export const PAGES = [
     subcopy: 'Cada tipo de inmueble tiene su propia lógica de valuación. Elegí el que corresponde a tu caso para ver qué incluye el informe y el precio según tu finalidad.',
     sections: [
       {
+        type: 'lead',
+        heading: 'Elegí el tipo de inmueble',
+        body: 'Cada tipo de inmueble se tasa con criterios propios; entrá al que corresponde a tu caso.',
+        links: SERVICIOS.map((x) => ({ label: x.title, href: x.href })),
+      },
+      {
         type: 'services', id: 'servicios',
         heading: 'Especialistas en cada tipo de inmueble',
         items: SERVICIOS,
@@ -297,6 +303,8 @@ export const PAGES = [
       otrasTasaciones(null, [
         { title: 'Departamentos', href: '/tasaciones/departamentos/' },
         { title: 'Terrenos', href: '/tasaciones/terrenos/' },
+        { title: 'Valuación para vender', href: '/valuacion-para-vender/' },
+        { title: 'Informes Periciales', href: '/informes-periciales/' },
       ]),
       ctaBand('Informe oficial de tasación de tu casa', 'Documento firmado por el Tasador Fernando Capurro, listo para bancos, juzgados y trámites oficiales.'),
     ],
@@ -348,6 +356,8 @@ export const PAGES = [
       otrasTasaciones(null, [
         { title: 'Casas', href: '/tasaciones/casas/' },
         { title: 'Locales Comerciales', href: '/tasaciones/locales-comerciales/' },
+        { title: 'Valuación para vender', href: '/valuacion-para-vender/' },
+        { title: 'Informes Periciales', href: '/informes-periciales/' },
       ]),
       ctaBand('Informe oficial de tasación de tu departamento', 'Documento firmado por el Tasador Fernando Capurro, con validez legal y bancaria.'),
     ],
@@ -400,6 +410,7 @@ export const PAGES = [
         { title: 'Casas', href: '/tasaciones/casas/' },
         { title: 'Corporativa', href: '/tasaciones/corporativa/' },
         { title: 'Franja de Dominio', href: '/tasaciones/franja-de-dominio/' },
+        { title: 'Valuación para vender', href: '/valuacion-para-vender/' },
       ]),
       ctaBand('Informe oficial de tasación de tu terreno', 'Documento técnico firmado por el Tasador Fernando Capurro, con validez legal y bancaria.'),
     ],
@@ -458,6 +469,7 @@ export const PAGES = [
         { title: 'Locales Comerciales', href: '/tasaciones/locales-comerciales/' },
         { title: 'Informes Periciales', href: '/informes-periciales/' },
         { title: 'Franja de Dominio', href: '/tasaciones/franja-de-dominio/' },
+        { title: 'Hipotecaria', href: '/tasaciones/hipotecaria/' },
       ]),
       ctaBand('Informe oficial para tu empresa', 'Documentación técnica firmada por el Tasador Fernando Capurro, apta para balances, garantías y auditoría.', {
         primary: { label: 'Solicitar informe corporativo', waOption: 'empresa' },
@@ -527,6 +539,7 @@ export const PAGES = [
       otrasTasaciones('Servicios relacionados', [
         { title: 'Casas', href: '/tasaciones/casas/' },
         { title: 'Informes Periciales', href: '/informes-periciales/' },
+        { title: 'Departamentos', href: '/tasaciones/departamentos/' },
       ]),
       ctaBand('Informe oficial para tu carpeta bancaria', 'Documento firmado por un tasador inscripto en el registro del BCP, listo para presentar al banco.', {
         primary: { label: 'Pedir mi tasación para crédito', waOption: 'hipotecaria' },
@@ -581,6 +594,7 @@ export const PAGES = [
       otrasTasaciones(null, [
         { title: 'Corporativa', href: '/tasaciones/corporativa/' },
         { title: 'Departamentos', href: '/tasaciones/departamentos/' },
+        { title: 'Informes Periciales', href: '/informes-periciales/' },
       ]),
       ctaBand('Informe oficial de tasación de tu local', 'Documento firmado por el Tasador Fernando Capurro, con validez legal y bancaria.'),
     ],
@@ -632,6 +646,7 @@ export const PAGES = [
       otrasTasaciones('Otras Tasaciones', [
         { title: 'Tasación de Terrenos', body: 'Tasación técnica de lotes y fracciones urbanas', href: '/tasaciones/terrenos/' },
         { title: 'Tasación Corporativa', body: 'Informes para oficinas y plantas industriales', href: '/tasaciones/corporativa/' },
+        { title: 'Informes Periciales', href: '/informes-periciales/' },
       ]),
       ctaBand('Informe oficial de tasación de tu campo', 'Documento técnico firmado por el Tasador Fernando Capurro, con validez legal y bancaria.'),
     ],
@@ -692,6 +707,7 @@ export const PAGES = [
       otrasTasaciones('Otras tasaciones', [
         { title: 'Corporativa', href: '/tasaciones/corporativa/' },
         { title: 'Terrenos', href: '/tasaciones/terrenos/' },
+        { title: 'Informes Periciales', href: '/informes-periciales/' },
       ]),
       ctaBand('Pedí tu presupuesto para franja de dominio', 'Relevamiento y avaluación edilicia firmados por el Tasador Fernando Capurro.', {
         primary: { label: 'Pedir presupuesto por proyecto', waOption: 'franja' },
@@ -929,13 +945,13 @@ export const PAGES = [
           {
             title: 'Informe Oficial',
             items: [
-              { q: '¿Cuánto cuesta según la finalidad?', a: `Compra o venta: ${PRECIO_TXT} ${IVA_TXT}. Sucesiones y juicios: ${PRECIO_JUDICIAL_TXT} ${IVA_TXT}. Crédito bancario: ${PRECIO_CREDITO_TXT} ${IVA_TXT}. ${PRECIO_NOTA.charAt(0).toUpperCase() + PRECIO_NOTA.slice(1)}. ${FACTURA_TXT}.` },
+              { q: '¿Cuánto cuesta según la finalidad?', a: `Compra o venta: ${PRECIO_TXT} ${IVA_TXT}. Sucesiones y juicios: ${PRECIO_JUDICIAL_TXT} ${IVA_TXT}. Crédito bancario: ${PRECIO_CREDITO_TXT} ${IVA_TXT}. ${PRECIO_NOTA.charAt(0).toUpperCase() + PRECIO_NOTA.slice(1)}. ${FACTURA_TXT}.`, link: { label: 'Ver precios por finalidad →', href: '/informes-periciales/#compraventa' } },
               { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
               { q: '¿Quién firma el informe?', a: `El Tasador Fernando Capurro, ${CRED_CSJ} y ${CRED_ARQ}. Para crédito, ${CRED_BCP_FIRMA}.` },
               { q: '¿La visita tiene costo?', a: 'La visita está incluida en el precio del informe, para cualquier finalidad.' },
               { q: '¿Por qué varía el precio?', a: 'Primero depende de la finalidad del informe, que define el rango de precio. Dentro de ese rango, el monto lo fijan el tipo, el tamaño y la ubicación del inmueble. Te confirmamos el monto por WhatsApp antes de agendar la visita.' },
               { q: '¿Qué es un informe oficial?', a: 'Es un informe individual, para un solo inmueble. Es oficial porque lo firma un profesional matriculado.' },
-              { q: '¿Qué incluye el informe?', a: `Visita técnica, comparables reales, justificación del valor con el análisis de mercado, documentación fotográfica, metodología explicada y la firma del profesional. Lo entregamos en ${PLAZO_TXT}.` },
+              { q: '¿Qué incluye el informe?', a: `Visita técnica, comparables reales, justificación del valor con el análisis de mercado, documentación fotográfica, metodología explicada y la firma del profesional. Lo entregamos en ${PLAZO_TXT}.`, link: { label: 'Ver el informe oficial →', href: '/informes-periciales/#compraventa' } },
               { q: '¿Cómo se paga?', a: 'El 50 % por transferencia para reservar la visita y el otro 50 % al entregar el informe. Aceptamos efectivo, transferencia y QR; no trabajamos con tarjeta.' },
               { q: '¿Emiten factura?', a: `Sí. ${FACTURA_TXT} en todos los casos.` },
               { q: '¿Cuánto tiempo es válida una tasación?', a: 'Entre 6 meses y 1 año, según cómo se mueva el mercado en la zona del inmueble.' },
@@ -945,16 +961,16 @@ export const PAGES = [
             title: 'Crédito Bancario',
             items: [
               { q: '¿Sirve para mi banco o cooperativa?', a: `Sí: para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS}` },
-              { q: '¿Sirve para hipotecario y fiduciario?', a: 'Sí, cubrimos ambos: el informe se ajusta al formato que tu entidad exige.' },
+              { q: '¿Sirve para hipotecario y fiduciario?', a: 'Sí, cubrimos ambos: el informe se ajusta al formato que tu entidad exige.', link: { label: 'Ver tasación para crédito →', href: '/tasaciones/hipotecaria/' } },
               { q: '¿Sirve para un remate bancario?', a: 'Sí, también hacemos tasaciones para remates bancarios por ejecución de hipoteca.' },
-              { q: '¿Qué incluye el informe para crédito?', a: `Es el informe normal más la firma de un tasador inscripto en el registro del BCP, con fotos y una descripción del estado del edificio y de su ubicación. Cuesta más solo por esa firma.` },
+              { q: '¿Qué incluye el informe para crédito?', a: `Es el informe normal más la firma de un tasador inscripto en el registro del BCP, con fotos y una descripción del estado del edificio y de su ubicación. Cuesta más solo por esa firma.`, link: { label: 'Ver tasación para crédito →', href: '/tasaciones/hipotecaria/' } },
             ],
           },
           {
             title: 'Sucesiones y Juicios',
             items: [
-              { q: '¿Sirve para una sucesión?', a: `Sí, para herencias y particiones: el informe lo firma el ${CRED_CSJ.replace("Perito Tasador", "perito tasador")}.` },
-              { q: '¿Sirve para un remate judicial?', a: 'Sí, también hacemos tasaciones periciales para remates judiciales y liquidaciones.' },
+              { q: '¿Sirve para una sucesión?', a: `Sí, para herencias y particiones: el informe lo firma el ${CRED_CSJ.replace("Perito Tasador", "perito tasador")}.`, link: { label: 'Ver informe pericial →', href: '/informes-periciales/#judicial' } },
+              { q: '¿Sirve para un remate judicial?', a: 'Sí, también hacemos tasaciones periciales para remates judiciales y liquidaciones.', link: { label: 'Ver informe pericial →', href: '/informes-periciales/#judicial' } },
               { q: '¿Por qué cuesta más que el informe para compra o venta?', a: 'Porque requiere un informe más detallado y suele ser la base de honorarios de abogados y jueces.' },
               { q: '¿Cuánto tarda una tasación judicial?', a: `${PLAZO_JUDICIAL_TXT} El informe va dirigido al juez y tiene que ser más preciso, porque sobre ese valor se calculan los honorarios.` },
             ],
@@ -962,8 +978,8 @@ export const PAGES = [
           {
             title: 'Para Vender',
             items: [
-              { q: '¿Cuánto cuesta la tasación para vender?', a: `Tiene el mismo costo que el informe oficial (${PRECIO_TXT} ${IVA_TXT}). Si firmás un contrato de exclusividad con uno de nuestros corredores asociados, ese costo se descuenta de la comisión al cerrar la venta.` },
-              { q: '¿Estoy obligado a vender con ustedes?', a: 'No. Podés usar la tasación de forma independiente; el descuento del costo solo aplica si firmás exclusividad con uno de nuestros corredores asociados.' },
+              { q: '¿Cuánto cuesta la tasación para vender?', a: `Tiene el mismo costo que el informe oficial (${PRECIO_TXT} ${IVA_TXT}). Si firmás un contrato de exclusividad con uno de nuestros corredores asociados, ese costo se descuenta de la comisión al cerrar la venta.`, link: { label: 'Ver tasación para vender →', href: '/valuacion-para-vender/' } },
+              { q: '¿Estoy obligado a vender con ustedes?', a: 'No. Podés usar la tasación de forma independiente; el descuento del costo solo aplica si firmás exclusividad con uno de nuestros corredores asociados.', link: { label: 'Ver cómo funciona →', href: '/valuacion-para-vender/' } },
             ],
           },
           {

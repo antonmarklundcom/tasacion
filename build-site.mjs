@@ -206,7 +206,8 @@ function block(section, page) {
       return `<section class="section section--narrow"${section.id ? ` id="${section.id}"` : ''}>
   <div class="container">
     <h2>${esc(section.heading)}</h2>
-    ${nl2p(section.body)}
+    ${nl2p(section.body)}${section.links ? `
+    <p class="lead__links">${section.links.map((l) => `<a class="link" href="${l.href}">${esc(l.label)}</a>`).join(' · ')}</p>` : ''}
     ${section.cta ? `<p><a class="btn btn--primary" href="${section.cta.wa ? waOptionHref('compraventa', page.waContext, page) : section.cta.href}"${section.cta.wa ? ' target="_blank" rel="noopener"' : ''}>${esc(section.cta.label)}</a></p>` : ''}
   </div>
 </section>`;
@@ -408,7 +409,7 @@ function block(section, page) {
   <div class="container">
     ${section.heading ? `<h2>${esc(section.heading)}</h2>` : '<h2>Preguntas frecuentes</h2>'}
     <div class="faq">
-      ${section.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('\n      ')}
+      ${section.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}${f.link ? ` <a class="link" href="${f.link.href}">${esc(f.link.label)}</a>` : ''}</p></details>`).join('\n      ')}
     </div>
   </div>
 </section>`;
@@ -418,7 +419,7 @@ function block(section, page) {
   <div class="container">
     ${section.groups.map((g) => `<h2>${esc(g.title)}</h2>
     <div class="faq">
-      ${g.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('\n      ')}
+      ${g.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}${f.link ? ` <a class="link" href="${f.link.href}">${esc(f.link.label)}</a>` : ''}</p></details>`).join('\n      ')}
     </div>`).join('\n    ')}
   </div>
 </section>`;
