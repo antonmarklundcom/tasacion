@@ -31,6 +31,7 @@ RedirectMatch 404 ^/tools(/|$)
 RedirectMatch 404 ^/deploy(/|$)
 RedirectMatch 404 ^/verify\.mjs$
 RedirectMatch 404 ^/content\.mjs$
+RedirectMatch 404 ^/content(/|$)
 RedirectMatch 404 ^/build-site\.mjs$
 RedirectMatch 404 ^/\.github(/|$)
 

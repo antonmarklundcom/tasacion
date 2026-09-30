@@ -20,7 +20,7 @@ export const CRED_BCP_FIRMA = 'el informe lo firma un tasador inscripto en el re
 export const CRED_BCP_BANCOS = 'Trabajamos con todos los bancos y cooperativas: al gestionar tu carpeta coordinamos la firma que tu entidad requiere.';
 export const PLAZO_TXT = '3 a 5 días hábiles después de la visita';
 export const PLAZO_JUDICIAL_TXT = 'En tasaciones judiciales el plazo lo fija el juzgado, normalmente 15 a 20 días hábiles.';
-export const IVA_TXT = '+ IVA'; // D1 (Anton, 2026-09-10)
+export const IVA_TXT = 'IVA incluido'; // Q2a (Anton, 2026-09-30): mismas cifras, IVA incluido
 export const FACTURA_TXT = 'Emitimos factura legal';
 export const PRECIOS = { compraventa: { min: 800000, max: 1500000 }, judicial: { min: 1800000, max: 2500000 }, credito: { min: 1500000, max: null } };
 export const PRECIO_TXT = rango(PRECIOS.compraventa); // compat: "Gs. 800.000 a Gs. 1.500.000" (sin IVA_TXT; se agrega al renderizar)
@@ -29,6 +29,11 @@ export const PRECIO_CREDITO_TXT = rango(PRECIOS.credito);
 export const PRECIO_NOTA = 'según tipo, tamaño y ubicación del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
 export const FRANJA_COTIZA = 'Presupuesto por proyecto, según la cantidad de lotes y edificaciones dentro de la franja.';
 export const VISITA_TXT = null; // Q7, pendiente de confirmar
+// Condiciones confirmadas por Fer (2026-09-13) y aprobadas por Anton (Q2, 2026-09-30).
+export const TRASLADO_TXT = `En Asunción y Gran Asunción la visita está incluida. En Cordillera y Paraguarí se suma el traslado: + ${fmtGs(200000)} ${IVA_TXT}. Más lejos, el traslado va a presupuesto.`;
+export const URGENTE_TXT = 'Si lo necesitás con urgencia, consultá el recargo por entrega urgente.';
+export const VOLUMEN_TXT = 'Para varias propiedades a la vez, bancos o empresas, tenemos precio por volumen bajo contrato.';
+export const GARANTIA_TXT = 'Si el banco o la cooperativa observa el informe, lo corregimos sin costo.';
 export const EJEMPLO = { valor: 400000000, error: 0.05 };
 
 export const FINALIDADES = [
@@ -154,7 +159,7 @@ export const PAGES = [
     title: 'Tasación de inmuebles en Asunción | Tasación.com.py',
     description: 'Informe oficial de tasación firmado por el Tasador Fernando Capurro, con validez legal y bancaria, para crédito, sucesión o venta. Precio anclado por finalidad, antes de la visita.',
     h1: 'Tasación con validez legal y bancaria, para tu crédito, tu sucesión o tu venta',
-    subcopy: `Informe técnico firmado por el Tasador ${TASADOR}, listo para presentar en tu banco, cooperativa, juzgado o escribanía. Si tu objetivo es vender con exclusividad, el costo se descuenta de la comisión de tu corredor asociado.`,
+    subcopy: `Informe técnico firmado por el Tasador ${TASADOR}, listo para presentar en tu banco, cooperativa, juzgado o escribanía. Para crédito, firma un tasador inscripto en el registro del BCP. Si tu objetivo es vender con exclusividad, el costo se descuenta de la comisión de tu corredor asociado.`,
     sections: [
       {
         type: 'useCases', id: 'finalidades',
@@ -296,7 +301,7 @@ export const PAGES = [
         type: 'faq',
         items: [
           ...verticalFaqCore('una casa'),
-          { q: '¿La visita tiene costo?', a: 'La visita está incluida en el precio del informe, para cualquier finalidad.' },
+          { q: '¿La visita tiene costo?', a: TRASLADO_TXT },
           { q: '¿Qué incluye el informe de una casa?', a: `Visita técnica, comparables reales, justificación del valor con el análisis de mercado, documentación fotográfica, metodología explicada y la firma del profesional. Entrega en ${PLAZO_TXT}.` },
         ],
       },
@@ -534,6 +539,7 @@ export const PAGES = [
           { q: '¿Qué lleva el informe hipotecario?', a: 'Todo lo del informe oficial, más la firma de un tasador inscripto en el registro del BCP. Suma fotos de la vivienda y una descripción de su estado y de dónde está ubicada, que es lo que el banco revisa.' },
           { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
           { q: '¿Por qué cuesta más que el informe para compra o venta?', a: 'Porque lleva la firma de un tasador inscripto en el registro del BCP, que es lo que tu banco exige.' },
+          { q: '¿Y si el banco observa el informe?', a: GARANTIA_TXT },
         ],
       },
       otrasTasaciones('Servicios relacionados', [
@@ -949,7 +955,9 @@ export const PAGES = [
               { q: '¿Cuánto cuesta según la finalidad?', a: `Compra o venta: ${PRECIO_TXT} ${IVA_TXT}. Sucesiones y juicios: ${PRECIO_JUDICIAL_TXT} ${IVA_TXT}. Crédito bancario: ${PRECIO_CREDITO_TXT} ${IVA_TXT}. ${PRECIO_NOTA.charAt(0).toUpperCase() + PRECIO_NOTA.slice(1)}. ${FACTURA_TXT}.`, link: { label: 'Ver precios por finalidad →', href: '/informes-periciales/#compraventa' } },
               { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
               { q: '¿Quién firma el informe?', a: `El Tasador Fernando Capurro, ${CRED_CSJ} y ${CRED_ARQ}. Para crédito, ${CRED_BCP_FIRMA}.` },
-              { q: '¿La visita tiene costo?', a: 'La visita está incluida en el precio del informe, para cualquier finalidad.' },
+              { q: '¿La visita tiene costo?', a: TRASLADO_TXT },
+              { q: '¿Hacen entregas urgentes?', a: `Sí. El plazo normal es de ${PLAZO_TXT}. ${URGENTE_TXT}` },
+              { q: '¿Hay precio por varias propiedades?', a: VOLUMEN_TXT },
               { q: '¿Por qué varía el precio?', a: 'Primero depende de la finalidad del informe, que define el rango de precio. Dentro de ese rango, el monto lo fijan el tipo, el tamaño y la ubicación del inmueble. Te confirmamos el monto por WhatsApp antes de agendar la visita.' },
               { q: '¿Qué es un informe oficial?', a: 'Es un informe individual, para un solo inmueble. Es oficial porque lo firma un profesional matriculado.' },
               { q: '¿Qué incluye el informe?', a: `Visita técnica, comparables reales, justificación del valor con el análisis de mercado, documentación fotográfica, metodología explicada y la firma del profesional. Lo entregamos en ${PLAZO_TXT}.`, link: { label: 'Ver el informe oficial →', href: '/informes-periciales/#compraventa' } },
@@ -964,6 +972,7 @@ export const PAGES = [
               { q: '¿Sirve para mi banco o cooperativa?', a: `Sí: para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS}` },
               { q: '¿Sirve para hipotecario y fiduciario?', a: 'Sí, cubrimos ambos: el informe se ajusta al formato que tu entidad exige.', link: { label: 'Ver tasación para crédito →', href: '/tasaciones/hipotecaria/' } },
               { q: '¿Sirve para un remate bancario?', a: 'Sí, también hacemos tasaciones para remates bancarios por ejecución de hipoteca.' },
+              { q: '¿Qué pasa si el banco observa el informe?', a: GARANTIA_TXT },
               { q: '¿Qué incluye el informe para crédito?', a: `Es el informe normal más la firma de un tasador inscripto en el registro del BCP, con fotos y una descripción del estado del edificio y de su ubicación. Cuesta más solo por esa firma.`, link: { label: 'Ver tasación para crédito →', href: '/tasaciones/hipotecaria/' } },
             ],
           },
@@ -988,7 +997,7 @@ export const PAGES = [
             items: [
               { q: '¿Qué es un perito tasador y cuándo lo necesito?', a: 'Es un profesional habilitado para determinar el valor técnico de un inmueble. Lo necesitás para vender con el precio correcto, o para trámites bancarios, legales y sucesorios.' },
               { q: '¿Cómo solicito una tasación?', a: 'Escribinos por WhatsApp con el tipo de inmueble y la zona. Coordinamos la visita.' },
-              { q: '¿Atienden toda Asunción y Gran Asunción?', a: 'Sí, cubrimos Asunción y el Gran Asunción; consultanos por otras zonas del interior.' },
+              { q: '¿Atienden toda Asunción y Gran Asunción?', a: `Sí, y también el interior. ${TRASLADO_TXT}` },
             ],
           },
         ],
@@ -1021,7 +1030,7 @@ export const PAGES = [
       {
         type: 'lead',
         heading: 'Cómo preparar tu consulta',
-        body: "Atendemos Asunción, Gran Asunción y todo Paraguay. Si tu inmueble está en el interior, coordinamos el traslado por WhatsApp: contanos la localidad y cómo se llega para acordar la visita y confirmar el presupuesto antes de agendar.\n\nForma de pago: 50% por transferencia para agendar la visita y 50% contra entrega del informe. Aceptamos efectivo, transferencia y QR; no aceptamos tarjeta. Emitimos factura legal.\n\nEn horario comercial, la respuesta por WhatsApp suele ser inmediata. Atendemos de lunes a viernes de 08:00 a 18:00 y los sábados de 08:00 a 12:00. Si escribís fuera de ese horario, dejanos tu consulta para retomarla al volver a la atención.\n\nTené a mano la dirección del inmueble y explicanos para qué necesitás la tasación: vender, comprar, solicitar un crédito o presentar un informe en un trámite judicial. Si contás con una escritura o un plano, avisános; ayudan a identificar la propiedad y sus superficies. También indicá si hay una fecha límite o requisitos del banco o del juzgado, así podemos revisar el alcance desde el primer mensaje.",
+        body: `Atendemos Asunción, Gran Asunción y todo Paraguay. Si tu inmueble está en el interior, coordinamos el traslado por WhatsApp: contanos la localidad y cómo se llega para acordar la visita y confirmar el presupuesto antes de agendar. ${TRASLADO_TXT} ${URGENTE_TXT} ${VOLUMEN_TXT}\n\nForma de pago: 50% por transferencia para agendar la visita y 50% contra entrega del informe. Aceptamos efectivo, transferencia y QR; no aceptamos tarjeta. Emitimos factura legal.\n\nEn horario comercial, la respuesta por WhatsApp suele ser inmediata. Atendemos de lunes a viernes de 08:00 a 18:00 y los sábados de 08:00 a 12:00. Si escribís fuera de ese horario, dejanos tu consulta para retomarla al volver a la atención.\n\nTené a mano la dirección del inmueble y explicanos para qué necesitás la tasación: vender, comprar, solicitar un crédito o presentar un informe en un trámite judicial. Si contás con una escritura o un plano, avisános; ayudan a identificar la propiedad y sus superficies. También indicá si hay una fecha límite o requisitos del banco o del juzgado, así podemos revisar el alcance desde el primer mensaje.`,
         cta: { label: 'Consultá cómo tratamos tus datos en el aviso de privacidad.', href: '/privacidad/' },
       },
       {
