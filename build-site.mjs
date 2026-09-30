@@ -11,11 +11,20 @@ import {
 // Cache-busting: el CDN de Hostinger cachea site.css/site.js hasta 7 días por
 // URL; sin un ?v= que cambie con el contenido, un deploy puede quedar detrás
 // del edge (visto en vivo el 2026-09-11). El hash se recalcula en cada build.
+// Se quita \r antes de hashear: un checkout Windows (CRLF) y uno Linux (LF)
+// tienen que dar el mismo ?v=, si no verify.mjs falla en CI.
+const assetHash = (f) => createHash('sha1').update(readFileSync(f, 'utf8').replace(/\r/g, '')).digest('hex').slice(0, 8);
 const ASSET_V = {
-  fonts: createHash('sha1').update(readFileSync('assets/fonts/fonts.css')).digest('hex').slice(0, 8),
-  css: createHash('sha1').update(readFileSync('assets/css/site.css')).digest('hex').slice(0, 8),
-  js: createHash('sha1').update(readFileSync('assets/js/site.js')).digest('hex').slice(0, 8),
+  fonts: assetHash('assets/fonts/fonts.css'),
+  css: assetHash('assets/css/site.css'),
+  js: assetHash('assets/js/site.js'),
 };
+
+// <lastmod> del sitemap: fecha fija, nunca la del día del build (si no, el
+// HTML/sitemap commiteado deja de coincidir con el rebuild al día siguiente).
+// Subirla a mano cuando cambia el contenido; una página puede fijar su propio
+// `lastmod` en content.mjs.
+const SITE_LASTMOD = '2026-09-13';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
@@ -132,7 +141,7 @@ function renderFooter() {
     </div>
   </div>
   <div class="container ftr__base">
-    <p>© <span id="yr">${new Date().getFullYear()}</span> Tasación.com.py — Asunción, Paraguay.</p>
+    <p>© <span id="yr">${SITE_LASTMOD.slice(0, 4)}</span> Tasación.com.py — Asunción, Paraguay.</p>
   </div>
 </footer>`;
 }
@@ -711,14 +720,13 @@ const sitemapPriorities = {
   "/contacto/": "0.6",
   "/privacidad/": "0.3"
 };
-const buildDate = new Date().toISOString().slice(0, 10);
 const sitemapPages = PAGES.filter((page) => !page.noindex);
 const sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
   '<!-- ' + sitemapPages.length + ' URLs. 404.html y gracias.html excluidas a propósito. -->',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ...sitemapPages.map((page) => ['  <url>',
     '    <loc>' + esc(SITE + page.slug) + '</loc>',
-    '    <lastmod>' + esc(page.lastmod ?? buildDate) + '</lastmod>',
+    '    <lastmod>' + esc(page.lastmod ?? SITE_LASTMOD) + '</lastmod>',
     '    <changefreq>monthly</changefreq>',
     '    <priority>' + (sitemapPriorities[page.slug] ?? '0.6') + '</priority>',
     '  </url>'].join('\n')),

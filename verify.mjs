@@ -23,8 +23,8 @@ const { routes, copyDone } = routesDoc;
 step('build limpio');
 execSync('node build-site.mjs', { stdio: 'inherit' });
 try {
-  execSync('git diff --exit-code -- "*.html"', { stdio: 'pipe' });
-  ok('node build-site.mjs no deja cambios en *.html');
+  execSync('git diff --exit-code -- "*.html" sitemap.xml', { stdio: 'pipe' });
+  ok('node build-site.mjs no deja cambios en *.html ni sitemap.xml');
 } catch {
   fail('build-site.mjs generó HTML distinto al commiteado — correr `node build-site.mjs` y commitear');
 }
