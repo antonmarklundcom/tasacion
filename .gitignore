@@ -5,6 +5,7 @@ leads.log
 zone-img/
 docs/screenshots/
 dist/
+audit-shots/
 
 # Config privada de VenderCRM (clave real, solo en el PC de Anton). Solo *.example.* va a git.
 deploy/vendercrm-config.php
