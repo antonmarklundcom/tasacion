@@ -16,7 +16,7 @@ Goal: improve the site a lot (content depth, conversion, trust) without losing a
 |---|---|---|
 | Fresh clone, read README/docs/build/templates | Yes | No README exists. The source of truth is `content.mjs` (copy and pages), `build-site.mjs` (renderer), `verify.mjs` (gate), `docs/routes.json` (frozen URLs, titles and canonicals), `.htaccess` (legacy 301s and blocking), `.github/workflows/verify.yml` (CI). |
 | Crawl every sitemap URL | Yes, against a **local build** of the live branch | This sandbox's network policy blocks `tasacion.com.py` (proxy 403, WebFetch "egress blocked"). The build window **must re-crawl the live host** and diff it against this baseline (see §4.3). |
-| Playwright at 1366 and 390 | Yes | 18 pages × 2 widths. Full-page screenshots are in `./audit-shots/` in this session's working copy. They are not committed (22 MB), and the build window regenerates them. |
+| Playwright at 1366 and 390 | Yes | 18 pages × 2 widths. Full-page screenshots (36, WebP, 6.4 MB) are committed in `docs/audit/audit-shots/`. They are under `docs/` so `.htaccess` keeps them off the live site. Keep new screenshots out of the repo root, which is served publicly. |
 | Keyword data (keyword-library MCP) | **Not available** | The MCP is not connected in this environment (`ListConnectors` returns nothing). §3 is therefore a provisional map built from the existing page targets. The build window's Phase 0 has to run `list_projects → project_overview → list_groups → get_group → keyword_lookup` and confirm or kill each row before any new page is built. |
 | `C:\Claude 1\site-verify-report.md` | Not reachable | That is on Anton's PC. The rules it verified (number, messages, SEO division) are copied verbatim into this plan and the next-window prompt. |
 

@@ -140,7 +140,7 @@ Add npm scripts: `audit`, `seo:diff`, `check:contact`, `check:links`. Opus revie
    - `node tools/link-check.mjs`
    - `node tools/seo-audit.mjs` → `docs/audit/audit-after-<pr>.json`
    - `node tools/seo-diff.mjs docs/audit/audit-before.json docs/audit/audit-after-<pr>.json`
-4. Playwright pass at **1366 and 390**: console errors, failed requests (ignore only hosts the sandbox blocks, and name them), broken images, horizontal scroll, and **viewport** screenshots of changed pages to `audit-shots/` (untracked; attach the key ones to the PR as a comment only if useful).
+4. Playwright pass at **1366 and 390**: console errors, failed requests (ignore only hosts the sandbox blocks, and name them), broken images, horizontal scroll, and **viewport** screenshots of changed pages to `audit-shots/` (untracked scratch; the committed baseline shots are in `docs/audit/audit-shots/`; attach the key ones to the PR as a comment only if useful).
 5. Number check: `git grep` for the old-number pattern = 0 hits. Every `wa.me` link in the built HTML = `595992279599` with non-empty text.
 6. Re-read your own diff adversarially before pushing. One validated push beats three speculative ones.
 
