@@ -15,8 +15,11 @@ Model: **Opus 5.5, effort medium** as director. Subagents: **Sonnet 5.5** at the
   - `content/wa-messages.mjs` holds 130 messages. Purpose ids: compraventa, hipotecaria, credito, sucesion, venta, empresa, franja, consulta.
   - `tools/check-contact.mjs` runs in `verify.mjs`.
   - Any new WhatsApp CTA must add its text to the map; the check fails otherwise.
-- **Next: Phase 3.** No QA-tooling PR existed, so build it.
-- **Then:** Phase 4 → Phase 5 → Phase 7.
+- **Done: Phase 3** (PR #20: seo-audit, seo-diff, link-check; link-check runs in verify).
+- **Done: Phase 4** (PR #21: Fer's facts, FAQ +8 and one per vertical, contextual links).
+- **Done: Phase 5** (PR #22: mobile sticky bar, FAQ/judicial CTAs, form purpose + city, gracias follow-up; CRM extras go in `fields`).
+- **Partly done: Phase 7** (breadcrumbs, casas/FAQ descriptions). Items 13, 14 and 17 still wait on Q2–Q5. See `docs/audit/BUILD-REPORT-2026-09-30.md`.
+- **Next:** get Q1–Q7 answered (they were not answered on 2026-09-30), do the rest of Phase 7, run the live checks once master deploys, and do Phase 6 only with the keyword MCP connected.
 - **Before merging anything:** check the Q answers Anton gave in the previous chat (Q1–Q7) and ask again for those still open.
 - **Deploy:** until Anton confirms Hostinger deploys master (Q1), merges to master do **not** reach the live site. Note this in each PR rather than blocking on it.
 - **When you bump content:** set `SITE_LASTMOD` in `build-site.mjs` to the day of the content change, or add a per-page `lastmod`. Rebuild and commit.
