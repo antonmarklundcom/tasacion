@@ -38,6 +38,8 @@ RedirectMatch 404 ^/\.github(/|$)
 # Log de leads: contiene datos personales (teléfono, etc). robots.txt ya lo
 # bloquea para crawlers; esto lo bloquea para cualquiera con la URL directa.
 RedirectMatch 404 ^/leads\.log$
+# Config con la clave del CRM, si está dentro de public_html.
+RedirectMatch 404 ^/vendercrm-config\.php$
 
 # CORE 15 (rebuild anterior) -> sitemap actual. build-images.mjs y contenido
 # quedaron atrás; estos 301 evitan 404s de cualquier link/bookmark viejo.
