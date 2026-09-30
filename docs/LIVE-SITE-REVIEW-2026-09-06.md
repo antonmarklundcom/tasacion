@@ -222,7 +222,7 @@ Evidence:
 Deductions:
 
 - **Structured data**: only `FAQPage` on 11 pages. No `LocalBusiness`/`ProfessionalService`
-  (name, telephone `+595995628862`, `areaServed` Asunción/Gran Asunción, `priceRange`
+  (name, telephone `+595992279599`, `areaServed` Asunción/Gran Asunción, `priceRange`
   "Gs. 800.000–1.500.000", `founder`/`employee` Fernando Capurro), no `Service` per vertical,
   no `BreadcrumbList`. `PLACEHOLDERS.md` mentions a JSON-LD that the current renderer never emits.
 - **Internal linking**: vertical pages link to 2 siblings and to `/valuacion-para-vender/` only.

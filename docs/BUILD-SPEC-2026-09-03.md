@@ -162,8 +162,8 @@ return [
   'site_name'   => 'Tasación.com.py',
   'base_url'    => 'https://tasacion.com.py',
   'locale'      => 'es_PY',
-  'wa_number'   => '595995628862',     // digits only, one place for the whole site
-  'wa_display'  => '0995 628 862',
+  'wa_number'   => '595992279599',     // digits only, one place for the whole site
+  'wa_display'  => '0992 279 599',
   'price_min'   => 800000,
   'price_max'   => 1500000,
   'price_note'  => 'según tipo de inmueble y superficie',   // IVA: PLACEHOLDER, see docs/PLACEHOLDERS.md
@@ -539,7 +539,7 @@ and the deploy steps (upload zip to `public_html`, create
 then with curl asserts: all 17 routes → 200 (gracias included); 5 old routes →
 301 with the right Location; `/tasaciones/casas` (no slash) → 301 to slashed;
 `/nada/` → 404; `/go/whatsapp.php?src=check-test&t=casa&z=Luque` → 302 with
-Location starting `https://wa.me/595995628862?text=` and one new line in
+Location starting `https://wa.me/595992279599?text=` and one new line in
 `storage/wa-clicks.log` containing `check-test`; `/go/stats.php` → 403 when no
 password configured; a POST to `/api/lead.php` with `telefono=0981123456&form=valuacion&tipo=Casa`
 → 303 to `/gracias/?f=valuacion` and a new line in `storage/leads.log`; a POST

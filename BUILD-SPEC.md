@@ -20,7 +20,7 @@ CIUDAD:         Asunción + Departamento Central
 BARRIOS:        Villa Morra · Carmelitas · Las Mercedes · Sajonia · San Vicente · Barrio Jara
 ZONAS:          Asunción, Luque, San Lorenzo, Fernando de la Mora, Lambaré,
                 Capiatá, Mariano Roque Alonso (+ Interior som specialfall)
-WHATSAPP:       +595 995 628862          ⚠️ delat stage-1-nummer, ej dedikerat
+WHATSAPP:       +595 992 279 599          ⚠️ delat stage-1-nummer, ej dedikerat
 TELÉFONO FIJO:  saknas                   ⚠️ finns inget — ingen rad skrivs
 SERVICIOS:      1) tasación online sin costo
                 2) informe formal de tasación
@@ -213,7 +213,7 @@ elementen saknas (det gör det redan; guarden `if (send && preview)` finns).
 `WA_NUMBER` deklareras fortfarande överst i varje HTML-fil, före `site.js`:
 
 ```html
-<script>var WA_NUMBER = '595995628862';</script>
+<script>var WA_NUMBER = '595992279599';</script>
 ```
 
 ### 2.5 Gemensam header och footer
@@ -481,7 +481,7 @@ sanna. Där en rubrik står nedan ska exakt den texten användas.
 - H1: `Tasación online de inmuebles, sin costo`
 - lede: `Nos contás lo que ya sabés de tu propiedad y te devolvemos un rango de valor con la explicación de cómo llegamos a él. No hace falta que vengas a una oficina, no pedimos tarjeta y no hay nada que firmar para recibirlo.`
 - CTA primär: `Pedí tu rango por WhatsApp` · CTA sekundär: `Armar mi consulta` → `/cotizador/`
-- under CTA: `O llamanos: 0995 628 862`
+- under CTA: `O llamanos: 0992 279 599`
 
 **S3 — Qué te devolvemos**
 - eyebrow: `Qué recibís`
@@ -1238,7 +1238,7 @@ ovan är byggbara utan den, men listan över *fler* guider får inte hittas på.
 
 ## 9. WHATSAPP-PREFILL PER SIDA (§10.5)
 
-Alla länkar: `https://wa.me/595995628862?text=` + URL-kodad text.
+Alla länkar: `https://wa.me/595992279599?text=` + URL-kodad text.
 Alla bär `data-ev="whatsapp_click"` + `data-ev-loc`.
 `WA_NUMBER`-konstanten skriver om numret vid load; de literala `href`-värdena
 är fallback utan JS.
@@ -1421,7 +1421,7 @@ Körs **per sida**, alla 15. Rapportera pass/fail ärligt, sida för sida.
 - [ ] `<html lang="es-PY">` på varje sida
 
 **WhatsApp**
-- [ ] Varje `wa.me`-länk har rätt nummerformat (`595995628862`, inga mellanslag, inget `+`)
+- [ ] Varje `wa.me`-länk har rätt nummerformat (`595992279599`, inga mellanslag, inget `+`)
 - [ ] Varje `wa.me`-länk har sidspecifik förifylld text enligt §9
 - [ ] `WA_NUMBER`-konstanten finns överst i varje HTML-fil
 - [ ] Grön `#25D366` används ENDAST på WhatsApp-element
@@ -1462,7 +1462,7 @@ uppfinnas för att fylla en sektion.
 1. **RUC, factura legal, razón social** — ingen rad finns på någon av de 15 sidorna.
 2. **Matrícula / registro profesional** — ingen förtroendesektion byggd.
 3. **Habilitación BCP** — medvetet frånvarande. Om den någon gång finns är det en ny sektion, inte en rad.
-4. **Dedikerat WhatsApp-nummer** — en rad per fil (`WA_NUMBER`), plus sök-och-ersätt av `595995628862` när bytet är definitivt.
+4. **Dedikerat WhatsApp-nummer** — en rad per fil (`WA_NUMBER`), plus sök-och-ersätt av `595992279599` när bytet är definitivt.
 5. **Prisgrid för informe** — blockerar inget i CORE 15, men krävs för en `/precios/`-sida.
 6. **Comparables-tabell (Gs./m² per ort och typ, med datum och källa)** — blockerar `/cotizador/` Option B (§7.1).
 7. **Reseñas** — inga. `aggregateRating` får inte läggas till förrän de finns, ordagrant och med förnamn + barrio.

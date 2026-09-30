@@ -4,9 +4,10 @@ import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import {
-  PAGES, EXTRAS, NAV, WA_NUMBER, SITE, TASADOR, PRECIO_TXT, WA_MENU,
+  PAGES, EXTRAS, NAV, SITE, TASADOR, PRECIO_TXT,
   CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS, FINALIDADES,
 } from './content.mjs';
+import { WA_NUMBER, WA_DISPLAY, TEL_HREF, PURPOSES, menuRows, defaultPurpose, waLink } from './content/wa-messages.mjs';
 
 // Cache-busting: el CDN de Hostinger cachea site.css/site.js hasta 7 días por
 // URL; sin un ?v= que cambie con el contenido, un deploy puede quedar detrás
@@ -28,21 +29,17 @@ const SITE_LASTMOD = '2026-09-13';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
-const waHref = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 const nl2p = (body) => body.split('\n\n').map((p) => `<p>${esc(p)}</p>`).join('\n');
 
-// optionId 'consulta' + page.waConsultaText (§3.5, corporativa/franja-de-dominio):
-// esa página sobreescribe el texto de la 5ª opción del menú, en el panel y en
-// cualquier trigger que abra 'consulta' desde esa página.
-function waOptionText(optionId, ctx, page) {
-  const opt = WA_MENU.options.find((o) => o.id === optionId) || WA_MENU.options[0];
-  if (optionId === 'consulta' && page && page.waConsultaText) return page.waConsultaText;
-  return opt.text(ctx);
+// Todos los textos de WhatsApp salen de content/wa-messages.mjs (waLink falla
+// en el build si falta el mensaje de una página × finalidad).
+function waOptionHref(optionId, ctx, page) {
+  return waLink(page.slug, optionId);
 }
 
-function waOptionHref(optionId, ctx, page) {
-  return waHref(waOptionText(optionId, ctx, page));
-}
+// Finalidad principal de la página: el botón primario del hero, o la
+// finalidad por defecto de la ruta. Alimenta FAB, fila resaltada y header sin JS.
+const pagePurpose = (page) => (page.hero && page.hero.primary && page.hero.primary.waOption) || defaultPurpose(page.slug);
 
 // -------------------------------------------------------------- icons (SVG)
 const ICON_CHECK = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -52,7 +49,8 @@ const ICON_SEAL = `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" 
 const ICON_BURGER = `<svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 
 // ---------------------------------------------------------------- header/nav
-function renderNav(current, ctx) {
+function renderNav(current, ctx, page) {
+  const defaultHref = waLink(current, pagePurpose(page));
   const items = NAV.map((i) => {
     if (i.children) {
       const childActive = i.children.some((c) => c.href === current);
@@ -88,8 +86,8 @@ function renderNav(current, ctx) {
         ${items}
       </ul>
     </nav>
-    <a class="wa-pill" href="${waHref(WA_MENU.fallback(ctx))}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false">${ICON_WA}WhatsApp</a>
-    <a class="wa-round" href="${waHref(WA_MENU.fallback(ctx))}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="WhatsApp">${ICON_WA}</a>
+    <a class="wa-pill" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false">${ICON_WA}WhatsApp</a>
+    <a class="wa-round" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="WhatsApp">${ICON_WA}</a>
     <button type="button" class="hdr__burger" data-hdr-burger aria-expanded="false" aria-controls="hdr-panel" aria-label="Abrir menú">${ICON_BURGER}</button>
   </div>
   <div class="hdr__panel" id="hdr-panel" data-hdr-panel>
@@ -102,7 +100,7 @@ function renderNav(current, ctx) {
 </header>`;
 }
 
-function renderFooter() {
+function renderFooter(slug) {
   return `<footer class="ftr">
   <div class="container ftr__grid">
     <div>
@@ -136,8 +134,8 @@ function renderFooter() {
     </nav>
     <div>
       <p class="ftr__label">Contacto</p>
-      <p><a class="ftr__wa" href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener" data-ev="wa_click" data-ev-loc="footer">WhatsApp: +595 995 628862</a></p>
-      <p><a href="tel:+595995628862">Llamar</a></p>
+      <p><a class="ftr__wa" href="${waLink(slug, 'footer')}" target="_blank" rel="noopener" data-ev="wa_click" data-ev-loc="footer">WhatsApp: ${WA_DISPLAY}</a></p>
+      <p><a href="${TEL_HREF}">Llamar</a></p>
     </div>
   </div>
   <div class="container ftr__base">
@@ -148,8 +146,8 @@ function renderFooter() {
 
 // ------------------------------------------------------------------ wa menu
 function renderWaMenu(ctx, page) {
-  const defaultOption = (page && page.hero && page.hero.primary && page.hero.primary.waOption) || 'informe';
-  const options = WA_MENU.options.map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waHref(waOptionText(o.id, ctx, page))}" target="_blank" rel="noopener" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
+  const defaultOption = pagePurpose(page);
+  const options = menuRows(page.slug).map((id) => ({ id, ...PURPOSES[id] })).map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waLink(page.slug, o.id)}" target="_blank" rel="noopener" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
           <span class="wa-menu__opt-title">${esc(o.label)}</span>
           <span class="wa-menu__opt-sub">${esc(o.sub)}</span>
         </a></li>`).join('\n        ');
@@ -209,7 +207,7 @@ function block(section, page) {
   <div class="container">
     <h2>${esc(section.heading)}</h2>
     ${nl2p(section.body)}
-    ${section.cta ? `<p><a class="btn btn--primary" href="${section.cta.wa ? waOptionHref('informe', page.waContext, page) : section.cta.href}"${section.cta.wa ? ' target="_blank" rel="noopener"' : ''}>${esc(section.cta.label)}</a></p>` : ''}
+    ${section.cta ? `<p><a class="btn btn--primary" href="${section.cta.wa ? waOptionHref('compraventa', page.waContext, page) : section.cta.href}"${section.cta.wa ? ' target="_blank" rel="noopener"' : ''}>${esc(section.cta.label)}</a></p>` : ''}
   </div>
 </section>`;
 
@@ -227,7 +225,7 @@ function block(section, page) {
     case 'priceBlock': {
       const eyebrow = section.eyebrow || 'El informe oficial';
       const ctaLabel = section.ctaLabel || 'Pedir mi informe por WhatsApp';
-      const waOption = section.waOption || 'informe';
+      const waOption = section.waOption || 'compraventa';
       const figureTxt = (section.figure || PRECIO_TXT).replace(/^desde Gs\./, 'Desde Gs.');
       const note = section.note || 'según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
       return `<section class="price-panel" id="incluye">
@@ -462,7 +460,7 @@ function block(section, page) {
   <div class="container">
     <h2>${esc(section.heading)}</h2>
     <p>${esc(section.body)}</p>
-    <form class="form" action="/lead-forward.php" method="post">
+    <form class="form" action="/lead-forward.php" method="post" data-wa-error="${attr(waLink('/contacto/', 'error'))}">
       <input type="hidden" name="page_url" id="page_url">
       <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
       <label class="field">Nombre completo<input type="text" name="nombre" required></label>
@@ -580,7 +578,7 @@ function professionalServiceJsonLd() {
     '@type': 'ProfessionalService',
     name: 'Tasación.com.py',
     url: SITE,
-    telephone: `+${WA_NUMBER}`,
+    telephone: '+' + WA_NUMBER,
     areaServed: ['Asunción', 'Gran Asunción'],
     priceRange: 'Gs. 800.000 – 2.500.000',
     founder: {
@@ -653,7 +651,6 @@ function renderPage(page) {
 <meta charset="utf-8">
 <script src="https://crm.clientes.com.py/vc-attribution.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>var WA_NUMBER = '${WA_NUMBER}';</script>
 <script>var ANALYTICS_ID = '';</script>
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
@@ -675,13 +672,13 @@ ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="stylesheet" href="/assets/css/site.css?v=${ASSET_V.css}">
 ${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
 <body data-page-context="${attr(page.waContext)}">
-${renderNav(page.slug, page.waContext)}
+${renderNav(page.slug, page.waContext, page)}
 <main>
 ${renderHero(page)}
 ${trust}
 ${body}
 </main>
-${renderFooter()}
+${renderFooter(page.slug)}
 ${renderWaMenu(page.waContext, page)}
 <script defer src="/assets/js/site.js?v=${ASSET_V.js}"></script>
 </body>

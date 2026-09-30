@@ -3,6 +3,7 @@
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
+import { MESSAGES, menuRows } from '../content/wa-messages.mjs';
 
 // En este sandbox Playwright viene preinstalado en /opt/pw-browsers con una
 // versión fija; en CI, `npx playwright install --with-deps chromium` deja el
@@ -49,8 +50,9 @@ try {
 
     const options = page.locator('.wa-menu__option');
     const count = await options.count();
-    if (count !== 5) fail(`el panel tiene ${count} opciones (debe tener 5)`);
-    else ok('el panel tiene 5 opciones');
+    const wantRows = menuRows('/tasaciones/terrenos/').length;
+    if (count !== wantRows) fail(`el panel tiene ${count} opciones (debe tener ${wantRows})`);
+    else ok(`el panel tiene ${wantRows} opciones`);
 
     const current = page.locator('.wa-menu__option--current');
     await current.waitFor({ state: 'attached' });
@@ -60,8 +62,8 @@ try {
 
     const href = await current.getAttribute('href');
     const decoded = decodeURIComponent(href.split('?text=')[1] || '');
-    if (!decoded.includes('Tasación de Terrenos') || !decoded.includes('informe oficial')) {
-      fail('el texto de la opción 1 no menciona el contexto/oferta esperados: ' + decoded);
+    if (decoded !== MESSAGES['/tasaciones/terrenos/'].compraventa) {
+      fail('el texto de la opción 1 no es MESSAGES[terrenos].compraventa: ' + decoded);
     } else ok('href de la opción 1 correcto: ' + decoded);
 
     // stacking: el subtítulo debe quedar debajo del título, no al lado (§4 fix).
@@ -108,9 +110,9 @@ try {
   // ------------------------------------------------------------- foco por página
   {
     const cases = [
-      { path: '/tasaciones/hipotecaria/', expected: 'credito' },
-      { path: '/tasaciones/franja-de-dominio/', expected: 'consulta' },
-      { path: '/', expected: 'informe' },
+      { path: '/tasaciones/hipotecaria/', expected: 'hipotecaria' },
+      { path: '/tasaciones/franja-de-dominio/', expected: 'franja' },
+      { path: '/', expected: 'compraventa' },
     ];
     for (const c of cases) {
       const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
@@ -188,7 +190,7 @@ try {
       fail('sin JS, el FAB no es un <a> a wa.me con ?text=');
     } else {
       const decoded = decodeURIComponent(fabHref.split('?text=')[1]);
-      if (!decoded.includes('Tasación de Terrenos')) fail('sin JS, el FAB no lleva el contexto de la página');
+      if (decoded !== MESSAGES['/tasaciones/terrenos/'].compraventa) fail('sin JS, el FAB no lleva el mensaje de la página');
       else ok('sin JS, el FAB es un enlace directo con el contexto correcto');
     }
     const panelVisible = await page.locator('[data-wa-panel]').isVisible();

@@ -428,7 +428,7 @@ export const WA_MENU = {
 | `gracias.html` | `Gracias` |
 
 Ejemplo (opción 1 en terrenos): `Hola, vengo de la página de Tasación de Terrenos y quiero un
-informe oficial de tasación.` URL: `https://wa.me/595995628862?text=` + `encodeURIComponent(msg)`.
+informe oficial de tasación.` URL: `https://wa.me/595992279599?text=` + `encodeURIComponent(msg)`.
 
 ### 4.3 Comportamiento y degradación
 
@@ -602,7 +602,7 @@ ningún `.btn--primary` hacia lo gratis. Mergear y pasar a PR-3.
 8. **Sin JS:** con JS deshabilitado (Playwright `javaScriptEnabled: false` en
    `tests/wa-menu.mjs`), la pill del header y el FAB son `<a>` a `wa.me` con `?text=` que
    contiene el `waContext`; el panel no se ve; los enlaces `tel:` y `wa.me` llevan
-   `595995628862`.
+   `595992279599`.
 9. **Formulario:** `/contacto/` envía por POST a `/lead-forward.php` los campos `nombre`,
    `telefono`, `mensaje` (radio), `email` (opcional), `page_url`, `website` (honeypot); no
    hay ningún otro `name=`.
