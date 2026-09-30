@@ -377,3 +377,50 @@ ul.list--links li{margin-bottom:.4em}
   .mbar__btn--wa{background:var(--wa);color:#fff}
 }
 @media (prefers-reduced-motion:reduce){.mbar{transition:none !important}}
+
+/* ---------------------------------------------------------------- contacto: formulario arriba + aside */
+.form--wide{max-width:none}
+.form__row{display:grid;gap:14px}
+@media (min-width:640px){.form__row{grid-template-columns:1fr 1fr}}
+.field textarea{padding:12px 14px;border:1px solid var(--hairline);border-radius:var(--r-sm);font-size:16px;font-family:inherit;resize:vertical;min-height:110px}
+.field textarea:focus-visible{outline:3px solid var(--navy);outline-offset:1px}
+.field input::placeholder,.field textarea::placeholder{color:#9AA3AD}
+.form__note{margin:0;font-size:.9rem;color:var(--ink-muted)}
+.contact-split{scroll-margin-top:80px}
+.contact-split__grid{display:grid;gap:32px}
+@media (min-width:900px){.contact-split__grid{grid-template-columns:7fr 5fr;align-items:start;gap:48px}}
+.contact-split__form{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:32px}
+@media (max-width:640px){.contact-split__form{padding:24px 20px;border-radius:20px}}
+.contact-split__form h2{margin-top:0}
+.contact-split__form .btn{width:100%}
+.contact-split__aside{background:var(--navy);color:var(--on-dark);border-radius:var(--r-lg);padding:32px;display:flex;flex-direction:column;gap:16px}
+@media (max-width:640px){.contact-split__aside{padding:24px 20px;border-radius:20px}}
+@media (min-width:900px){.contact-split__aside{position:sticky;top:96px}}
+.contact-split__aside p{margin:0;color:var(--on-dark-muted)}
+.contact-split__aside-h{margin:0;color:var(--on-dark)}
+.contact-split__aside .btn{width:100%}
+.contact-split__tel{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:inherit}
+.contact-split__tel svg{width:18px;height:18px;flex:none}
+.contact-split__facts{list-style:none;margin:8px 0 0;padding:16px 0 0;border-top:1px solid var(--hairline-dark);display:grid;gap:12px}
+.contact-split__facts strong{display:block;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-line)}
+.contact-split__facts span{color:var(--on-dark)}
+
+/* ---------------------------------------------------------------- gracias */
+.gracias-next__purpose{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:var(--r-pill);background:var(--gold-tint);border:1px solid var(--gold-line);font-weight:600}
+.gracias-next__purpose[hidden]{display:none}
+.gracias-next__card{margin-top:40px;display:grid;gap:24px;background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:32px}
+@media (min-width:900px){.gracias-next__card{grid-template-columns:1fr 1fr;align-items:center;gap:48px}}
+@media (max-width:640px){.gracias-next__card{padding:24px 20px;border-radius:20px}}
+.gracias-next__card h3{margin-top:0}
+.gracias-next__list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.gracias-next__list li{display:flex;gap:10px;align-items:flex-start}
+.gracias-next__list svg{width:18px;height:18px;flex:none;margin-top:3px;color:var(--navy)}
+.gracias-next__actions{display:flex;flex-direction:column;gap:14px}
+.gracias-next__actions p{margin:0}
+.gracias-next__actions .btn{width:100%}
+.gracias-next .contact-split__tel{color:var(--navy)}
+
+/* hero compacto: contacto y gracias, donde lo importante es lo que viene debajo */
+.hero--compact{padding:56px 0 24px}
+@media (max-width:640px){.hero--compact{padding:28px 0 8px}}
+.hero--compact .hero__text{gap:16px}
