@@ -20,7 +20,7 @@ El HTML generado está commiteado, así que el servidor no necesita Node ni `npm
 Antes del primer deploy por Git: Hostinger exige que `public_html/` esté vacío. Descargar un backup, vaciarlo y desplegar.
 `leads.log` (si existe y tiene leads) conviene bajarlo antes y volver a subirlo después.
 
-La clave del CRM **no** va al repo: va en `vendercrm-config.php`, un nivel **encima** de `public_html/` (ver §3).
+La clave del CRM **no** va al repo: va en `vendercrm-config.php`, un nivel **encima** de `public_html/` (ver §3), o dentro de `public_html/` junto a `lead-forward.php` si en File Manager no se puede subir un nivel. Está en `.gitignore`, así que el deploy la conserva, y `.htaccess` le responde 404.
 Un deploy por Git nunca lo toca.
 
 Después de cada deploy: purgar el CDN (§4) y verificar (§5).

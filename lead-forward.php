@@ -16,9 +16,15 @@ declare(strict_types=1);
 // define(), no const: una constante declarada con `const` no admite una
 // llamada a función en su valor (fatal en tiempo de compilación). Mismo
 // nombre, mismo comportamiento, valor resuelto en runtime.
+/* Primero un nivel encima de public_html; si no está, junto a este archivo.
+   Ambos están en .gitignore, así que el deploy por Git de Hostinger los
+   conserva, y .htaccess responde 404 a una petición directa. */
 $vendercrmConfig = [];
-if (file_exists(__DIR__ . '/../vendercrm-config.php')) {
-    $vendercrmConfig = require __DIR__ . '/../vendercrm-config.php';
+foreach ([__DIR__ . '/../vendercrm-config.php', __DIR__ . '/vendercrm-config.php'] as $vendercrmConfigPath) {
+    if (file_exists($vendercrmConfigPath)) {
+        $vendercrmConfig = require $vendercrmConfigPath;
+        break;
+    }
 }
 if (!is_array($vendercrmConfig)) {
     $vendercrmConfig = [];
