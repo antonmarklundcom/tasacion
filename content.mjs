@@ -519,7 +519,7 @@ export const PAGES = [
         type: 'faq',
         items: [
           { q: '¿Sirve para cualquier banco?', a: `Para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS} Decinos por WhatsApp en qué banco o cooperativa estás gestionando.` },
-          { q: '¿Qué lleva el informe hipotecario?', a: 'Es el informe normal más la firma de un tasador inscripto en el registro del BCP, con fotos y una descripción del estado del edificio y de su ubicación.' },
+          { q: '¿Qué lleva el informe hipotecario?', a: 'Todo lo del informe oficial, más la firma de un tasador inscripto en el registro del BCP. Suma fotos de la vivienda y una descripción de su estado y de dónde está ubicada, que es lo que el banco revisa.' },
           { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
           { q: '¿Por qué cuesta más que el informe para compra o venta?', a: 'Porque lleva la firma de un tasador inscripto en el registro del BCP, que es lo que tu banco exige.' },
         ],
@@ -858,7 +858,7 @@ export const PAGES = [
           { q: '¿Sirve para sucesión?', a: 'Sí, lo usamos para partición de herencias y determinación de valores fiscales.' },
           { q: '¿Quién firma?', a: `El Tasador Fernando Capurro, ${CRED_CSJ} y ${CRED_ARQ}. Para crédito, ${CRED_BCP_FIRMA}.` },
           { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
-          { q: '¿Cuánto tarda un informe pericial judicial?', a: `${PLAZO_JUDICIAL_TXT} El informe va al juez y tiene que ser más preciso, porque sobre ese valor se calculan los honorarios.` },
+          { q: '¿Cuánto tarda un informe pericial judicial?', a: `${PLAZO_JUDICIAL_TXT} Como el juez calcula los honorarios sobre ese valor, este informe es más detallado que el de compra o venta.` },
         ],
       },
       otrasTasaciones('Informes por tipo de inmueble', SERVICIOS.map((s) => ({ title: s.title, href: s.href }))),
