@@ -39,7 +39,7 @@ You fix whatever you find along the way instead of only reporting it: broken lin
    - display `+595 992 279 599`
    - JSON-LD `+595992279599`
 
-   The old number (the `WA_NUMBER` value at the start of this window, ending in 628862) must end up **nowhere** in the repo, including docs and `docs/legacy-copy/`. Plan §1.4 lists every place. In code, build the old-number pattern from pieces (e.g. `String(595995) + '628862'`) so the check file does not match itself. `docs/audit/audit-before.json` already has it masked as `OLD_NUMBER`.
+   The old number (the `WA_NUMBER` value before 2026-09-30; see git history) must end up **nowhere** in the repo, including docs and `docs/legacy-copy/`. Plan §1.4 lists every place. In code, build the old-number pattern from pieces so the check file does not match itself. `docs/audit/audit-before.json` already has it masked as `OLD_NUMBER`.
 5. **Every WhatsApp CTA carries a pre-written Spanish message:**
    - Paraguayan voseo, in the client's voice
    - PYG only, and no amounts unless the exact figure is already published on the site (preferably none at all)

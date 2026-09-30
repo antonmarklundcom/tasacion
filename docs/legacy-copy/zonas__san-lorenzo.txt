@@ -14,7 +14,7 @@
  Cotizador 
  Preguntas 
  Contacto 
- 0995 628 862
+ 0992 279 599
  Escribinos
  Inicio 
  › 
@@ -26,7 +26,7 @@
 [p] San Lorenzo tiene algo que ninguna otra ciudad del Gran Asunción tiene con esta intensidad: un mercado de alquiler estudiantil que sostiene el valor de propiedades que, por construcción, valdrían menos en otro lado. 
  Consultá por tu propiedad en San Lorenzo 
  Armar mi consulta 
-[p] O llamanos: 0995 628 862 
+[p] O llamanos: 0992 279 599 
 [p] Tasación sin costo 
 [p] Sin visita a oficina 
 [p] Respuesta por WhatsApp 
@@ -69,8 +69,8 @@
  Cotizador Armá tu consulta en un minuto. 
 [h3] Escribinos por WhatsApp 
 [p] Contanos de tu propiedad en San Lorenzo y arrancamos desde ahí. 
- 0995 628 862 
-[p] +595 995 628 862 · Asunción, Paraguay 
+ 0992 279 599 
+[p] +595 992 279 599 · Asunción, Paraguay 
  Consultá por tu propiedad
  Llamanos 
 [h3] ¿Preferís que te escribamos? 
@@ -90,7 +90,7 @@
 [li] Preguntas frecuentes 
 [li] Contacto 
 [p] Contacto 
-[li] 0995 628 862 
+[li] 0992 279 599 
 [li] Escribinos por WhatsApp 
 [li] Asunción · Gran Asunción 
  © 2026 Tasación.com.py 

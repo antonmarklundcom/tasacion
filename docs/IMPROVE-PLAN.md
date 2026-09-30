@@ -67,7 +67,7 @@ The only number allowed is **+595 992 279599**, written as:
 - `tel:+595992279599`
 - display text `+595 992 279 599`
 
-The old number (the current `WA_NUMBER` value, ending in 628862) appears here:
+The old number (the `WA_NUMBER` value before 2026-09-30; see git history) appeared here. All of these were switched on 2026-09-30:
 
 | File | Where |
 |---|---|

@@ -1,4 +1,5 @@
-/* assets/js/site.js — un solo número de WhatsApp, un solo ID de analítica.
+/* assets/js/site.js — un solo ID de analítica. Los links de WhatsApp ya vienen
+   completos en el HTML (número y mensaje: content/wa-messages.mjs).
    Header sticky, hamburguesa móvil y menú WhatsApp (§4 de plan.md). */
 (function () {
   window.dataLayer = window.dataLayer || [];
@@ -24,14 +25,6 @@
     document.head.appendChild(s);
   }
 
-  var n = window.WA_NUMBER;
-  document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function (a) {
-    a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/' + n);
-  });
-  document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
-    a.href = 'tel:+' + n;
-  });
-
   var contactForm = document.querySelector('form[action="/lead-forward.php"]');
   if (/^\/contacto(?:\/|\/index\.html)?$/.test(location.pathname) && contactForm) {
     var error = new URLSearchParams(location.search).get('error');
@@ -43,7 +36,7 @@
         : 'No pudimos enviar tus datos. Escribinos por WhatsApp para coordinar tu tasación: ';
       if (error === 'envio') {
         var link = document.createElement('a');
-        link.href = 'https://wa.me/' + n;
+        link.href = contactForm.getAttribute('data-wa-error') || '/contacto/';
         link.textContent = 'Escribinos por WhatsApp';
         alert.appendChild(link);
       }
@@ -79,9 +72,9 @@
   /* -------------------------------------------------------------- WA menu
      Every [data-wa-trigger] opens the single [data-wa-menu] panel. A trigger
      may carry data-wa-open="<optionId>" to preselect/focus that option
-     (defaults to the first, "informe"); [data-wa-anchor] positions the panel
+     (defaults to the first row); [data-wa-anchor] positions the panel
      next to the header pill or the FAB. Progressive enhancement: without
-     this script every trigger stays a plain <a href="https://wa.me/...">. */
+     this script every trigger stays a plain WhatsApp link. */
   var menu = document.querySelector('[data-wa-menu]');
   var triggers = Array.prototype.slice.call(document.querySelectorAll('[data-wa-trigger]'));
   if (menu && triggers.length) {

@@ -25,8 +25,8 @@ contenido y no deben indexarse.
 
 | Dato | Estado |
 |---|---|
-| **Teléfono / WhatsApp** | `+595 995 628862` — número compartido de etapa 1, el mismo de las otras verticales. **No es un número dedicado a tasación.** |
-| Cómo cambiarlo | Una sola línea: `var WA_NUMBER = '595995628862';` arriba de `index.html` (y la misma línea en `gracias.html`). El script reescribe todos los `wa.me` y todos los `tel:` al cargar. Los `href` literales quedan como fallback sin JS — si el cambio es definitivo, hacer también un buscar-y-reemplazar de `595995628862`. |
+| **Teléfono / WhatsApp** | `+595 992 279 599` — número compartido de etapa 1, el mismo de las otras verticales. **No es un número dedicado a tasación.** |
+| Cómo cambiarlo | Una sola línea: `var WA_NUMBER = '595992279599';` arriba de `index.html` (y la misma línea en `gracias.html`). El script reescribe todos los `wa.me` y todos los `tel:` al cargar. Los `href` literales quedan como fallback sin JS — si el cambio es definitivo, hacer también un buscar-y-reemplazar de `595992279599`. |
 | **Dirección** | Ausente a propósito (MODO 3 §10.2). Footer dice solo `Asunción, Paraguay`. Sin calle, sin código postal, sin mapa. El JSON-LD **no** lleva `streetAddress`. |
 | Cuando haya socio operador | Cambiar el footer por la dirección real y agregar `streetAddress` al JSON-LD. Nada más cambia. |
 | **Email** | No hay email público en la página. Si se quiere uno, definir la casilla primero. |
@@ -150,7 +150,7 @@ después de construir las 14 páginas nuevas + home:
 1. **RUC, factura legal, razón social** — ninguna línea existe en ninguna de las 15 páginas.
 2. **Matrícula / registro profesional** — no se construyó ninguna sección de confianza sobre habilitación.
 3. **Habilitación BCP** — deliberadamente ausente. Si alguna vez existe, es una sección nueva, no una línea suelta.
-4. **Número de WhatsApp dedicado** — sigue siendo el compartido de etapa 1 (`WA_NUMBER` en una línea por archivo). Buscar y reemplazar `595995628862` el día que cambie.
+4. **Número de WhatsApp dedicado** — sigue siendo el compartido de etapa 1 (`WA_NUMBER` en una línea por archivo). Buscar y reemplazar `595992279599` el día que cambie.
 5. **Grilla de precios para el informe** — no bloquea nada del CORE 15, pero hace falta para una futura `/precios/`.
 6. **Tabla de comparables (Gs./m² por zona y tipo, con fecha y fuente)** — bloquea la Opción B del `/cotizador/` (§7.1 del BUILD-SPEC). El cotizador construido es un medidor de completitud, no una calculadora de precio, y así debe quedar hasta que exista esa tabla real.
 7. **Reseñas reales** — siguen sin existir. No se agregó `aggregateRating` en ningún JSON-LD.

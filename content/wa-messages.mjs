@@ -12,7 +12,7 @@ export const TEL_HREF = 'tel:+' + WA_NUMBER;
 // Finalidades (§4.1). `label` va en el menú, en el select del formulario y en leads.
 export const PURPOSES = {
   compraventa: { label: 'Informe oficial para comprar o vender', sub: 'Firmado por perito tasador matriculado' },
-  hipotecaria: { label: 'Tasación para crédito hipotecario', sub: 'Firma un tasador inscripto en el BCP' },
+  hipotecaria: { label: 'Tasación para crédito hipotecario', sub: 'Firma un tasador inscripto en el registro del BCP' },
   credito: { label: 'Tasación para otro crédito', sub: 'Fiduciario, cooperativa, prendario de inmueble' },
   sucesion: { label: 'Tasación para sucesión o juicio', sub: 'Herencias, divisiones, procesos judiciales' },
   venta: { label: 'Tasación para vender con un corredor', sub: 'Con exclusividad, el costo se descuenta de la comisión' },

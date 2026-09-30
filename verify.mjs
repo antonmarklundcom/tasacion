@@ -5,6 +5,7 @@
 import { execSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { MESSAGES, menuRows } from './content/wa-messages.mjs';
 import { PRECIO_TXT, CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS, FINALIDADES } from './content.mjs';
 
 const sha1_8 = (path) => createHash('sha1').update(readFileSync(path)).digest('hex').slice(0, 8);
@@ -102,7 +103,8 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
   if (waMenus.length !== 1) fail(`${p}: ${waMenus.length} #wa-menu (debe haber exactamente 1)`);
 
   const menuOptionLinks = [...html.matchAll(/<a class="wa-menu__option[^"]*" href="([^"]*)"/g)].map((m) => m[1]);
-  if (menuOptionLinks.length !== 5) fail(`${p}: el panel WA tiene ${menuOptionLinks.length} opciones (debe tener 5)`);
+  const wantRows = menuRows(r.slug).length;
+  if (menuOptionLinks.length !== wantRows) fail(`${p}: el panel WA tiene ${menuOptionLinks.length} opciones (debe tener ${wantRows})`);
 
   // audit 2026-09-11 §2.3: sin target=_blank, un click en desktop sacaba al
   // visitante del sitio hacia WhatsApp Web en la misma pestaña.
@@ -121,7 +123,7 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
   const ctx = (html.match(/data-page-context="([^"]*)"/) || [])[1] || '';
   for (const href of menuOptionLinks) {
     const text = decodeURIComponent(href.split('?text=')[1] || '');
-    if (!text.includes(ctx)) fail(`${p}: una opción del menú WA no menciona el contexto "${ctx}": ${text}`);
+    if (!Object.values(MESSAGES[r.slug] || {}).includes(text)) fail(`${p}: una opción del menú WA no sale de MESSAGES: ${text}`);
   }
 
   const triggers = [...html.matchAll(/data-wa-trigger/g)];
@@ -131,7 +133,7 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
   const headerWaLinks = [...html.matchAll(/class="wa-(pill|round)" href="([^"]*)"/g)].map((m) => m[2]);
   for (const href of headerWaLinks) {
     const text = decodeURIComponent((href.split('?text=')[1] || ''));
-    if (!text.includes(ctx)) fail(`${p}: el trigger del header no lleva el contexto en ?text= (bug "()"): ${href}`);
+    if (!Object.values(MESSAGES[r.slug] || {}).includes(text)) fail(`${p}: el trigger del header no lleva un mensaje de MESSAGES en ?text=: ${href}`);
   }
 
   const sectionTags = [...html.matchAll(/<section class="([^"]*)"/g)].map((m) => m[1]);
@@ -140,8 +142,7 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
     fail(`${p}: la última sección antes del footer es "${lastSection}", debería ser cta-band`);
   }
 
-  const waNumberLines = [...html.matchAll(/var WA_NUMBER = /g)];
-  if (waNumberLines.length !== 1) fail(`${p}: ${waNumberLines.length} líneas "var WA_NUMBER" (debe haber 1)`);
+  if (/var WA_NUMBER/.test(html)) fail(`${p}: quedó "var WA_NUMBER" inline (el número vive solo en content/wa-messages.mjs)`);
 
   if (/\bTODO\b/.test(html) || /lorem ipsum/i.test(html)) fail(`${p}: contiene TODO/lorem`);
 
@@ -229,9 +230,9 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
       if (!fa.toLowerCase().includes('no es un informe oficial')) fail(`${p}: un free-aside no aclara "no es un informe oficial"`);
     }
 
-    const expectedFirstMap = { 'valuacion-para-vender/index.html': 'valoracion', 'tasaciones/hipotecaria/index.html': 'credito', 'tasaciones/franja-de-dominio/index.html': 'consulta', 'tasaciones/corporativa/index.html': 'consulta' };
+    const expectedFirstMap = { 'valuacion-para-vender/index.html': 'venta', 'tasaciones/hipotecaria/index.html': 'hipotecaria', 'tasaciones/franja-de-dominio/index.html': 'franja', 'tasaciones/corporativa/index.html': 'empresa' };
     const firstPrimary = (html.match(/<main>[\s\S]*?class="btn btn--primary"[^>]*data-wa-open="([^"]*)"/) || [])[1];
-    const expectedFirst = expectedFirstMap[p] || 'informe';
+    const expectedFirst = expectedFirstMap[p] || 'compraventa';
     if (firstPrimary && firstPrimary !== expectedFirst) fail(`${p}: el primer .btn--primary abre "${firstPrimary}", se esperaba "${expectedFirst}"`);
   }
 
@@ -269,6 +270,14 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
 if (failures === 0) ok('todas las páginas pasan los checks estructurales');
 if (copyDone) ok('checks de copy activos (docs/routes.json copyDone=true)');
 else console.log('  (checks de copy dependientes de IVA/finalidades desactivados — docs/routes.json copyDone=false)');
+
+// ------------------------------------------------- contacto WhatsApp / tel
+step('tools/check-contact.mjs');
+try {
+  execSync('node tools/check-contact.mjs', { stdio: 'inherit' });
+} catch {
+  fail('tools/check-contact.mjs falló');
+}
 
 // --------------------------------------------------------------- resultado
 console.log('');

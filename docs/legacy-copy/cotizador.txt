@@ -14,7 +14,7 @@
  Cotizador 
  Preguntas 
  Contacto 
- 0995 628 862
+ 0992 279 599
  Escribinos
  Inicio 
  › 
@@ -22,7 +22,7 @@
 [p] Cotizador 
 [h1] Cuánto vale tu propiedad: armá tu consulta en un minuto 
 [p] Cargá lo que sepas de tu inmueble y el cotizador arma el mensaje de WhatsApp con todos los datos ordenados. No te muestra un precio ni estima nada — sirve para que no tengas que escribirlo todo a mano y para que podamos darte un rango serio en la primera respuesta. 
-[p] O llamanos: 0995 628 862 
+[p] O llamanos: 0992 279 599 
 [p] Tu propiedad 
 [h2] Contanos de tu propiedad 
  Tipo de propiedad 
@@ -80,8 +80,8 @@
  Informe de tasación Para sucesiones, divisiones y trámites judiciales. 
 [h3] Escribinos por WhatsApp 
 [p] Si preferís no completar el formulario, contanos directamente por WhatsApp. 
- 0995 628 862 
-[p] +595 995 628 862 · Asunción, Paraguay 
+ 0992 279 599 
+[p] +595 992 279 599 · Asunción, Paraguay 
  Escribinos ahora
  Llamanos 
 [h3] ¿Preferís que te escribamos? 
@@ -101,7 +101,7 @@
 [li] Preguntas frecuentes 
 [li] Contacto 
 [p] Contacto 
-[li] 0995 628 862 
+[li] 0992 279 599 
 [li] Escribinos por WhatsApp 
 [li] Asunción · Gran Asunción 
  © 2026 Tasación.com.py 
