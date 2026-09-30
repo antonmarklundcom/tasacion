@@ -19,13 +19,14 @@ export const CRED_ARQ = 'Arquitecto, matrícula profesional N.º 3.738';
 export const CRED_BCP_FIRMA = 'el informe lo firma un tasador inscripto en el registro del BCP';
 export const CRED_BCP_BANCOS = 'Trabajamos con todos los bancos y cooperativas: al gestionar tu carpeta coordinamos la firma que tu entidad requiere.';
 export const PLAZO_TXT = '3 a 5 días hábiles después de la visita';
+export const PLAZO_JUDICIAL_TXT = 'En tasaciones judiciales el plazo lo fija el juzgado, normalmente 15 a 20 días hábiles.';
 export const IVA_TXT = '+ IVA'; // D1 (Anton, 2026-09-10)
 export const FACTURA_TXT = 'Emitimos factura legal';
 export const PRECIOS = { compraventa: { min: 800000, max: 1500000 }, judicial: { min: 1800000, max: 2500000 }, credito: { min: 1500000, max: null } };
 export const PRECIO_TXT = rango(PRECIOS.compraventa); // compat: "Gs. 800.000 a Gs. 1.500.000" (sin IVA_TXT; se agrega al renderizar)
 export const PRECIO_JUDICIAL_TXT = rango(PRECIOS.judicial);
 export const PRECIO_CREDITO_TXT = rango(PRECIOS.credito);
-export const PRECIO_NOTA = 'según tipo y tamaño del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
+export const PRECIO_NOTA = 'según tipo, tamaño y ubicación del inmueble; te confirmamos el monto exacto por WhatsApp antes de agendar la visita';
 export const FRANJA_COTIZA = 'Presupuesto por proyecto, según la cantidad de lotes y edificaciones dentro de la franja.';
 export const VISITA_TXT = null; // Q7, pendiente de confirmar
 export const EJEMPLO = { valor: 400000000, error: 0.05 };
@@ -60,7 +61,7 @@ const verticalFaqCore = (item) => [
   { q: '¿Sirve para mi banco o cooperativa?', a: `Sí: para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS}` },
 ];
 
-const INCLUYE_INFORME = [`Firma de ${CRED_CSJ}`, 'Visita técnica al inmueble', 'Análisis de comparables reales', 'Documentación fotográfica', 'Metodología de tasación explicada', 'Vigencia legal para bancos y juzgados', `Entrega en ${PLAZO_TXT}`];
+const INCLUYE_INFORME = [`Firma de ${CRED_CSJ}`, 'Visita técnica al inmueble', 'Análisis de comparables reales', 'Justificación del valor con el análisis de mercado', 'Documentación fotográfica', 'Metodología de tasación explicada', 'Vigencia legal para bancos y juzgados', `Entrega en ${PLAZO_TXT}`];
 
 const freeAsideVender = () => ({
   type: 'freeAside',
@@ -486,7 +487,7 @@ export const PAGES = [
         items: [
           { title: 'Documentación Técnica', body: 'Copia de título, planos y cuenta corriente catastral.' },
           { title: 'Análisis de Mercado', body: 'Comparación con propiedades similares en la zona.' },
-          { title: 'Registro Fotográfico', body: 'Fotos detalladas de interiores, exteriores y entorno.' },
+          { title: 'Registro Fotográfico', body: 'Fotos de interiores, exteriores y entorno, con la descripción del estado de la edificación y de su ubicación.' },
           { title: 'Firma para crédito', body: `${CRED_BCP_FIRMA}.` },
           { title: 'Valor de Liquidación', body: 'Estimación del valor ante una venta rápida.' },
           { title: 'Plazo', body: `Informe firmado en ${PLAZO_TXT}.` },
@@ -649,8 +650,11 @@ export const PAGES = [
         type: 'grid3',
         heading: 'Qué incluye',
         items: [
+          { title: 'Notificación a los afectados', body: 'Aviso a los propietarios y ocupantes de cada lote antes del relevamiento.' },
           { title: 'Relevamiento', body: 'Medición de cada edificación y terreno dentro de la franja.' },
-          { title: 'Cómputo', body: 'Cómputo técnico de todo lo relevado.' },
+          { title: 'Acta de relevamiento', body: 'Acta del relevamiento en el lugar, lote por lote.' },
+          { title: 'Planos de lo afectado', body: 'Planos de las edificaciones afectadas por la franja.' },
+          { title: 'Cómputo y presupuesto', body: 'Planilla de cómputo y presupuesto de lo relevado, como parte del informe.' },
           { title: 'Valor de mercado', body: 'Valor de mercado asignado por lote.' },
           { title: 'Registro fotográfico', body: 'Documentación fotográfica de cada lote relevado.' },
           { title: 'Informe técnico', body: 'Informe técnico firmado, listo para presentar al consorcio adjudicatario.' },
@@ -777,7 +781,7 @@ export const PAGES = [
       {
         type: 'lead', id: 'judicial',
         heading: 'Tasación pericial para sucesiones y juicios',
-        body: `Herencias, remates judiciales y liquidaciones: lo piden abogados y jueces, y sirve de base para el cálculo de honorarios. Firmada por el Tasador Fernando Capurro, ${CRED_CSJ}.\n\nTodo lo judicial, sucesiones incluidas: ${PRECIO_JUDICIAL_TXT} ${IVA_TXT}. Es un informe más detallado, y suele ser la base sobre la que abogados y jueces calculan sus honorarios.`,
+        body: `Herencias, remates judiciales y liquidaciones: lo piden abogados y jueces. Firmada por el Tasador Fernando Capurro, ${CRED_CSJ}.\n\nEl informe va dirigido al juez y tiene que ser más preciso y detallado, porque sobre ese valor se calculan los honorarios. Todo lo judicial, sucesiones incluidas: ${PRECIO_JUDICIAL_TXT} ${IVA_TXT}. ${PLAZO_JUDICIAL_TXT}`,
       },
       {
         type: 'lead', id: 'credito',
@@ -788,7 +792,7 @@ export const PAGES = [
       {
         type: 'pricingTiers', id: 'compraventa',
         heading: 'Tres informes, un precio claro para cada uno',
-        lede: 'El costo depende de para qué lo necesitás, no del tamaño de tu casa. Elegí tu caso y hablamos por WhatsApp.',
+        lede: 'La finalidad define el rango de precio; el tipo, el tamaño y la ubicación del inmueble fijan el monto dentro de ese rango. Cada informe es individual, de un solo inmueble, y es oficial porque lo firma un profesional matriculado. Elegí tu caso y hablamos por WhatsApp.',
         tiers: [
           {
             highlight: true,
@@ -796,7 +800,7 @@ export const PAGES = [
             title: 'Compra o venta',
             corto: FINALIDADES[0].corto,
             price: PRECIO_TXT,
-            nota: 'según tipo y tamaño del inmueble',
+            nota: 'según tipo, tamaño y ubicación del inmueble',
             firma: CRED_CSJ_CORTA,
             plazo: PLAZO_TXT,
             incluye: ['Visita técnica al inmueble', 'Comparables reales de mercado, no promedios', 'Registro fotográfico', 'Informe firmado, con la metodología explicada'],
@@ -982,7 +986,7 @@ export const PAGES = [
       {
         type: 'lead',
         heading: 'Cómo preparar tu consulta',
-        body: "Atendemos Asunción, Gran Asunción y todo Paraguay. Si tu inmueble está en el interior, coordinamos el traslado por WhatsApp: contanos la localidad y cómo se llega para acordar la visita y confirmar el presupuesto antes de agendar.\n\nEn horario comercial, la respuesta por WhatsApp suele ser inmediata. Atendemos de lunes a viernes de 08:00 a 18:00 y los sábados de 08:00 a 12:00. Si escribís fuera de ese horario, dejanos tu consulta para retomarla al volver a la atención.\n\nTené a mano la dirección del inmueble y explicanos para qué necesitás la tasación: vender, comprar, solicitar un crédito o presentar un informe en un trámite judicial. Si contás con una escritura o un plano, avisános; ayudan a identificar la propiedad y sus superficies. También indicá si hay una fecha límite o requisitos del banco o del juzgado, así podemos revisar el alcance desde el primer mensaje.",
+        body: "Atendemos Asunción, Gran Asunción y todo Paraguay. Si tu inmueble está en el interior, coordinamos el traslado por WhatsApp: contanos la localidad y cómo se llega para acordar la visita y confirmar el presupuesto antes de agendar.\n\nForma de pago: 50% por transferencia para agendar la visita y 50% contra entrega del informe. Aceptamos efectivo, transferencia y QR; no aceptamos tarjeta. Emitimos factura legal.\n\nEn horario comercial, la respuesta por WhatsApp suele ser inmediata. Atendemos de lunes a viernes de 08:00 a 18:00 y los sábados de 08:00 a 12:00. Si escribís fuera de ese horario, dejanos tu consulta para retomarla al volver a la atención.\n\nTené a mano la dirección del inmueble y explicanos para qué necesitás la tasación: vender, comprar, solicitar un crédito o presentar un informe en un trámite judicial. Si contás con una escritura o un plano, avisános; ayudan a identificar la propiedad y sus superficies. También indicá si hay una fecha límite o requisitos del banco o del juzgado, así podemos revisar el alcance desde el primer mensaje.",
         cta: { label: 'Consultá cómo tratamos tus datos en el aviso de privacidad.', href: '/privacidad/' },
       },
       {

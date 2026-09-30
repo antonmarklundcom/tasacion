@@ -25,7 +25,7 @@ const ASSET_V = {
 // HTML/sitemap commiteado deja de coincidir con el rebuild al día siguiente).
 // Subirla a mano cuando cambia el contenido; una página puede fijar su propio
 // `lastmod` en content.mjs.
-const SITE_LASTMOD = '2026-09-13';
+const SITE_LASTMOD = '2026-09-30';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
