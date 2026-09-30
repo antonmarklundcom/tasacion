@@ -263,7 +263,7 @@ export const PAGES = [
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'compraventa' }, secondary: { label: 'Ver qué incluye el informe', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'tasacion-casas-departamentos-asuncion', alt: 'Casa residencial en un barrio de Asunción' },
     title: 'Tasación de casas en Asunción | Tasación.com.py',
-    description: 'Valuación de mercado para residencias urbanas y barrios cerrados, hecha por peritos que conocen tu zona. Costo cubierto por tu corredor si querés vender; certificada si es para un trámite.',
+    description: 'Tasación de casas y residencias en barrios cerrados, con datos reales de tu zona. Informe oficial para trámites, o costo cubierto si vendés con exclusividad.',
     h1: 'Tasación de casas en Asunción: conocé el valor real de tu vivienda',
     subcopy: 'Valuación de mercado para residencias urbanas y barrios cerrados, hecha por peritos que conocen tu zona. Costo cubierto por tu corredor con exclusividad si querés vender; certificada si es para un trámite.',
     sections: [
@@ -936,7 +936,7 @@ export const PAGES = [
     showPriceChip: false,
     hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'compraventa' }, secondary: null, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     title: 'Preguntas frecuentes sobre tasación | Tasación.com.py',
-    description: 'Resolvé tus dudas sobre costos, validez legal y procesos de valuación en Paraguay.',
+    description: 'Respuestas sobre tasación de inmuebles en Paraguay: cuánto cuesta, cuánto tarda, quién firma, cómo se paga y por cuánto tiempo vale el informe.',
     h1: 'Preguntas frecuentes sobre tasación de inmuebles',
     subcopy: 'Resolvé tus dudas sobre costos, validez legal y procesos de valuación en Paraguay.',
     sections: [

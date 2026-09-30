@@ -656,14 +656,25 @@ function serviceJsonLd(page) {
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
 }
 
+// Nombres legibles para las migas: etiquetas del menú, con nombres completos
+// donde la etiqueta del menú es demasiado corta para un resultado de Google.
+const CRUMB_NAMES = {
+  ...Object.fromEntries(NAV.flatMap((i) => [[i.href, i.label], ...(i.children || []).map((c) => [c.href, c.label])])),
+  '/informes-periciales/': 'Informes periciales',
+  '/valuacion-para-vender/': 'Valuación para vender',
+  '/preguntas-frecuentes/': 'Preguntas frecuentes',
+  '/privacidad/': 'Privacidad',
+};
+
+// Inicio › … › página, para toda página indexable salvo la home (una miga sola no aporta).
 function breadcrumbJsonLd(page) {
+  if (page.noindex || page.slug === '/') return '';
   const parts = page.slug.split('/').filter(Boolean);
-  if (parts.length < 2) return '';
   const itemListElement = [{ '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE + '/' }];
-  let acc = '';
+  let acc = '/';
   parts.forEach((p, idx) => {
-    acc += '/' + p;
-    itemListElement.push({ '@type': 'ListItem', position: idx + 2, name: p, item: SITE + acc + '/' });
+    acc += p + '/';
+    itemListElement.push({ '@type': 'ListItem', position: idx + 2, name: CRUMB_NAMES[acc] || p, item: SITE + acc });
   });
   const data = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement };
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
