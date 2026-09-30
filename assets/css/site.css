@@ -268,8 +268,10 @@ ul.list--links li{margin-bottom:.4em}
 @media (prefers-reduced-motion:reduce){.wa-menu__panel{transition:none}}
 .wa-menu__panel[data-anchor="header"]{right:24px;top:80px}
 .wa-menu__panel[data-anchor="fab"]{right:24px;bottom:92px}
+.wa-menu__panel[data-anchor="mbar"]{right:16px;bottom:calc(68px + env(safe-area-inset-bottom))}
 @media (max-width:640px){
   .wa-menu__panel{left:16px;right:16px;bottom:88px;top:auto !important}
+  .wa-menu__panel[data-anchor="mbar"]{bottom:calc(68px + env(safe-area-inset-bottom))}
 }
 .wa-menu__head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 18px 10px}
 .wa-menu__head p{margin:0;font-size:15px;font-weight:600;color:var(--ink)}
@@ -359,3 +361,17 @@ ul.list--links li{margin-bottom:.4em}
 .value-block__items .steps__n{width:32px;height:32px;font-size:15px}
 .value-block__items h3{font-size:20px;line-height:1.25;margin:0 0 .3em}
 .value-block__items p{font-size:16px;line-height:1.6;max-width:64ch;margin:0}
+
+/* Barra móvil fija (§4.5) */
+.faq__more{margin:16px 0 0;font-size:var(--t-0)}
+.mbar{display:none}
+@media (max-width:768px){
+  body{padding-bottom:calc(56px + env(safe-area-inset-bottom))}
+  .wa-fab{display:none}
+  .mbar{position:fixed;left:0;right:0;bottom:0;display:flex;height:calc(56px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--surface);border-top:1px solid var(--hairline);z-index:80;transform:translateY(0);opacity:1;visibility:visible;transition:transform var(--dur) var(--ease-out),opacity var(--dur) var(--ease-out),visibility 0s}
+  .mbar.is-hidden{transform:translateY(100%);opacity:0;visibility:hidden;transition:transform var(--dur) var(--ease-out),opacity var(--dur) var(--ease-out),visibility 0s var(--dur)}
+  .mbar__btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:56px;font-weight:600;font-size:16px;text-decoration:none;color:var(--ink)}
+  .mbar__btn svg{width:22px;height:22px;fill:currentColor}
+  .mbar__btn--wa{background:var(--wa);color:#fff}
+}
+@media (prefers-reduced-motion:reduce){.mbar{transition:none !important}}

@@ -44,6 +44,7 @@ const pagePurpose = (page) => (page.hero && page.hero.primary && page.hero.prima
 // -------------------------------------------------------------- icons (SVG)
 const ICON_CHECK = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const ICON_ARROW = `<svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ICON_PHONE = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1l-2.22 2.2Z"/></svg>`;
 const ICON_WA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-.95.23-3.2-.67-2.7-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75 0-1.3.68-1.95.93-2.21.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.6.46.23.55.77 1.9.84 2.03.07.14.11.3.02.48-.09.18-.13.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.18-.27.35-.22.59-.13.24.09 1.53.72 1.79.85.26.13.44.2.5.31.07.11.07.63-.17 1.31Z"/></svg>`;
 const ICON_SEAL = `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" fill="#A98B57"/><path d="M12 20.5l5.5 5.5L28 15" stroke="#0F3D5C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const ICON_BURGER = `<svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
@@ -164,10 +165,20 @@ function renderWaMenu(ctx, page) {
     <p class="wa-menu__foot">${ICON_WA}Se abre WhatsApp con el mensaje ya escrito.</p>
   </div>
 </div>
-<a class="wa-fab" href="${waOptionHref(defaultOption, ctx, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${defaultOption}" data-wa-anchor="fab" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="Abrir WhatsApp" data-ev="wa_click" data-ev-loc="fab">${ICON_WA}</a>`;
+<a class="wa-fab" href="${waOptionHref(defaultOption, ctx, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${defaultOption}" data-wa-anchor="fab" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="Abrir WhatsApp" data-ev="wa_click" data-ev-loc="fab">${ICON_WA}</a>
+<div class="mbar" data-mbar>
+  <a class="mbar__btn mbar__btn--wa" href="${waOptionHref(defaultOption, ctx, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${defaultOption}" data-wa-anchor="mbar" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" data-ev="wa_click" data-ev-loc="mbar">${ICON_WA}WhatsApp</a>
+  <a class="mbar__btn mbar__btn--tel" href="${TEL_HREF}" data-ev="tel_click" data-ev-loc="mbar">${ICON_PHONE}Llamar</a>
+</div>`;
 }
 
 // -------------------------------------------------------------------- blocks
+function faqMore(page) {
+  const rows = menuRows(page.slug);
+  const purpose = rows.includes('consulta') ? 'consulta' : rows[rows.length - 1];
+  return `<p class="faq__more">¿Otra duda? <a href="${waLink(page.slug, purpose)}" target="_blank" rel="noopener" data-ev="wa_click" data-ev-loc="faq">Preguntanos por WhatsApp</a></p>`;
+}
+
 function block(section, page) {
   switch (section.type) {
     case 'services':
@@ -208,7 +219,7 @@ function block(section, page) {
     <h2>${esc(section.heading)}</h2>
     ${nl2p(section.body)}${section.links ? `
     <p class="lead__links">${section.links.map((l) => `<a class="link" href="${l.href}">${esc(l.label)}</a>`).join(' · ')}</p>` : ''}
-    ${section.cta ? `<p><a class="btn btn--primary" href="${section.cta.wa ? waOptionHref('compraventa', page.waContext, page) : section.cta.href}"${section.cta.wa ? ' target="_blank" rel="noopener"' : ''}>${esc(section.cta.label)}</a></p>` : ''}
+    ${section.cta ? (section.cta.wa ? (() => { const o = section.cta.waOption || 'compraventa'; return `<p><a class="btn btn--primary" href="${waOptionHref(o, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${o}" data-ev="wa_click" data-ev-loc="lead">${esc(section.cta.label)}</a></p>`; })() : `<p><a class="btn btn--primary" href="${section.cta.href}">${esc(section.cta.label)}</a></p>`) : ''}
   </div>
 </section>`;
 
@@ -411,6 +422,7 @@ function block(section, page) {
     <div class="faq">
       ${section.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}${f.link ? ` <a class="link" href="${f.link.href}">${esc(f.link.label)}</a>` : ''}</p></details>`).join('\n      ')}
     </div>
+    ${faqMore(page)}
   </div>
 </section>`;
 
@@ -421,6 +433,7 @@ function block(section, page) {
     <div class="faq">
       ${g.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}${f.link ? ` <a class="link" href="${f.link.href}">${esc(f.link.label)}</a>` : ''}</p></details>`).join('\n      ')}
     </div>`).join('\n    ')}
+    ${faqMore(page)}
   </div>
 </section>`;
 

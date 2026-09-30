@@ -807,6 +807,7 @@ export const PAGES = [
         type: 'lead', id: 'judicial',
         heading: 'Tasación pericial para sucesiones y juicios',
         body: `Herencias, remates judiciales y liquidaciones: lo piden abogados y jueces. Firmada por el Tasador Fernando Capurro, ${CRED_CSJ}.\n\nEl informe va dirigido al juez y tiene que ser más preciso y detallado, porque sobre ese valor se calculan los honorarios. Todo lo judicial, sucesiones incluidas: ${PRECIO_JUDICIAL_TXT} ${IVA_TXT}. ${PLAZO_JUDICIAL_TXT}`,
+        cta: { label: 'Pedir tasación pericial', wa: true, waOption: 'sucesion' },
       },
       {
         type: 'lead', id: 'credito',

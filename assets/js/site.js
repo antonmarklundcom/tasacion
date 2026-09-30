@@ -69,6 +69,16 @@
     }
   }
 
+  /* Barra móvil: oculta mientras el CTA principal del hero está a la vista. */
+  var mbar = document.querySelector('[data-mbar]');
+  var heroCta = document.querySelector('[data-ev-loc="hero"]');
+  if (mbar && heroCta && 'IntersectionObserver' in window) {
+    var mbarIO = new IntersectionObserver(function (entries) {
+      mbar.classList.toggle('is-hidden', entries[entries.length - 1].isIntersecting);
+    });
+    mbarIO.observe(heroCta);
+  }
+
   /* -------------------------------------------------------------- WA menu
      Every [data-wa-trigger] opens the single [data-wa-menu] panel. A trigger
      may carry data-wa-open="<optionId>" to preselect/focus that option
