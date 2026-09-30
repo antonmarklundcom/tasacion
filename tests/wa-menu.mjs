@@ -36,6 +36,9 @@ try {
   // ------------------------------------------------------------- con JS
   {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    // wa.me responde con un stub: el test verifica a dónde apunta la pestaña
+    // nueva, no la disponibilidad de WhatsApp (CI y sandboxes pueden bloquearlo).
+    await page.context().route(/^https:\/\/(wa\.me|api\.whatsapp\.com)\//, (r) => r.fulfill({ status: 200, contentType: 'text/html', body: 'wa stub' }));
     await page.goto(BASE + '/tasaciones/terrenos/');
 
     const fab = page.locator('.wa-fab');
