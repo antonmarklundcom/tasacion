@@ -44,6 +44,15 @@
     }
   }
 
+  var gw = document.querySelector('[data-gracias-wa]');
+  if (gw) {
+    try {
+      var gp = new URLSearchParams(location.search).get('p');
+      var gmap = JSON.parse(gw.getAttribute('data-wa-map') || '{}');
+      if (gp && Object.prototype.hasOwnProperty.call(gmap, gp)) gw.href = gmap[gp];
+    } catch (err) { /* queda el href por defecto */ }
+  }
+
   var pu = document.getElementById('page_url');
   if (pu) pu.value = location.href;
 

@@ -456,7 +456,7 @@ function block(section, page) {
 </section>`;
 
     case 'contactForm': {
-      const radios = (section.mensajeOptions || []).map((o, idx) => `<label><input type="radio" name="mensaje" value="${attr(o.value)}"${o.default ? ' checked' : ''}> ${esc(o.label)}</label>`).join('\n          ');
+      const opts = Object.keys(PURPOSES).map((id, idx) => `<option value="${id}"${idx === 0 ? ' selected' : ''}>${esc(PURPOSES[id].label)}</option>`).join('\n          ');
       return `<section class="section section--narrow">
   <div class="container">
     <h2>${esc(section.heading)}</h2>
@@ -467,10 +467,25 @@ function block(section, page) {
       <label class="field">Nombre completo<input type="text" name="nombre" required></label>
       <label class="field">Número de WhatsApp<input type="tel" name="telefono" minlength="6" required></label>
       <label class="field">Email (opcional)<input type="email" name="email"></label>
-      ${radios ? `<fieldset class="radios">\n          <legend>¿Qué necesitás?</legend>\n          ${radios}\n        </fieldset>` : ''}
+      <label class="field">¿Para qué necesitás la tasación?<select name="purpose" required>
+          ${opts}
+        </select></label>
+      <label class="field">Ciudad o barrio del inmueble (opcional)<input type="text" name="ciudad" autocomplete="address-level2" maxlength="120"></label>
       <button class="btn btn--primary" type="submit">Enviar mis datos</button>
       <p>Conocé cómo usamos tus datos en el <a href="/privacidad/">aviso de privacidad</a>.</p>
     </form>
+  </div>
+</section>`;
+    }
+
+    case 'graciasWa': {
+      const map = {};
+      for (const id of Object.keys(PURPOSES)) map[id] = waLink('gracias.html', id);
+      return `<section class="section section--narrow">
+  <div class="container">
+    <h2>${esc(section.heading)}</h2>
+    <p>${esc(section.body)}</p>
+    <a class="btn btn--wa" href="${waLink('gracias.html', 'compraventa')}" target="_blank" rel="noopener" data-gracias-wa data-wa-map="${attr(JSON.stringify(map))}" data-ev="wa_click" data-ev-loc="gracias">${ICON_WA}${esc(section.label)}</a>
   </div>
 </section>`;
     }
