@@ -497,7 +497,7 @@ function renderChip(page) {
   if (page.kind === 'secondary-free') return '';
   if (page.showPriceChip) {
     if (page.priceChip) return `<p class="offer-chip offer-chip--price"><strong>${esc(page.priceChip.strong)}</strong><span>${esc(page.priceChip.note)}</span></p>`;
-    return `<p class="offer-chip offer-chip--price"><strong>Informe oficial: ${esc(PRECIO_TXT)}</strong><span>según tipo y tamaño del inmueble</span></p>`;
+    return `<p class="offer-chip offer-chip--price"><strong>Informe oficial: ${esc(PRECIO_TXT)}</strong><span>según tipo, tamaño y ubicación del inmueble</span></p>`;
   }
   if (page.chipNote) return `<p class="offer-chip"><strong>Informe oficial de tasación</strong><span>${esc(page.chipNote)}</span></p>`;
   return `<p class="offer-chip"><strong>Informe oficial de tasación</strong><span>pago · firmado por el Tasador ${esc(TASADOR)}</span></p>`;
