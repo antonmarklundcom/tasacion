@@ -83,7 +83,7 @@ const FORBIDDEN_V3 = [
   'estándares bancarios', 'Te confirmamos el plazo', 'te confirmamos el plazo',
   'Aprobado por', 'Ueno', 'Itaú', 'Itau', 'Continental', 'AFD', 'sin IVA',
 ];
-const ALLOWED_GS = new Set(['800000', '1500000', '1800000', '2500000']);
+const ALLOWED_GS = new Set(['800000', '1500000', '1800000', '2500000', '200000']); // 200000: traslado Cordillera/Paraguarí
 const VERTICAL_B2B_SLUGS = new Set(['/tasaciones/franja-de-dominio/']);
 
 for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.html', extra: true }]) {
@@ -191,9 +191,9 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
     // cada cifra Gs. debe estar seguida de IVA_TXT en el mismo nodo de texto
     // (§7: "el primer Gs. de un rango no lleva sufijo, el segundo sí" — se
     // comprueba de forma conservadora buscando el sufijo dentro de los 40
-    // caracteres siguientes a cada cifra).
+    // caracteres siguientes a cada cifra; 90 desde que el sufijo es "IVA incluido").
     for (const m of gsOutside) {
-      const after = htmlOutsideValueBlock.slice(m.index, m.index + 70);
+      const after = htmlOutsideValueBlock.slice(m.index, m.index + 90);
       if (!after.includes(IVA_TXT)) fail(`${p}: "Gs. ${m[1]}" sin "${IVA_TXT}" en el mismo nodo de texto`);
     }
   }

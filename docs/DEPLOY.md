@@ -4,6 +4,27 @@ Sitio estático generado con Node (`build-site.mjs` + `content.mjs`) más un PHP
 formulario de contacto (`lead-forward.php`). Sin base de datos. Sin CI/CD al servidor: el deploy
 es manual, vía el File Manager de Hostinger.
 
+## 0. Deploy por Git (desde 2026-09-30, el método principal)
+
+hPanel → Websites → tasacion.com.py → Avanzado → **Git**:
+
+- Repositorio: `https://github.com/antonmarklundcom/tasacion.git` (o la URL SSH si el repo es privado y usás deploy key).
+- Rama: **`master`**. La rama `audit-fixes-2026-09-13` queda retirada.
+- Directorio: vacío (= `public_html/`).
+- Activar *Auto deployment* y copiar el webhook en GitHub → Settings → Webhooks, para que cada merge a `master` se publique solo.
+
+El HTML generado está commiteado, así que el servidor no necesita Node ni `npm install`. Todo lo que no es sitio público
+(`docs/`, `tools/`, `prompts/`, `tests/`, `content/`, `*.mjs`, `package*.json`…) queda en el servidor pero
+`.htaccess` lo responde con 404.
+
+Antes del primer deploy por Git: Hostinger exige que `public_html/` esté vacío. Descargar un backup, vaciarlo y desplegar.
+`leads.log` (si existe y tiene leads) conviene bajarlo antes y volver a subirlo después.
+
+La clave del CRM **no** va al repo: va en `vendercrm-config.php`, un nivel **encima** de `public_html/` (ver §3).
+Un deploy por Git nunca lo toca.
+
+Después de cada deploy: purgar el CDN (§4) y verificar (§5).
+
 ## 1. Generar el zip
 
 ```
