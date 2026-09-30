@@ -346,6 +346,10 @@ Hostinger may auto-deploy on a merge to the deploy branch, so **treat every merg
 
 **PR granularity:** one PR per numbered block in §5's order, each small enough to review. PR 1 is step 1 alone.
 
+**Step 1 PR already open:** https://github.com/antonmarklundcom/tasacion/pull/18 (draft; head `claude/compassionate-planck-oyuk36` → `master`). It carries the live branch's 9 commits plus these planning docs. CI is expected red until Phase 1 pushes the deterministic-build fix to that branch.
+
+**Parallel Sonnet session (optional):** item 4 (QA tooling: `tools/seo-audit.mjs`, `seo-diff.mjs`, `link-check.mjs`) touches only new files under `tools/`. It can run as a separate Sonnet 5.5 medium chat that opens its own PR and does not merge. The Opus window reviews and merges it after PR #18.
+
 ---
 
 ## 7. Setup needed before the build window (environment, not decisions)

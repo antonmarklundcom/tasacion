@@ -30,7 +30,7 @@ You fix whatever you find along the way instead of only reporting it: broken lin
 
 ## Hard rules
 
-1. **Clone fresh** into a temp or scratch folder. Branch off `origin/master` once step 1 has merged; before that, off `origin/audit-fixes-2026-09-13`.
+1. **Clone fresh** into a temp or scratch folder. Step 1 finishes PR #18 on `claude/compassionate-planck-oyuk36`. Every later branch goes off `origin/master` after PR #18 has merged.
 2. **Never read, print or commit `deploy/vendercrm-config.php`** or any `vendercrm-config.php`. It is a real private file on Anton's PC. Only `*.example.*` files belong in git. Stage explicit paths only; never `git add -A` or `git add .`. Print no secrets and no private config.
 3. **Legal claims stay exactly as they are.** Invent no credentials, prices, deadlines or guarantees. Only facts that Fer gave (plan §1.5) may be added, and the rows marked (Anton) only after Anton says yes.
 4. **Only WhatsApp number anywhere:**
@@ -75,14 +75,14 @@ You fix whatever you find along the way instead of only reporting it: broken lin
 
 ## Phase 1: step 1, bring master up to the live branch (Opus, medium)
 
-1. Create `sync/live-to-master` from `origin/audit-fixes-2026-09-13`. It carries the audit branch's 9 commits untouched.
+1. **Draft PR https://github.com/antonmarklundcom/tasacion/pull/18 already exists**: head `claude/compassionate-planck-oyuk36` → base `master`. It carries the audit branch's 9 commits untouched, plus the plan docs. Do the work below on that branch (check it out, commit, push to it). Do not open a second sync PR.
 2. Make the build deterministic:
    - hash assets with `\r` stripped
    - `lastmod` from a per-page field or the page's last git commit date, never `new Date()`
 3. Add `deploy/vendercrm-config.php` and `**/vendercrm-config.php` to `.gitignore`.
 4. Rebuild and commit the regenerated HTML and sitemap.
 5. Run `verify.mjs` (PASS), `php -l lead-forward.php` and `node tests/wa-menu.mjs` (with `serve.mjs` running).
-6. Open a PR into master: "Sync master with live branch audit-fixes-2026-09-13 + deterministic build". Resolve any conflict by merging master in (none is expected: master is an ancestor). Wait for CI. Fix it if red. Merge with a merge commit.
+6. Push, mark PR #18 ready for review, and update its body with the verification output. Resolve any conflict by merging master in (none is expected: master is an ancestor). Wait for CI. Fix it if red. Merge with a merge commit.
 7. After the merge: if Hostinger deploys master (Q1), run the live verification (below). Otherwise note that the audit branch is still what deploys, and that from now on PRs go to master and deploy once Anton switches the branch.
 
 ## Phase 2: number switch and message map (Opus writes, Sonnet wires)
@@ -102,7 +102,9 @@ You fix whatever you find along the way instead of only reporting it: broken lin
 - `tools/seo-diff.mjs <before> <after>`: the 9 fail rules in plan §2.3. Treat `OLD_NUMBER` in the baseline as the old number.
 - `tools/link-check.mjs`: all internal hrefs and `#anchors` resolve. The 8 legacy 301 patterns are checked against `.htaccess` (and live when reachable).
 
-Add npm scripts: `audit`, `seo:diff`, `check:contact`, `check:links`. Opus reviews. These can ride in the Phase 2 PR or get their own.
+Add npm scripts: `audit`, `seo:diff`, `check:links`.
+
+**This phase may already be done by a parallel Sonnet session** (Anton starts it with the "Sonnet side-session" prompt). Look for an open PR titled "QA tooling: seo-audit, seo-diff, link-check". If it exists: review it, merge `origin/master` into it if behind, run it against the current build, fix what is wrong, and merge it after green. Do not rebuild these tools yourself. If no such PR exists, build Phase 3 with a Sonnet 5.5 medium subagent. `tools/check-contact.mjs` stays in Phase 2 (it depends on the message map).
 
 ## Phase 4: content from Fer's answers, FAQ, links (fan-out)
 
