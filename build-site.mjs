@@ -25,7 +25,7 @@ const ASSET_V = {
 // HTML/sitemap commiteado deja de coincidir con el rebuild al día siguiente).
 // Subirla a mano cuando cambia el contenido; una página puede fijar su propio
 // `lastmod` en content.mjs.
-const SITE_LASTMOD = '2026-09-13';
+const SITE_LASTMOD = '2026-09-30';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
@@ -206,7 +206,8 @@ function block(section, page) {
       return `<section class="section section--narrow"${section.id ? ` id="${section.id}"` : ''}>
   <div class="container">
     <h2>${esc(section.heading)}</h2>
-    ${nl2p(section.body)}
+    ${nl2p(section.body)}${section.links ? `
+    <p class="lead__links">${section.links.map((l) => `<a class="link" href="${l.href}">${esc(l.label)}</a>`).join(' · ')}</p>` : ''}
     ${section.cta ? `<p><a class="btn btn--primary" href="${section.cta.wa ? waOptionHref('compraventa', page.waContext, page) : section.cta.href}"${section.cta.wa ? ' target="_blank" rel="noopener"' : ''}>${esc(section.cta.label)}</a></p>` : ''}
   </div>
 </section>`;
@@ -408,7 +409,7 @@ function block(section, page) {
   <div class="container">
     ${section.heading ? `<h2>${esc(section.heading)}</h2>` : '<h2>Preguntas frecuentes</h2>'}
     <div class="faq">
-      ${section.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('\n      ')}
+      ${section.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}${f.link ? ` <a class="link" href="${f.link.href}">${esc(f.link.label)}</a>` : ''}</p></details>`).join('\n      ')}
     </div>
   </div>
 </section>`;
@@ -418,7 +419,7 @@ function block(section, page) {
   <div class="container">
     ${section.groups.map((g) => `<h2>${esc(g.title)}</h2>
     <div class="faq">
-      ${g.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('\n      ')}
+      ${g.items.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}${f.link ? ` <a class="link" href="${f.link.href}">${esc(f.link.label)}</a>` : ''}</p></details>`).join('\n      ')}
     </div>`).join('\n    ')}
   </div>
 </section>`;
@@ -497,7 +498,7 @@ function renderChip(page) {
   if (page.kind === 'secondary-free') return '';
   if (page.showPriceChip) {
     if (page.priceChip) return `<p class="offer-chip offer-chip--price"><strong>${esc(page.priceChip.strong)}</strong><span>${esc(page.priceChip.note)}</span></p>`;
-    return `<p class="offer-chip offer-chip--price"><strong>Informe oficial: ${esc(PRECIO_TXT)}</strong><span>según tipo y tamaño del inmueble</span></p>`;
+    return `<p class="offer-chip offer-chip--price"><strong>Informe oficial: ${esc(PRECIO_TXT)}</strong><span>según tipo, tamaño y ubicación del inmueble</span></p>`;
   }
   if (page.chipNote) return `<p class="offer-chip"><strong>Informe oficial de tasación</strong><span>${esc(page.chipNote)}</span></p>`;
   return `<p class="offer-chip"><strong>Informe oficial de tasación</strong><span>pago · firmado por el Tasador ${esc(TASADOR)}</span></p>`;
