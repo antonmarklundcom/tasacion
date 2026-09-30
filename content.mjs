@@ -291,6 +291,7 @@ export const PAGES = [
         items: [
           ...verticalFaqCore('una casa'),
           { q: '¿La visita tiene costo?', a: 'La visita está incluida en el precio del informe, para cualquier finalidad.' },
+          { q: '¿Qué incluye el informe de una casa?', a: `Visita técnica, comparables reales, justificación del valor con el análisis de mercado, documentación fotográfica, metodología explicada y la firma del profesional. Entrega en ${PLAZO_TXT}.` },
         ],
       },
       otrasTasaciones(null, [
@@ -341,6 +342,7 @@ export const PAGES = [
           ...verticalFaqCore('un departamento'),
           { q: '¿El piso y la orientación cambian el valor?', a: 'Sí, son parte de los factores que evaluamos junto con vista, luz natural y confort térmico.' },
           { q: '¿Tasan en propiedad horizontal y pozo?', a: 'Sí, tasamos unidades terminadas en propiedad horizontal y también preventas en pozo. Contanos tu caso por WhatsApp.' },
+          { q: '¿Cuánto tiempo es válida la tasación de un departamento?', a: 'Entre 6 meses y 1 año, según cómo se mueva el mercado en la zona del edificio.' },
         ],
       },
       otrasTasaciones(null, [
@@ -391,6 +393,7 @@ export const PAGES = [
           ...verticalFaqCore('un terreno'),
           { q: '¿Tasan fracciones grandes y loteamientos?', a: 'Sí, tasamos desde lotes individuales hasta fracciones grandes con potencial de loteamiento.' },
           { q: '¿Consideran el potencial de desarrollo?', a: 'Sí, es parte central del análisis: zonificación, F.O.S., F.O.T. y alturas permitidas.' },
+          { q: '¿De qué depende el precio de la tasación de un terreno?', a: 'Primero de la finalidad del informe, que define el rango de precio. Dentro de ese rango, cuentan el tipo de terreno, su tamaño y su ubicación. Confirmamos el monto por WhatsApp antes de agendar la visita.' },
         ],
       },
       otrasTasaciones(null, [
@@ -448,6 +451,7 @@ export const PAGES = [
           ...verticalFaqCore('un activo corporativo'),
           { q: '¿Emiten informes para estados contables y auditoría?', a: 'Sí, emitimos informes técnicos aptos para revaluación de activos fijos en balances.' },
           { q: '¿Tasan plantas industriales completas?', a: 'Sí, tasamos plantas de producción, depósitos y complejos agroindustriales completos.' },
+          { q: '¿Emiten factura legal a la empresa?', a: `Sí. ${FACTURA_TXT} en todos los casos. Se paga el 50 % por transferencia para reservar la visita y el otro 50 % al entregar el informe.` },
         ],
       },
       otrasTasaciones('Servicios relacionados', [
@@ -515,6 +519,7 @@ export const PAGES = [
         type: 'faq',
         items: [
           { q: '¿Sirve para cualquier banco?', a: `Para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS} Decinos por WhatsApp en qué banco o cooperativa estás gestionando.` },
+          { q: '¿Qué lleva el informe hipotecario?', a: 'Es el informe normal más la firma de un tasador inscripto en el registro del BCP, con fotos y una descripción del estado del edificio y de su ubicación.' },
           { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
           { q: '¿Por qué cuesta más que el informe para compra o venta?', a: 'Porque lleva la firma de un tasador inscripto en el registro del BCP, que es lo que tu banco exige.' },
         ],
@@ -570,6 +575,7 @@ export const PAGES = [
           ...verticalFaqCore('un local comercial'),
           { q: '¿Valúan por rentabilidad o por m²?', a: 'Usamos ambos criterios: rentabilidad estimada y comparables de m² del mismo corredor comercial.' },
           { q: '¿Tasan locales en shopping?', a: 'Sí, tasamos locales a pie de calle, en galerías y en shoppings.' },
+          { q: '¿Cuánto tiempo es válida la tasación de un local?', a: 'Entre 6 meses y 1 año, según cómo se mueva el mercado en la zona del local.' },
         ],
       },
       otrasTasaciones(null, [
@@ -620,6 +626,7 @@ export const PAGES = [
           { q: '¿Tasan en todo el territorio nacional?', a: 'Sí, cubrimos campos y estancias en todo el territorio paraguayo.' },
           { q: '¿Qué tipo de análisis técnico realizan?', a: 'Aptitud del suelo, infraestructura instalada, logística y situación legal del inmueble.' },
           { q: '¿El informe sirve para garantías bancarias?', a: 'Sí, el informe pericial puede usarse como respaldo para garantías reales.' },
+          { q: '¿Un informe cubre varios campos o fracciones?', a: 'No. El informe oficial es individual, para un solo inmueble. Si tenés varias fracciones, contanos por WhatsApp y coordinamos.' },
         ],
       },
       otrasTasaciones('Otras Tasaciones', [
@@ -679,6 +686,7 @@ export const PAGES = [
           { q: '¿Quién contrata este servicio?', a: 'Empresas, consorcios viales y constructoras a cargo de un proyecto que afecta una franja de dominio.' },
           { q: '¿Firman como perito?', a: `Sí, firmado por el Tasador Fernando Capurro, ${CRED_CSJ} y ${CRED_ARQ}.` },
           { q: '¿Cuánto tarda?', a: 'Depende de la cantidad de lotes; lo definimos en el presupuesto por proyecto.' },
+          { q: '¿Cómo se cotiza y qué incluye el informe?', a: 'Se cotiza a presupuesto, por proyecto, según la afectación y la distancia. Incluye la notificación a los afectados, el acta de relevamiento en el lugar, los planos de las edificaciones afectadas, la planilla de cómputo y presupuesto dentro del informe y el valor de mercado por lote.' },
         ],
       },
       otrasTasaciones('Otras tasaciones', [
@@ -747,6 +755,7 @@ export const PAGES = [
           { q: '¿Cómo se cubre ese costo?', a: 'Si después de la tasación firmás un contrato de exclusividad con uno de nuestros corredores inmobiliarios asociados, el costo se descuenta de su comisión al cerrar la venta.' },
           { q: '¿Estoy obligado a vender con ustedes?', a: 'No. Podés usar la tasación de forma independiente; el descuento del costo solo aplica si firmás exclusividad con uno de nuestros corredores asociados.' },
           { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
+          { q: '¿Cómo se paga la tasación para vender?', a: 'El 50 % por transferencia para reservar la visita y el otro 50 % al entregar el informe. Aceptamos efectivo, transferencia y QR, y emitimos factura legal.' },
         ],
       },
       ctaBand('¿Necesitás validez legal o bancaria?', 'Pedí el informe oficial de tasación, firmado por el Tasador Fernando Capurro.'),
@@ -849,6 +858,7 @@ export const PAGES = [
           { q: '¿Sirve para sucesión?', a: 'Sí, lo usamos para partición de herencias y determinación de valores fiscales.' },
           { q: '¿Quién firma?', a: `El Tasador Fernando Capurro, ${CRED_CSJ} y ${CRED_ARQ}. Para crédito, ${CRED_BCP_FIRMA}.` },
           { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
+          { q: '¿Cuánto tarda un informe pericial judicial?', a: `${PLAZO_JUDICIAL_TXT} El informe va al juez y tiene que ser más preciso, porque sobre ese valor se calculan los honorarios.` },
         ],
       },
       otrasTasaciones('Informes por tipo de inmueble', SERVICIOS.map((s) => ({ title: s.title, href: s.href }))),
@@ -923,6 +933,12 @@ export const PAGES = [
               { q: '¿Cuánto tarda?', a: `El informe firmado está listo en ${PLAZO_TXT}.` },
               { q: '¿Quién firma el informe?', a: `El Tasador Fernando Capurro, ${CRED_CSJ} y ${CRED_ARQ}. Para crédito, ${CRED_BCP_FIRMA}.` },
               { q: '¿La visita tiene costo?', a: 'La visita está incluida en el precio del informe, para cualquier finalidad.' },
+              { q: '¿Por qué varía el precio?', a: 'Primero depende de la finalidad del informe, que define el rango de precio. Dentro de ese rango, el monto lo fijan el tipo, el tamaño y la ubicación del inmueble. Te confirmamos el monto por WhatsApp antes de agendar la visita.' },
+              { q: '¿Qué es un informe oficial?', a: 'Es un informe individual, para un solo inmueble. Es oficial porque lo firma un profesional matriculado.' },
+              { q: '¿Qué incluye el informe?', a: `Visita técnica, comparables reales, justificación del valor con el análisis de mercado, documentación fotográfica, metodología explicada y la firma del profesional. Lo entregamos en ${PLAZO_TXT}.` },
+              { q: '¿Cómo se paga?', a: 'El 50 % por transferencia para reservar la visita y el otro 50 % al entregar el informe. Aceptamos efectivo, transferencia y QR; no trabajamos con tarjeta.' },
+              { q: '¿Emiten factura?', a: `Sí. ${FACTURA_TXT} en todos los casos.` },
+              { q: '¿Cuánto tiempo es válida una tasación?', a: 'Entre 6 meses y 1 año, según cómo se mueva el mercado en la zona del inmueble.' },
             ],
           },
           {
@@ -931,6 +947,7 @@ export const PAGES = [
               { q: '¿Sirve para mi banco o cooperativa?', a: `Sí: para crédito, ${CRED_BCP_FIRMA}. ${CRED_BCP_BANCOS}` },
               { q: '¿Sirve para hipotecario y fiduciario?', a: 'Sí, cubrimos ambos: el informe se ajusta al formato que tu entidad exige.' },
               { q: '¿Sirve para un remate bancario?', a: 'Sí, también hacemos tasaciones para remates bancarios por ejecución de hipoteca.' },
+              { q: '¿Qué incluye el informe para crédito?', a: `Es el informe normal más la firma de un tasador inscripto en el registro del BCP, con fotos y una descripción del estado del edificio y de su ubicación. Cuesta más solo por esa firma.` },
             ],
           },
           {
@@ -939,6 +956,7 @@ export const PAGES = [
               { q: '¿Sirve para una sucesión?', a: `Sí, para herencias y particiones: el informe lo firma el ${CRED_CSJ.replace("Perito Tasador", "perito tasador")}.` },
               { q: '¿Sirve para un remate judicial?', a: 'Sí, también hacemos tasaciones periciales para remates judiciales y liquidaciones.' },
               { q: '¿Por qué cuesta más que el informe para compra o venta?', a: 'Porque requiere un informe más detallado y suele ser la base de honorarios de abogados y jueces.' },
+              { q: '¿Cuánto tarda una tasación judicial?', a: `${PLAZO_JUDICIAL_TXT} El informe va dirigido al juez y tiene que ser más preciso, porque sobre ese valor se calculan los honorarios.` },
             ],
           },
           {
