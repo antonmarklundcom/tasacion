@@ -757,7 +757,7 @@ export const PAGES = [
     eyebrow: 'Tasador Fernando Capurro · Informes periciales',
     showPriceChip: true,
     priceChip: { strong: `Informe oficial: desde ${fmtGs(PRECIOS.compraventa.min)} ${IVA_TXT}`, note: 'según finalidad; te confirmamos el monto antes de la visita' },
-    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'compraventa' }, secondary: { label: 'Ver qué incluye', href: '#incluye' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
+    hero: { primary: { label: 'Pedir mi informe oficial', waOption: 'compraventa' }, secondary: { label: 'Ver qué incluye', href: '#compraventa' }, freeLink: { label: '¿Solo querés vender? El costo se cubre si vendés con nosotros con exclusividad →', href: '/valuacion-para-vender/' } },
     heroImage: { base: 'informe-de-tasacion-linderos-paraguay', alt: 'Documentación técnica de un informe pericial en Paraguay' },
     title: 'Informes periciales con validez legal | Tasación.com.py',
     description: 'Informe oficial de tasación por finalidad: compra o venta, crédito bancario, sucesiones y juicios. Firmado por perito matriculado.',

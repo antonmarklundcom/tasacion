@@ -6,6 +6,9 @@
   "scripts": {
     "build": "node build-site.mjs",
     "verify": "node verify.mjs",
+    "audit": "node tools/seo-audit.mjs",
+    "seo:diff": "node tools/seo-diff.mjs",
+    "check:links": "node tools/link-check.mjs",
     "test:wa": "node tests/wa-menu.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
