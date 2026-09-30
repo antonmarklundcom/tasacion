@@ -11,7 +11,7 @@ import { MESSAGES, menuRows } from '../content/wa-messages.mjs';
 const LOCAL_CHROMIUM = '/opt/pw-browsers/chromium';
 const executablePath = process.env.PLAYWRIGHT_CHROMIUM_PATH || (existsSync(LOCAL_CHROMIUM) ? LOCAL_CHROMIUM : undefined);
 
-const BASE = 'http://localhost:4322';
+const BASE = process.env.BASE_URL || 'http://localhost:4322';
 let failures = 0;
 const fail = (msg) => { console.error('  FAIL  ' + msg); failures++; };
 const ok = (msg) => console.log('  ok    ' + msg);

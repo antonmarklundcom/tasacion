@@ -807,6 +807,7 @@ export const PAGES = [
         type: 'lead', id: 'judicial',
         heading: 'Tasación pericial para sucesiones y juicios',
         body: `Herencias, remates judiciales y liquidaciones: lo piden abogados y jueces. Firmada por el Tasador Fernando Capurro, ${CRED_CSJ}.\n\nEl informe va dirigido al juez y tiene que ser más preciso y detallado, porque sobre ese valor se calculan los honorarios. Todo lo judicial, sucesiones incluidas: ${PRECIO_JUDICIAL_TXT} ${IVA_TXT}. ${PLAZO_JUDICIAL_TXT}`,
+        cta: { label: 'Pedir tasación pericial', wa: true, waOption: 'sucesion' },
       },
       {
         type: 'lead', id: 'credito',
@@ -1027,7 +1028,6 @@ export const PAGES = [
         type: 'contactForm',
         heading: '¿Preferís que te escribamos?',
         body: 'Dejanos tus datos y te contactamos nosotros.',
-        mensajeOptions: menuRows('/contacto/').map((id, idx) => ({ value: PURPOSES[id].label, label: PURPOSES[id].label, default: idx === 0 })),
       },
       ctaBand('Pedí tu informe oficial de tasación', 'Firmado por el Tasador Fernando Capurro, con validez para bancos, juzgados y escribanías.'),
     ],
@@ -1101,6 +1101,8 @@ export const EXTRAS = [
     description: 'Recibimos tu consulta de tasación. Te respondemos por WhatsApp al número que dejaste.',
     h1: 'Gracias, ya recibimos tus datos',
     subcopy: 'El Tasador Fernando Capurro te escribe por WhatsApp al número que dejaste. Si preferís adelantar la consulta, escribinos ahora mismo.',
-    sections: [],
+    sections: [
+      { type: 'graciasWa', heading: '¿Querés adelantarlo?', body: 'Mandanos ahora un mensaje con los datos del inmueble y avanzamos con la consulta antes de que te escribamos.', label: 'Escribinos por WhatsApp' },
+    ],
   },
 ];

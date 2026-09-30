@@ -75,6 +75,35 @@ $email   = trim((string)($_POST['email'] ?? ''));
 $message = trim((string)($_POST['mensaje'] ?? ''));
 $pageUrl = trim((string)($_POST['page_url'] ?? ''));
 
+/* Finalidad (whitelist de las 8 de content/wa-messages.mjs) y ciudad. */
+const PURPOSE_LABELS = [
+    'compraventa' => 'Informe oficial para comprar o vender',
+    'hipotecaria' => 'Tasación para crédito hipotecario',
+    'credito'     => 'Tasación para otro crédito',
+    'sucesion'    => 'Tasación para sucesión o juicio',
+    'venta'       => 'Tasación para vender con un corredor',
+    'empresa'     => 'Tasación para mi empresa',
+    'franja'      => 'Relevamiento en franja de dominio',
+    'consulta'    => 'Otra consulta',
+];
+$purpose = trim((string)($_POST['purpose'] ?? ''));
+if (!array_key_exists($purpose, PURPOSE_LABELS)) {
+    $purpose = 'consulta';
+}
+$ciudad = trim(strip_tags((string)($_POST['ciudad'] ?? '')));
+$ciudad = preg_replace('/\s+/u', ' ', $ciudad) ?? '';
+$ciudad = function_exists('mb_substr') ? mb_substr($ciudad, 0, 120) : substr($ciudad, 0, 120);
+
+/* Mensaje legible para el CRM. `mensaje` (formulario viejo en caché) se conserva. */
+$parts = ['Finalidad: ' . PURPOSE_LABELS[$purpose] . '.'];
+if ($ciudad !== '') {
+    $parts[] = 'Ciudad o barrio: ' . $ciudad . '.';
+}
+if ($message !== '') {
+    $parts[] = 'Mensaje: ' . $message;
+}
+$message = implode(' ', $parts);
+
 /* 3. Atribución de primer toque, si vc-attribution.js dejó la cookie. */
 $attr = [];
 if (!empty($_COOKIE['vc_attr'])) {
@@ -94,6 +123,8 @@ $payload = [
     'name'            => $name,
     'email'           => $email,
     'message'         => $message,
+    /* Extras al timeline del CRM: `fields` es el único lugar documentado para datos propios. */
+    'fields'          => array_filter(['finalidad' => $purpose, 'ciudad' => $ciudad], static fn($v) => $v !== ''),
     'source'          => SITE_SOURCE,
     'page_url'        => $pageUrl !== '' ? $pageUrl : ($attr['landing_page'] ?? ''),
     'referrer'        => $attr['referrer']     ?? '',
@@ -152,4 +183,4 @@ if (VENDERCRM_URL !== '' && function_exists('curl_init')) {
 }
 
 /* 7. Confirmar solo si el log o el CRM aceptó el lead. */
-redirect_and_exit($logged || $forwarded ? THANK_YOU : '/contacto/?error=envio');
+redirect_and_exit($logged || $forwarded ? THANK_YOU . '?p=' . $purpose : '/contacto/?error=envio');

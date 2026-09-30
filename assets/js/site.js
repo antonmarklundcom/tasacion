@@ -44,6 +44,15 @@
     }
   }
 
+  var gw = document.querySelector('[data-gracias-wa]');
+  if (gw) {
+    try {
+      var gp = new URLSearchParams(location.search).get('p');
+      var gmap = JSON.parse(gw.getAttribute('data-wa-map') || '{}');
+      if (gp && Object.prototype.hasOwnProperty.call(gmap, gp)) gw.href = gmap[gp];
+    } catch (err) { /* queda el href por defecto */ }
+  }
+
   var pu = document.getElementById('page_url');
   if (pu) pu.value = location.href;
 
@@ -67,6 +76,16 @@
         burger.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
     }
+  }
+
+  /* Barra móvil: oculta mientras el CTA principal del hero está a la vista. */
+  var mbar = document.querySelector('[data-mbar]');
+  var heroCta = document.querySelector('[data-ev-loc="hero"]');
+  if (mbar && heroCta && 'IntersectionObserver' in window) {
+    var mbarIO = new IntersectionObserver(function (entries) {
+      mbar.classList.toggle('is-hidden', entries[entries.length - 1].isIntersecting);
+    });
+    mbarIO.observe(heroCta);
   }
 
   /* -------------------------------------------------------------- WA menu
