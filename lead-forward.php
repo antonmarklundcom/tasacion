@@ -123,8 +123,8 @@ $payload = [
     'name'            => $name,
     'email'           => $email,
     'message'         => $message,
-    'purpose'         => $purpose,
-    'ciudad'          => $ciudad,
+    /* Extras al timeline del CRM: `fields` es el único lugar documentado para datos propios. */
+    'fields'          => array_filter(['finalidad' => $purpose, 'ciudad' => $ciudad], static fn($v) => $v !== ''),
     'source'          => SITE_SOURCE,
     'page_url'        => $pageUrl !== '' ? $pageUrl : ($attr['landing_page'] ?? ''),
     'referrer'        => $attr['referrer']     ?? '',

@@ -1102,7 +1102,7 @@ export const EXTRAS = [
     h1: 'Gracias, ya recibimos tus datos',
     subcopy: 'El Tasador Fernando Capurro te escribe por WhatsApp al número que dejaste. Si preferís adelantar la consulta, escribinos ahora mismo.',
     sections: [
-      { type: 'graciasWa', heading: '¿Querés adelantarlo?', body: 'Mandanos ahora un mensaje con los datos del inmueble y avanzamos con la consulta antes de que te escribamos.', label: '¿Querés adelantarlo? Escribinos por WhatsApp' },
+      { type: 'graciasWa', heading: '¿Querés adelantarlo?', body: 'Mandanos ahora un mensaje con los datos del inmueble y avanzamos con la consulta antes de que te escribamos.', label: 'Escribinos por WhatsApp' },
     ],
   },
 ];
