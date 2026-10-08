@@ -19,7 +19,7 @@ const counts = { FAIL: 0, WARN: 0, INFO: 0 };
 const say = (lvl, msg) => { counts[lvl]++; console.log(`  ${lvl.padEnd(4)}  ${msg}`); };
 const allowed = (path, field) => (whitelist[path] || []).includes(field);
 
-const NUMBER = '595992279599';
+const NUMBER = '595995628862';
 const TEL = 'tel:+' + NUMBER;
 // Canonical: absoluto a tasacion.com.py en ambos lados; se normaliza host local por si acaso.
 const canon = (c) => (c || '').replace(/^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?/, 'https://tasacion.com.py');

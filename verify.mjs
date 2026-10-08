@@ -8,7 +8,8 @@ import { createHash } from 'node:crypto';
 import { MESSAGES, menuRows } from './content/wa-messages.mjs';
 import { PRECIO_TXT, CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS, FINALIDADES } from './content.mjs';
 
-const sha1_8 = (path) => createHash('sha1').update(readFileSync(path)).digest('hex').slice(0, 8);
+// Mismo tratamiento de CRLF que build-site.mjs para checkouts Windows.
+const sha1_8 = (path) => createHash('sha1').update(readFileSync(path, 'utf8').replace(/\r/g, '')).digest('hex').slice(0, 8);
 const CSS_HASH = sha1_8('assets/css/site.css');
 const JS_HASH = sha1_8('assets/js/site.js');
 
