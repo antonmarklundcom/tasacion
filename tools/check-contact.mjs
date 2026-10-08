@@ -9,9 +9,9 @@ const fail = (msg) => { console.error('  FAIL  ' + msg); failures++; };
 const ok = (msg) => console.log('  ok    ' + msg);
 const step = (msg) => console.log('\n== ' + msg + ' ==');
 
-const EXPECTED_NUMBER = '595992279599';
-const EXPECTED_TEL = 'tel:+595992279599';
-const EXPECTED_DISPLAY = '+595 992 279 599';
+const EXPECTED_NUMBER = '595995628862';
+const EXPECTED_TEL = 'tel:+595995628862';
+const EXPECTED_DISPLAY = '+595 995 628862';
 // Cifras de 4+ dígitos permitidas dentro de mensajes (vacío: ninguna).
 const ALLOWED_DIGIT_RUNS = [];
 
@@ -69,13 +69,16 @@ if (WA_NUMBER !== EXPECTED_NUMBER || TEL_HREF !== EXPECTED_TEL || WA_DISPLAY !==
 // ------------------------------------------------ d. número viejo en archivos
 step('número viejo en archivos versionados');
 const b4 = failures;
-const g = ['595', '995', '628', '862'];
+const g = ['595', '992', '279', '599'];
 const gap = '[^\\d\\n]{0,3}';
 const OLD = new RegExp(g.join(gap));
 const OLD_LOCAL = new RegExp('0' + g.slice(1).join(gap));
 const OTHER_595 = /(?<!\d)595\d{9}(?!\d)/g;
 const BINARY = /\.(webp|png|jpe?g|gif|ico|woff2?|ttf|otf|pdf|zip|avif)$/i;
 for (const f of execSync('git ls-files -z', { encoding: 'utf8' }).split('\0').filter(Boolean)) {
+  // Los informes históricos conservan el número observado en su fecha.
+  // Solo el código, los checks y los archivos públicos usan el contacto actual.
+  if (f.startsWith('docs/') || /\.md$/i.test(f)) continue;
   if (BINARY.test(f) || !existsSync(f)) continue;
   const buf = readFileSync(f);
   if (buf.includes(0)) continue;
@@ -98,6 +101,7 @@ for (const [slug, msgs] of Object.entries(MESSAGES)) {
     for (const m of t.match(/\d{4,}/g) || []) if (!ALLOWED_DIGIT_RUNS.includes(m)) fail(`${id}: cifra de 4+ dígitos (${m})`);
     if (/\b(tienes|puedes|quieres|necesitas|eres|sabes)\b/i.test(t)) fail(`${id}: forma de tú`);
     if (!t.includes('___')) fail(`${id}: falta el espacio "___"`);
+    if (!t.includes('Tasación.com.py')) fail(`${id}: falta el origen Tasación.com.py`);
     if (seen.has(t)) fail(`${id}: idéntico a ${seen.get(t)}`); else seen.set(t, id);
   }
 }
