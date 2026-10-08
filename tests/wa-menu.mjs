@@ -127,6 +127,44 @@ try {
     }
   }
 
+  // Header: la finalidad debe coincidir en desktop y móvil, no solo en FAB.
+  for (const c of [
+    { path: '/', expected: 'compraventa' },
+    { path: '/tasaciones/hipotecaria/', expected: 'hipotecaria' },
+    { path: '/tasaciones/corporativa/', expected: 'empresa' },
+    { path: '/tasaciones/franja-de-dominio/', expected: 'franja' },
+    { path: '/valuacion-para-vender/', expected: 'venta' },
+  ]) {
+    for (const width of [1280, 390]) {
+      const page = await browser.newPage({ viewport: { width, height: 900 } });
+      await page.goto(BASE + c.path);
+      await page.locator(width === 1280 ? '.wa-pill' : '.wa-round').click();
+      const current = page.locator('.wa-menu__option--current');
+      const selected = await current.getAttribute('data-wa-option');
+      const href = await current.getAttribute('href');
+      if (selected !== c.expected || new URL(href).searchParams.get('text') !== MESSAGES[c.path][c.expected]) {
+        fail(`${c.path} ${width}px: el header seleccionó ${selected}, se esperaba ${c.expected}`);
+      } else ok(`${c.path} ${width}px: header conserva finalidad y mensaje (${c.expected})`);
+      await page.close();
+    }
+  }
+
+  // Contacto: el select largo no debe ensanchar el grid en móviles.
+  for (const width of [320, 375, 390, 768, 1280]) {
+    const page = await browser.newPage({ viewport: { width, height: 900 } });
+    await page.goto(BASE + '/contacto/');
+    const fits = await page.evaluate(() => {
+      const controls = [...document.querySelectorAll('form input:not([type="hidden"]):not([name="website"]), form select, form textarea')];
+      return document.documentElement.scrollWidth <= innerWidth + 1 && controls.every((el) => {
+        const r = el.getBoundingClientRect();
+        return r.width > 0 && r.left >= 0 && r.right <= innerWidth + 1;
+      });
+    });
+    if (!fits) fail(`/contacto/ ${width}px: scroll horizontal o campos fuera del viewport`);
+    else ok(`/contacto/ ${width}px: todos los campos caben sin scroll horizontal`);
+    await page.close();
+  }
+
   // ------------------------------------------------------------- 390px
   {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });

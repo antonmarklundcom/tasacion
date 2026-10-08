@@ -59,7 +59,7 @@ a{color:var(--navy)}
 .hdr{position:sticky;top:0;z-index:60;background:rgba(250,249,247,.88);backdrop-filter:blur(10px) saturate(150%);border-bottom:1px solid transparent;transition:background var(--dur) var(--ease-out),border-color var(--dur) var(--ease-out)}
 .hdr.is-stuck{background:var(--base);border-bottom-color:var(--hairline)}
 .hdr__row{display:flex;align-items:center;gap:32px;height:68px}
-@media (max-width:640px){.hdr__row{height:60px}}
+@media (max-width:640px){.hdr__row{height:60px;gap:16px}}
 .hdr__brand{font-family:var(--font-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
 .hdr__brand span{color:var(--gold)}
 .hdr__nav{margin-left:auto}
@@ -231,7 +231,8 @@ table.compare th{background:var(--navy-tint)}
 
 /* ---------------------------------------------------------------- form */
 .form{display:grid;gap:14px;max-width:420px}
-.field{display:flex;flex-direction:column;gap:.35em;font-size:.9rem;color:var(--ink-muted)}
+.field{display:flex;flex-direction:column;gap:.35em;font-size:.9rem;color:var(--ink-muted);min-width:0}
+.field input,.field select,.field textarea{width:100%;max-width:100%;min-width:0}
 .field input{padding:12px 14px;border:1px solid var(--hairline);border-radius:var(--r-sm);font-size:16px;font-family:inherit}
 .field select{padding:12px 14px;border:1px solid var(--hairline);border-radius:var(--r-sm);font-size:16px;font-family:inherit;background:#fff;color:var(--ink)}
 .field select:focus-visible{outline:3px solid var(--navy);outline-offset:1px}
@@ -387,8 +388,8 @@ ul.list--links li{margin-bottom:.4em}
 .field input::placeholder,.field textarea::placeholder{color:#9AA3AD}
 .form__note{margin:0;font-size:.9rem;color:var(--ink-muted)}
 .contact-split{scroll-margin-top:80px}
-.contact-split__grid{display:grid;gap:32px}
-@media (min-width:900px){.contact-split__grid{grid-template-columns:7fr 5fr;align-items:start;gap:48px}}
+.contact-split__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:32px}
+@media (min-width:900px){.contact-split__grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);align-items:start;gap:48px}}
 .contact-split__form{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-lg);padding:32px}
 @media (max-width:640px){.contact-split__form{padding:24px 20px;border-radius:20px}}
 .contact-split__form h2{margin-top:0}
