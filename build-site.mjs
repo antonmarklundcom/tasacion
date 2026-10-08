@@ -87,8 +87,8 @@ function renderNav(current, ctx, page) {
         ${items}
       </ul>
     </nav>
-    <a class="wa-pill" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false">${ICON_WA}WhatsApp</a>
-    <a class="wa-round" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="WhatsApp">${ICON_WA}</a>
+    <a class="wa-pill" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${pagePurpose(page)}" data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false">${ICON_WA}WhatsApp</a>
+    <a class="wa-round" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${pagePurpose(page)}" data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="WhatsApp">${ICON_WA}</a>
     <button type="button" class="hdr__burger" data-hdr-burger aria-expanded="false" aria-controls="hdr-panel" aria-label="Abrir menú">${ICON_BURGER}</button>
   </div>
   <div class="hdr__panel" id="hdr-panel" data-hdr-panel>

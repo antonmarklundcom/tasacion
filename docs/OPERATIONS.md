@@ -1,6 +1,6 @@
 # Tasación operations — updated 8 October 2026
 
-Repository: https://github.com/antonmarklundcom/tasacion. Public site: https://tasacion.com.py. Baseline reviewed: `ba2e898`. Delivery branch: `codex/whatsapp-number-20261008`.
+Repository: https://github.com/antonmarklundcom/tasacion. Public site: https://tasacion.com.py. Deployed revision checked: `ee22d4584d4a738f53890e6f144aaeb8a1157938`. Follow-up branch: `codex/live-check-fixes-20261008`.
 
 ## Current state
 
@@ -8,7 +8,7 @@ Static HTML generated with Node, plus a PHP contact handler. No application data
 
 Contact is **+595 995 628862**, controlled by `content/wa-messages.mjs`. All 130 messages identify Tasación.com.py and retain their page/service/purpose details. There are 16 sitemap routes and two extra pages. Historical specifications and audit snapshots retain the numbers and facts recorded at their original dates; use this document for current operations.
 
-This branch contains the contact update, generated output, matching verification assertions, a Windows hash-verification correction and [20 review findings](audit/2026-10-08-repository-review.md). Implemented does not mean merged or deployed. The pull request records delivery status and checks. Live hosting and CRM delivery have not been verified by this work.
+The contact update in PR #27 is merged and verified on all 18 live pages. See the [live deployment check](audit/2026-10-08-live-deployment-check.md). This follow-up branch fixes mobile contact/header overflow and the header WhatsApp purpose selection; those fixes are locally verified and await merge/redeployment. The [20 review findings](audit/2026-10-08-repository-review.md) remain a separate improvement backlog. Actual hPanel configuration and production CRM delivery were not inspected.
 
 ## Edit, build and Git
 
@@ -40,12 +40,13 @@ Attribution comes from `https://crm.clientes.com.py/vc-attribution.js` and the `
 
 ## Owner actions and validation limits
 
-- Review/merge the contact PR when ready, then verify the live site and CDN state.
+- Merge the follow-up mobile/header fixes when ready, then redeploy `master` and recheck the contact page and specialist header menus.
 - Update Google Business Profile, directory listings, social profiles and the CRM site's contact record to the new number if those still use the prior contact. These external records were not changed.
 - Decide the next improvement batch from the audit, starting with form validation and CRM recovery.
 - Confirm retention/deletion procedures and who monitors locally retained leads.
 - Local `node verify.mjs` passes: deterministic build, 18 pages, 130 messages, 394 internal links/assets/anchors and legacy redirects. `git diff --cached --check` passes.
 - The existing WhatsApp browser suite completed with `PASS` and exit code 0 (desktop, mobile, page defaults, popup URL, Escape and no-JavaScript fallback). The local harness used bundled Playwright/cached Chromium and stubbed external attribution. Browser cleanup was slow but completed successfully.
-- PHP is unavailable on this PC. PHP lint is left to CI; PHP behavior, production CRM delivery and hosting publication require separate verification.
+- The follow-up passes structural verification and local browser checks at 320–1280px. Header purposes/messages were checked at both 1280px and 390px; regression cases are in `tests/wa-menu.mjs`.
+- PHP is unavailable on this PC. GitHub reported no check runs for the deployed merge at verification time. PHP behavior and production CRM delivery require separate verification; publication of PR #27's public pages is confirmed.
 
 Local manuals reuse `C:/operation manuals/tasacion/README.md` across checkouts. New checkouts should use `C:/Projects`; this audit checkout was created in the then-active workspace before that preference was supplied and was retained in place.
