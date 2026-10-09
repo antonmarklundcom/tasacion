@@ -10,7 +10,8 @@ const pause=ms=>new Promise(r=>setTimeout(r,ms));
  const server=spawn(process.env.PHP_BINARY || 'php',['-S',`127.0.0.1:${port}`,'-t',web],{windowsHide:true,stdio:'ignore',env:{...process.env,TASACION_OUTBOX_DIR:base+'/private',VENDERCRM_URL:'unconfigured',VENDERCRM_API_KEY:''}});
  try {
   const url=`http://127.0.0.1:${port}/lead-forward.php`;
-  for(let i=0;i<50;i++){try{await fetch(url,{redirect:'manual'});break;}catch{await pause(100)}}
+  const waitForServer=async()=>{for(let i=0;i<100;i++){try{await fetch(url,{redirect:'manual',signal:AbortSignal.timeout(1000)});return;}catch{await pause(100)}}throw Error('Local PHP fixture server did not become ready');};
+  await waitForServer();
   let checks=0;
   const assert=(ok,label)=>{if(!ok)throw Error(label);checks++};
   const post=body=>fetch(url,{method:'POST',body:new URLSearchParams(body),redirect:'manual'});
@@ -28,7 +29,7 @@ const pause=ms=>new Promise(r=>setTimeout(r,ms));
   assert(entries.every(x=>!JSON.stringify(x).includes('api_key')),'Queue stores no key');
   server.kill();await new Promise(r=>server.once('close',r));
   const blocked=spawn(process.env.PHP_BINARY || 'php',['-S',`127.0.0.1:${port}`,'-t',web],{windowsHide:true,stdio:'ignore',env:{...process.env,TASACION_OUTBOX_DIR:web+'/unsafe',VENDERCRM_URL:'unconfigured',VENDERCRM_API_KEY:''}});
-  try{await pause(300);assert((await post(payload)).headers.get('location')==='/contacto/?error=envio','No queue and no receipt cannot show thank-you');}finally{blocked.kill();await new Promise(r=>blocked.once('close',r));}
+  try{await waitForServer();assert((await post(payload)).headers.get('location')==='/contacto/?error=envio','No queue and no receipt cannot show thank-you');}finally{blocked.kill();await new Promise(r=>blocked.once('close',r));}
   console.log(`PASS: ${checks} local PHP form checks; no real CRM submission.`);
  }finally{if(server.exitCode===null&&!server.killed)server.kill();}
 })().catch(e=>{console.error(e.message);process.exitCode=1}).finally(()=>{

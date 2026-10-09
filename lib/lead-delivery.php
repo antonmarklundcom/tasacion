@@ -75,10 +75,11 @@ final class TasacionLeadDelivery
 
     private function read(string $file): array
     {
+        if (is_link($file)) throw new RuntimeException('invalid-entry');
         $bytes = @file_get_contents($file);
         if ($bytes === false) throw new RuntimeException('queue-unavailable');
         $entry = json_decode($bytes, true, 32, JSON_THROW_ON_ERROR);
-        if (!is_array($entry) || ($entry['version'] ?? null) !== 1 || !is_array($entry['payload'] ?? null) || !isset($entry['payload']['idempotency_key'])) throw new RuntimeException('invalid-entry');
+        if (!is_array($entry) || ($entry['version'] ?? null) !== 1 || !is_array($entry['payload'] ?? null) || !is_string($entry['payload']['idempotency_key'] ?? null) || $entry['payload']['idempotency_key'] === '' || !in_array($entry['state'] ?? '', ['pending', 'delivered'], true) || !is_string($entry['created_at'] ?? null) || strtotime($entry['created_at']) === false || !is_int($entry['attempts'] ?? null) || $entry['attempts'] < 0 || !is_int($entry['next_attempt_at'] ?? null) || $entry['next_attempt_at'] < 0) throw new RuntimeException('invalid-entry');
         return $entry;
     }
 
@@ -118,7 +119,7 @@ final class TasacionLeadDelivery
         });
     }
 
-    private function request(string $endpoint, ?array $payload): array
+    private function request(string $endpoint, ?array $payload, array $extraHeaders = []): array
     {
         $base = rtrim((string)($this->config['url'] ?? ''), '/');
         $key = (string)($this->config['api_key'] ?? '');
@@ -129,7 +130,7 @@ final class TasacionLeadDelivery
         $body = '';
         $ch = curl_init($base . $endpoint);
         curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => false, CURLOPT_FOLLOWLOCATION => false, CURLOPT_TIMEOUT => 10, CURLOPT_CONNECTTIMEOUT => 5,
-            CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'X-Api-Key: ' . $key],
+            CURLOPT_HTTPHEADER => array_merge(['Content-Type: application/json', 'X-Api-Key: ' . $key], $extraHeaders),
             CURLOPT_WRITEFUNCTION => static function ($handle, string $chunk) use (&$body): int { if (strlen($body) + strlen($chunk) > 16384) return 0; $body .= $chunk; return strlen($chunk); }]);
         if ($payload !== null) { curl_setopt($ch, CURLOPT_POST, true); curl_setopt($ch, CURLOPT_POSTFIELDS, self::json($payload)); }
         $ok = curl_exec($ch);
@@ -154,11 +155,12 @@ final class TasacionLeadDelivery
         return ['received' => $received, 'status' => $response['status'], 'code' => $received ? 'received' : (($response['status'] === 200 || $response['status'] === 201) ? 'invalid-receipt' : $response['code'])];
     }
 
-    public function deliver(string $id, ?callable $transport = null, ?int $now = null): array
+    public function deliver(string $id, ?callable $transport = null, ?int $now = null, ?string $expectedFingerprint = null): array
     {
         $now ??= time();
-        return $this->locked($id, function (string $file) use ($transport, $now): array {
+        return $this->locked($id, function (string $file) use ($transport, $now, $expectedFingerprint, $id): array {
             $entry = $this->read($file);
+            if ($expectedFingerprint !== null && (!hash_equals($id, hash('sha256', (string)$entry['payload']['idempotency_key'])) || !hash_equals($expectedFingerprint, self::fingerprint($entry['payload'])))) throw new RuntimeException('review-changed');
             if ($entry['state'] === 'delivered') return ['received' => true, 'code' => 'already-received'];
             if ($entry['next_attempt_at'] > $now) return ['received' => false, 'code' => 'waiting'];
             // Lock covers delivery and marking it. A crash is safe: next retry uses the same CRM identity.
@@ -215,5 +217,133 @@ final class TasacionLeadDelivery
             return ['status' => 200, 'scope' => 'configuration-only', 'canReceive' => $body['canReceive'] ?? false, 'checks' => $body['checks'] ?? [], 'warnings' => $body['warnings'] ?? []];
         }
         return ['status' => $response['status'], 'code' => $response['code'], 'canReceive' => false];
+    }
+
+    /** Canonical UTF-8 JSON: byte-sorted object keys, preserved list order. */
+    public static function fingerprint(array $payload): string
+    {
+        $encode = static function (mixed $value) use (&$encode): string {
+            if (is_array($value)) {
+                if (array_is_list($value)) return '[' . implode(',', array_map($encode, $value)) . ']';
+                $keys = array_keys($value); sort($keys, SORT_STRING);
+                $pairs = [];
+                foreach ($keys as $key) $pairs[] = json_encode((string)$key, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_LINE_TERMINATORS | JSON_THROW_ON_ERROR) . ':' . $encode($value[$key]);
+                return '{' . implode(',', $pairs) . '}';
+            }
+            if (is_int($value) && abs($value) > 9007199254740991) throw new RuntimeException('review-number-unsupported');
+            $json = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_LINE_TERMINATORS | JSON_THROW_ON_ERROR);
+            if (!is_float($value)) return $json;
+            if ($value == 0) return '0';
+            // Match ECMAScript JSON number thresholds and exponent notation.
+            if (!str_contains($json, 'e')) return $json;
+            [$mantissa, $exponent] = explode('e', $json);
+            $negative = str_starts_with($mantissa, '-');
+            if ($negative) $mantissa = substr($mantissa, 1);
+            if (str_contains($mantissa, '.')) $mantissa = rtrim(rtrim($mantissa, '0'), '.');
+            $power = (int)$exponent;
+            if ($power < -6 || $power >= 21) return ($negative ? '-' : '') . $mantissa . 'e' . ($power >= 0 ? '+' : '') . $power;
+            $digits = str_replace('.', '', $mantissa); $position = $power + 1;
+            if ($position <= 0) $decimal = '0.' . str_repeat('0', -$position) . $digits;
+            elseif ($position >= strlen($digits)) $decimal = $digits . str_repeat('0', $position - strlen($digits));
+            else $decimal = substr($digits, 0, $position) . '.' . substr($digits, $position);
+            return ($negative ? '-' : '') . $decimal;
+        };
+        return hash('sha256', $encode($payload));
+    }
+
+    public function heartbeat(?callable $transport = null, ?int $now = null): array
+    {
+        $now ??= time();
+        $counts = $this->status();
+        $error = $counts['unreadable'] > 0 ? 'queue-unreadable' : null;
+        foreach (glob($this->directory() . '/*.json') ?: [] as $file) {
+            try {
+                if (is_link($file)) { $error = 'queue-unreadable'; continue; }
+                $entry = $this->read($file);
+                if (($entry['state'] ?? '') !== 'pending' || !isset($entry['last_code'])) continue;
+                if ($error === 'queue-unreadable') continue;
+                $error = in_array($entry['last_code'], ['network', 'curl-unavailable'], true) ? 'network-unavailable' : 'delivery-rejected';
+            } catch (Throwable $ignored) { $error = 'queue-unreadable'; }
+        }
+        $report = ['pending' => min(1000000, $counts['pending']), 'unreadable' => min(1000000, $counts['unreadable']),
+            'oldestAgeSeconds' => $counts['oldest_pending_at'] ? min(31536000, max(0, $now - (strtotime($counts['oldest_pending_at']) ?: $now))) : 0, 'error' => $error];
+        $timestamp = (string)$now;
+        $raw = self::json($report);
+        $key = (string)($this->config['api_key'] ?? '');
+        $headers = ['X-Delivery-Timestamp: ' . $timestamp, 'X-Delivery-Signature: ' . hash_hmac('sha256', $timestamp . "\n" . $raw, $key)];
+        $response = $transport ? $transport('/api/v1/sites/heartbeat', $raw, $headers) : $this->request('/api/v1/sites/heartbeat', $report, $headers);
+        return ['reported' => !empty($response['ok']) && ($response['status'] ?? 0) === 204, 'status' => (int)($response['status'] ?? 0), ...$report];
+    }
+
+    private function privateReviewPath(string $path, bool $mustExist): string
+    {
+        if (!preg_match('~^(?:/|[A-Za-z]:[/\\\\])~', $path) || is_link($path)) throw new RuntimeException('private-review-path-required');
+        $ancestor = dirname($path);
+        while (true) {
+            if (is_link($ancestor)) throw new RuntimeException('private-review-path-required');
+            if (dirname($ancestor) === $ancestor) break;
+            $ancestor = dirname($ancestor);
+        }
+        $parent = realpath(dirname($path));
+        if (!$parent || $this->insideWebRoot($parent)) throw new RuntimeException('private-review-path-required');
+        $resolved = $parent . DIRECTORY_SEPARATOR . basename($path);
+        if ($mustExist && (!is_file($resolved) || is_link($resolved))) throw new RuntimeException('private-review-path-required');
+        return $resolved;
+    }
+
+    public function exportReview(string $output, int $limit = 10): array
+    {
+        if ($limit < 1 || $limit > 50) throw new RuntimeException('review-limit');
+        $output = $this->privateReviewPath($output, false);
+        if (file_exists($output)) throw new RuntimeException('review-output-exists');
+        $entries = []; $unreadable = 0;
+        $files = glob($this->directory() . '/*.json') ?: []; sort($files, SORT_STRING);
+        foreach ($files as $file) {
+            if (count($entries) >= $limit) break;
+            try {
+                $id = basename($file, '.json');
+                $entry = $this->locked($id, fn(string $lockedFile): array => $this->read($lockedFile));
+                if (($entry['state'] ?? '') !== 'pending') continue;
+                if (!hash_equals($id, hash('sha256', (string)$entry['payload']['idempotency_key']))) throw new RuntimeException('invalid-entry');
+                self::fingerprint($entry['payload']);
+                $entries[] = ['id' => $id, 'payload' => $entry['payload']];
+            } catch (Throwable $ignored) { $unreadable++; }
+        }
+        $oldMask = umask(0077);
+        try { $handle = @fopen($output, 'x+b'); } finally { umask($oldMask); }
+        if (!$handle) throw new RuntimeException('review-output-unavailable');
+        try {
+            if (!@chmod($output, 0600)) throw new RuntimeException('review-output-permissions');
+            $bytes = self::json(['version' => 1, 'siteDomain' => 'tasacion.com.py', 'entries' => $entries]) . "\n";
+            $offset = 0;
+            while ($offset < strlen($bytes)) { $written = fwrite($handle, substr($bytes, $offset)); if (!$written) throw new RuntimeException('review-output-unavailable'); $offset += $written; }
+            if (!fflush($handle) || (function_exists('fsync') && !fsync($handle))) throw new RuntimeException('review-output-unavailable');
+        } finally { fclose($handle); }
+        return ['exported' => count($entries), 'unreadable' => $unreadable];
+    }
+
+    public function retryReviewed(string $manifestPath, ?callable $transport = null, ?int $now = null): array
+    {
+        $now ??= time();
+        $manifestPath = $this->privateReviewPath($manifestPath, true);
+        if (filesize($manifestPath) > 65536) throw new RuntimeException('review-invalid');
+        $manifest = json_decode((string)file_get_contents($manifestPath), true, 32, JSON_THROW_ON_ERROR);
+        $reviewed = is_string($manifest['reviewedAt'] ?? null) ? strtotime($manifest['reviewedAt']) : false;
+        if (($manifest['version'] ?? null) !== 1 || ($manifest['siteDomain'] ?? null) !== 'tasacion.com.py' || !$reviewed || $reviewed > $now || $now - $reviewed > 600 || !is_array($manifest['entries'] ?? null) || !array_is_list($manifest['entries']) || count($manifest['entries']) > 50) throw new RuntimeException('review-invalid');
+        $retry = []; $seen = []; $skipped = 0;
+        foreach ($manifest['entries'] as $row) {
+            if (!is_array($row) || !is_string($row['id'] ?? null) || !preg_match('/^[a-f0-9]{64}$/D', $row['id']) || !is_string($row['fingerprint'] ?? null) || !preg_match('/^[a-f0-9]{64}$/D', $row['fingerprint']) || isset($seen[$row['id']]) || !in_array($row['action'] ?? '', ['retry', 'received', 'conflict', 'invalid'], true)) throw new RuntimeException('review-invalid');
+            $seen[$row['id']] = true;
+            if ($row['action'] !== 'retry') { $skipped++; continue; }
+            $entry = $this->locked($row['id'], fn(string $file): array => $this->read($file));
+            if ($entry['state'] !== 'pending' || !hash_equals($row['id'], hash('sha256', (string)$entry['payload']['idempotency_key'])) || !hash_equals($row['fingerprint'], self::fingerprint($entry['payload']))) throw new RuntimeException('review-changed');
+            $retry[] = $row;
+        }
+        $counts = ['reviewed' => count($manifest['entries']), 'delivered' => 0, 'pending' => 0, 'skipped' => $skipped];
+        foreach ($retry as $row) {
+            $result = $this->deliver($row['id'], $transport, $now, $row['fingerprint']);
+            $counts[$result['received'] ? 'delivered' : 'pending']++;
+        }
+        return $counts;
     }
 }
