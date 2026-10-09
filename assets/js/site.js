@@ -66,6 +66,12 @@
     }
   }
 
+  var submissionId = document.getElementById('submission_id');
+  if (submissionId && window.crypto && window.crypto.getRandomValues) {
+    var bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    submissionId.value = Array.prototype.map.call(bytes, function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+  }
   var pu = document.getElementById('page_url');
   if (pu) pu.value = location.href;
 

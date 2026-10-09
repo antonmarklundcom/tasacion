@@ -2,6 +2,7 @@ node_modules/
 new-img/
 src-img/
 leads.log
+.tasacion-lead-outbox/
 zone-img/
 docs/screenshots/
 dist/

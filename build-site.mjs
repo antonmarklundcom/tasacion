@@ -478,6 +478,7 @@ function block(section, page) {
       <p>${esc(section.body)}</p>
       <form class="form form--wide" action="/lead-forward.php" method="post" data-wa-error="${attr(waLink('/contacto/', 'error'))}">
         <input type="hidden" name="page_url" id="page_url">
+        <input type="hidden" name="submission_id" id="submission_id">
         <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <div class="form__row">
           <label class="field">Nombre completo<input type="text" name="nombre" autocomplete="name" required></label>
