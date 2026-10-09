@@ -10,7 +10,8 @@
     "seo:diff": "node tools/seo-diff.mjs",
     "check:links": "node tools/link-check.mjs",
     "test:wa": "node tests/wa-menu.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:leads": "php tests/lead-delivery.php && node tests/lead-form.cjs"
   },
   "keywords": [],
   "author": "",

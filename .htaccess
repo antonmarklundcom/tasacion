@@ -28,6 +28,8 @@ RedirectMatch 404 ^/plan\.md$
 RedirectMatch 404 ^/prompts(/|$)
 RedirectMatch 404 ^/tests(/|$)
 RedirectMatch 404 ^/tools(/|$)
+RedirectMatch 404 ^/lib(/|$)
+RedirectMatch 404 ^/\.tasacion-lead-outbox(/|$)
 RedirectMatch 404 ^/deploy(/|$)
 RedirectMatch 404 ^/verify\.mjs$
 RedirectMatch 404 ^/content\.mjs$
