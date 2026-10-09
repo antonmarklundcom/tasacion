@@ -9,6 +9,9 @@ try {
     if ($command === 'status') $result = $delivery->status();
     elseif ($command === 'check') $result = $delivery->check();
     elseif ($command === 'retry') $result = $delivery->retry((int)($argv[2] ?? 10));
+    elseif ($command === 'heartbeat') $result = $delivery->heartbeat();
+    elseif ($command === 'export-review') $result = $delivery->exportReview((string)($argv[2] ?? ''), (int)($argv[3] ?? 10));
+    elseif ($command === 'retry-reviewed') $result = $delivery->retryReviewed((string)($argv[2] ?? ''));
     elseif ($command === 'legacy-preview') {
         // Read-only counts: older log entries have no reliable delivered marker.
         $result = ['payload_rows' => 0, 'unique_identities' => 0, 'conflicting_identities' => 0, 'unreadable' => 0, 'action' => 'review-before-recovery'];
@@ -30,9 +33,9 @@ try {
         }
         $result['unique_identities'] = count($identities);
         $result['conflicting_identities'] = count($conflicts);
-    } else throw new RuntimeException('Use status, check, retry [1..50], or legacy-preview.');
+    } else throw new RuntimeException('Use status, check, retry [1..50], heartbeat, export-review, retry-reviewed, or legacy-preview.');
     echo TasacionLeadDelivery::json($result) . PHP_EOL;
-    if (($result['unreadable'] ?? 0) > 0 || ($command === 'check' && !$result['canReceive'])) exit(1);
+    if (($result['unreadable'] ?? 0) > 0 || ($command === 'check' && !$result['canReceive']) || ($command === 'heartbeat' && !$result['reported'])) exit(1);
 } catch (Throwable $error) {
     // No payloads, keys, paths or provider error bodies in cron output.
     fwrite(STDERR, "Lead delivery check failed; review private configuration and directory permissions.\n");

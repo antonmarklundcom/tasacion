@@ -1,0 +1,66 @@
+<?php
+declare(strict_types=1);
+require_once dirname(__DIR__) . '/lib/lead-delivery.php';
+$base = sys_get_temp_dir() . '/tasacion-monitor-' . bin2hex(random_bytes(8));
+mkdir($base, 0700); mkdir($base . '/public', 0700); mkdir($base . '/queue', 0700);
+$key = 'vc_live_' . bin2hex(random_bytes(32));
+$delivery = new TasacionLeadDelivery(['outbox_dir' => $base . '/queue', 'api_key' => $key], $base . '/public');
+$assert = static function (bool $value, string $label): void { if (!$value) throw new RuntimeException($label); };
+$rejects = static function (callable $operation) use ($assert): void { try { $operation(); } catch (Throwable $expected) { return; } $assert(false, 'expected rejection'); };
+$now = time();
+try {
+    $payload = ['idempotency_key' => bin2hex(random_bytes(16)), 'phone' => '+595000000000', 'name' => 'Fictional operator', 'message' => "Prueba á / \u{2028}", 'utm' => ['z' => 2, 'a' => ['second', 'first']]];
+    $id = $delivery->enqueue($payload);
+    $assert(TasacionLeadDelivery::fingerprint($payload) === TasacionLeadDelivery::fingerprint(array_reverse($payload, true)), 'canonical object ordering');
+    $changed = $payload; $changed['utm']['a'] = ['first', 'second'];
+    $assert(TasacionLeadDelivery::fingerprint($payload) !== TasacionLeadDelivery::fingerprint($changed), 'list order retained');
+    $heartbeat = $delivery->heartbeat(static function (string $endpoint, string $raw, array $headers) use ($key, $now, $assert): array {
+        $assert($endpoint === '/api/v1/sites/heartbeat', 'heartbeat endpoint');
+        $assert($headers[0] === 'X-Delivery-Timestamp: ' . $now, 'timestamp header');
+        $assert($headers[1] === 'X-Delivery-Signature: ' . hash_hmac('sha256', $now . "\n" . $raw, $key), 'exact signed body');
+        $report = json_decode($raw, true);
+        $assert(array_keys($report) === ['pending', 'unreadable', 'oldestAgeSeconds', 'error'], 'aggregate-only');
+        $assert($report['pending'] === 1 && $report['error'] === null, 'pending count');
+        return ['ok' => true, 'status' => 204];
+    }, $now);
+    $assert($heartbeat['reported'], 'accepted heartbeat');
+    $export = $base . '/review.json';
+    $assert($delivery->exportReview($export)['exported'] === 1, 'export pending');
+    $bundle = json_decode((string)file_get_contents($export), true);
+    $assert($bundle['entries'][0]['id'] === $id && $bundle['entries'][0]['payload'] === $payload, 'stable export identity');
+    $rejects(fn() => $delivery->exportReview($export));
+    $rejects(fn() => $delivery->exportReview($base . '/public/review.json'));
+    $manifestPath = $base . '/manifest.json';
+    $manifest = ['version' => 1, 'siteDomain' => 'tasacion.com.py', 'reviewedAt' => gmdate('c', $now), 'entries' => [['id' => $id, 'fingerprint' => TasacionLeadDelivery::fingerprint($payload), 'action' => 'retry']]];
+    $write = static function (array $value) use ($manifestPath): void { file_put_contents($manifestPath, TasacionLeadDelivery::json($value)); chmod($manifestPath, 0600); };
+    $expired = $manifest; $expired['reviewedAt'] = gmdate('c', $now - 601); $write($expired);
+    $rejects(fn() => $delivery->retryReviewed($manifestPath, null, $now));
+    $future = $manifest; $future['reviewedAt'] = gmdate('c', $now + 1); $write($future);
+    $rejects(fn() => $delivery->retryReviewed($manifestPath, null, $now));
+    $wrong = $manifest; $wrong['entries'][0]['fingerprint'] = hash('sha256', 'changed'); $write($wrong);
+    $rejects(fn() => $delivery->retryReviewed($manifestPath, null, $now));
+    $missing = $manifest; $missing['entries'][0]['id'] = hash('sha256', 'absent-entry'); $write($missing);
+    $rejects(fn() => $delivery->retryReviewed($manifestPath, null, $now));
+    $duplicate = $manifest; $duplicate['entries'][] = $duplicate['entries'][0]; $write($duplicate);
+    $rejects(fn() => $delivery->retryReviewed($manifestPath, null, $now));
+    $foreign = $manifest; $foreign['siteDomain'] = 'other.example'; $write($foreign);
+    $rejects(fn() => $delivery->retryReviewed($manifestPath, null, $now));
+    $skip = $manifest; $skip['entries'][0]['action'] = 'received'; $write($skip);
+    $assert($delivery->retryReviewed($manifestPath, static function (): never { throw new RuntimeException('must not send'); }, $now)['skipped'] === 1, 'received is never retried');
+    $write($manifest); $calls = 0;
+    $result = $delivery->retryReviewed($manifestPath, static function (array $sent) use (&$calls, $payload, $assert): array { $calls++; $assert($sent === $payload, 'unchanged lead payload'); return ['received' => false, 'status' => 503, 'code' => 'network']; }, $now);
+    $assert($calls === 1 && $result['pending'] === 1, 'reviewed pending retry');
+    $delivery->retryReviewed($manifestPath, static function () use (&$calls): array { $calls++; return ['received' => true, 'status' => 201, 'code' => 'received']; }, $now);
+    $assert($calls === 1, 'backoff retained');
+    $delivery->deliver($id, static fn(): array => ['received' => true, 'status' => 201, 'code' => 'received'], $now + 61);
+    $rejects(fn() => $delivery->retryReviewed($manifestPath, null, $now + 61));
+    $assert($delivery->exportReview($base . '/empty.json')['exported'] === 0, 'delivered not exported');
+    file_put_contents($base . '/queue/broken.json', 'invalid');
+    $report = $delivery->heartbeat(static fn(): array => ['ok' => false, 'status' => 503], $now);
+    $assert($report['unreadable'] === 1 && $report['error'] === 'queue-unreadable' && !$report['reported'], 'unreadable and transport failure');
+    echo "PASS lead monitoring and reviewed recovery\n";
+} finally {
+    foreach (glob($base . '/queue/*') ?: [] as $file) unlink($file);
+    foreach (glob($base . '/*.json') ?: [] as $file) unlink($file);
+    rmdir($base . '/queue'); rmdir($base . '/public'); rmdir($base);
+}

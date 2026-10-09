@@ -29,6 +29,28 @@ Monitor oldest pending age and configuration/HTTP errors. Before intentionally r
 
 ## Historical recovery
 
+For hPanel cron, choose the installed PHP CLI and the deployed site's absolute path, then schedule the following command every five minutes (replace both example paths with verified hosting paths):
+
+```sh
+/absolute/path/to/php /absolute/path/to/public_html/tools/lead-delivery.php heartbeat
+```
+
+The heartbeat command reads the existing private configuration. Keep credentials out of the command and preserve its aggregate output/exit status for operator monitoring. `retry-reviewed` is a deliberate one-time recovery action, never a recurring cron command:
+
+```sh
+/absolute/path/to/php /absolute/path/to/public_html/tools/lead-delivery.php export-review /absolute/private/review.json 10
+# Privately review in CRM and save its approved manifest, then within ten minutes:
+/absolute/path/to/php /absolute/path/to/public_html/tools/lead-delivery.php retry-reviewed /absolute/private/manifest.json
+```
+
+### Signed reports and private reviewed recovery
+
+Run `php tools/lead-delivery.php heartbeat` every five minutes after deploying the companion CRM migration/endpoint. It posts only pending/unreadable counts, oldest queue age and an allowlisted error to `/api/v1/sites/heartbeat`; no enquiries are created. Existing `X-Api-Key` authentication is used with `X-Delivery-Timestamp` (Unix seconds) and `X-Delivery-Signature` (lowercase hex HMAC-SHA256 of timestamp, newline, exact UTF-8 body). CRM accepts ±300 seconds of skew and strictly increasing timestamps; a same-second repeat is rejected. The existing lead POST payload and headers remain unchanged. A failed heartbeat exits nonzero; stdout contains aggregates only. No report means unknown monitoring, not proof of a broken form.
+
+Run `php tools/lead-delivery.php export-review /absolute/private/review.json 10` (1–50 pending entries) for an operator review. The output contains customer payloads and stable SHA256 identities, never credentials. It refuses overwrite, public-root output and symlink paths, and creates mode 0600. Keep the file outside Git, public backups and shared reports. Transfer it privately to CRM recovery review. Save the returned version-1 `tasacion.com.py` manifest outside the public root, then run `php tools/lead-delivery.php retry-reviewed /absolute/private/manifest.json` within ten minutes.
+
+Only manifest entries marked `retry` can be sent. Each must still exist pending with the same SHA256 idempotency identity and SHA256 canonical payload fingerprint (UTF-8 JSON, byte-sorted object keys, preserved list order, unescaped Unicode/slashes/line separators). Changed/missing entries, stale manifests and duplicate IDs are rejected. Existing backoff and locking remain; the payload is rechecked inside the delivery lock. `received`, `conflict` and `invalid` entries are skipped and never automatically marked delivered. This workflow exports the durable outbox only and cannot replay historical `leads.log`. Run `php tests/lead-monitoring.php` alongside the existing durable-delivery suite before release. No hosting command or enquiry replay was performed during this source work.
+
 Existing `leads.log` is preserved and no historical data is automatically imported. `legacy-preview` is read-only: it counts payload rows, unique identities, conflicting identities and unreadable rows without printing any payload. Older logs lack delivery receipts and may include enquiries already accepted by CRM. The old phone/hour key may also cover different enquiry content. Compare retained identities with CRM in a private operator recovery process before replaying; conflicts require deliberate review, not blind new keys or automatic re-import. Keep a private recoverable backup. No hosting log was downloaded or historical lead replay performed during source work.
 
 ## Build, validation and release
@@ -47,4 +69,4 @@ Set `PHP_BINARY` to a portable absolute binary for the Node local form harness i
 
 Deploy only the reviewed release while retaining private config, existing log and outbox. Verify actual PHP/cURL, private path permissions, denied public access and cron execution. Then verify an authorized operator-owned form enquiry reaches CRM and is assigned correctly; no real enquiry/message was sent in these local checks. Source merge is not proof of hosting deployment. Roll back public code if needed while preserving pending entries and the compatible delivery library/tool for recovery. Do not delete the private queue or local log during rollback.
 
-This is a static/PHP website; no Tasación application database or migration is added. CRM pending migrations are separate: coordinate 0052/0053 with its release. Read-only production aggregates on 9 October showed two Tasación enquiries, latest 1 October, no recorded CRM rejection, and no default owner. That does not prove a missing enquiry: failures before CRM remain invisible until private hosting logs are reviewed.
+This is a static/PHP website; no Tasación application database or migration is added. CRM pending migrations are separate: coordinate verified pending0052/0053 and approved0054 with its release. Read-only production aggregates on 9 October showed two Tasación enquiries, latest 1 October, no recorded CRM rejection, and no default owner. That does not prove a missing enquiry: failures before CRM remain invisible until private hosting logs are reviewed.
