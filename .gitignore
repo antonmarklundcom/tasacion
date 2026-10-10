@@ -11,3 +11,6 @@ audit-shots/
 # Config privada de VenderCRM (clave real, solo en el PC de Anton). Solo *.example.* va a git.
 deploy/vendercrm-config.php
 **/vendercrm-config.php
+
+# Commit the loader code; credential config files stay ignored.
+!/lib/vendercrm-config.php

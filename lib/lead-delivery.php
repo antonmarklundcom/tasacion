@@ -23,6 +23,24 @@ final class TasacionLeadDelivery
                 break;
             }
         }
+        // Canonical aliases also work in existing private files; keep other settings.
+        if (array_key_exists('VENDERCRM_URL', $config) || array_key_exists('VENDERCRM_API_KEY', $config)) {
+            $url = $config['VENDERCRM_URL'] ?? null;
+            $key = $config['VENDERCRM_API_KEY'] ?? null;
+            if (!is_string($url) || trim($url) === '' || !is_string($key) || trim($key) === '' || preg_match('/[\x00-\x1F\x7F]/', $key)) {
+                throw new RuntimeException('incomplete-canonical-config');
+            }
+            $config['url'] = $url;
+            $config['api_key'] = $key;
+        }
+        // A shared outside-root file overrides legacy transport fields only.
+        require_once __DIR__ . '/vendercrm-config.php';
+        $fileEnv = ['VENDERCRM_CONFIG_FILE' => getenv('VENDERCRM_CONFIG_FILE')];
+        $canonical = \VenderCRM\Config::optional($webRoot, $fileEnv);
+        if ($canonical !== null) {
+            $config['url'] = $canonical->doctor()['url'];
+            $config['api_key'] = $canonical->apiKey();
+        }
         foreach (['url' => 'VENDERCRM_URL', 'api_key' => 'VENDERCRM_API_KEY', 'outbox_dir' => 'TASACION_OUTBOX_DIR'] as $key => $env) {
             $value = getenv($env);
             if ($value !== false && $value !== '') $config[$key] = $value;
