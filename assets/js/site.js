@@ -1,6 +1,6 @@
 /* assets/js/site.js — un solo ID de analítica. Los links de WhatsApp ya vienen
    completos en el HTML (número y mensaje: content/wa-messages.mjs).
-   Header sticky, hamburguesa móvil y menú WhatsApp (§4 de plan.md). */
+   Header sticky, hamburguesa móvil y menú WhatsApp (§4 de docs/history/plan.md). */
 (function () {
   window.dataLayer = window.dataLayer || [];
   document.addEventListener('click', function (e) {

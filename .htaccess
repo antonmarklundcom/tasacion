@@ -18,6 +18,7 @@ RedirectMatch 404 ^/docs(/|$)
 RedirectMatch 404 ^/BUILD-SPEC(.*)\.md$
 RedirectMatch 404 ^/NEXT-STEPS\.md$
 RedirectMatch 404 ^/PLACEHOLDERS\.md$
+RedirectMatch 404 ^/README\.md$
 
 # Herramientas de build/dev — no se ejecutan en el servidor de producción.
 RedirectMatch 404 ^/build-images\.mjs$

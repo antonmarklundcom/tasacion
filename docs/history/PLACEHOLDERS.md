@@ -1,3 +1,5 @@
+> Histórico — ver docs/OPERATIONS.md
+
 # PLACEHOLDERS — tasacion.com.py
 
 Todo lo que **no está confirmado** y hay que resolver antes de vender la página

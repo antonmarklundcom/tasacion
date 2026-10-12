@@ -82,7 +82,7 @@ The old number (the `WA_NUMBER` value before 2026-09-30; see git history) appear
 | `assets/js/site.js:27-33` | Rewrites every `wa.me` and `tel:` href at runtime from `window.WA_NUMBER` |
 | `assets/js/site.js:~43` | Contact-form error link `https://wa.me/`+n (**empty message**) |
 | 18 generated HTML files | about 13–18 occurrences each (hrefs, JSON-LD, display) |
-| Docs | `plan.md:431,605`, `BUILD-SPEC.md:23,216,484,1241,1424,1465`, `PLACEHOLDERS.md:28,29,153`, `docs/BUILD-SPEC-2026-09-03.md:165,166,542`, `docs/LIVE-SITE-AUDIT-2026-09-11.md:58`, `docs/LIVE-SITE-REVIEW-2026-09-06.md:225`, all 16 files in `docs/legacy-copy/` |
+| Docs | `docs/history/plan.md:431,605`, `docs/history/BUILD-SPEC.md:23,216,484,1241,1424,1465`, `docs/history/PLACEHOLDERS.md:28,29,153`, `docs/BUILD-SPEC-2026-09-03.md:165,166,542`, `docs/LIVE-SITE-AUDIT-2026-09-11.md:58`, `docs/LIVE-SITE-REVIEW-2026-09-06.md:225`, all 16 files in `docs/legacy-copy/` |
 | Off-site (human) | Google Business Profile, directories, social bios, VenderCRM site record, anything printed. **The NAP must match the site.** |
 
 The crawl found **19 WhatsApp links with an empty message**: the footer link on every page, plus the Privacidad CTA. Across the site there are 224 WhatsApp links but only 109 distinct messages, and the messages differ only by the page name inserted into a single template.

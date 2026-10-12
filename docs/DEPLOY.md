@@ -18,10 +18,12 @@ El HTML generado está commiteado, así que el servidor no necesita Node ni `npm
 `.htaccess` lo responde con 404.
 
 Antes del primer deploy por Git: Hostinger exige que `public_html/` esté vacío. Descargar un backup, vaciarlo y desplegar.
-`leads.log` (si existe y tiene leads) conviene bajarlo antes y volver a subirlo después.
+La bandeja privada de leads (`.tasacion-lead-outbox/`, §6) vive **fuera** de `public_html/`, así que vaciarlo no la toca. Solo si todavía existiera un `leads.log` viejo y con leads, conviene bajarlo antes y volver a subirlo después.
 
 La clave del CRM **no** va al repo: va en `vendercrm-config.php`, un nivel **encima** de `public_html/` (ver §3), o dentro de `public_html/` junto a `lead-forward.php` si en File Manager no se puede subir un nivel. Está en `.gitignore`, así que el deploy la conserva, y `.htaccess` le responde 404.
 Un deploy por Git nunca lo toca.
+
+El HTML referencia `assets/css/site.min.css` y `assets/js/site.min.js` (con `?v=<hash>`), que `build-site.mjs` genera a partir de `site.css`/`site.js`. Si se edita alguno de esos dos fuentes, hay que regenerar con `node build-site.mjs` y commitear también los `.min`; Hostinger publica lo commiteado, no los regenera.
 
 Después de cada deploy: purgar el CDN (§4) y verificar (§5).
 
@@ -31,18 +33,18 @@ Después de cada deploy: purgar el CDN (§4) y verificar (§5).
 ./deploy/make-zip.sh
 ```
 
-Regenera las 15 páginas (`node build-site.mjs`) y arma `dist/tasacion-<fecha>.zip`, plano, con
+Regenera las páginas (`node build-site.mjs`: las rutas de `docs/routes.json` más `404.html` y `gracias.html`) y arma `dist/tasacion-<fecha>.zip`, plano, con
 solo lo que el sitio necesita en producción:
 
 - `index.html`, `404.html`, `gracias.html`
 - `lead-forward.php`
 - `.htaccess`, `robots.txt`, `sitemap.xml`
-- `assets/` (CSS, JS, imágenes)
-- los 12 directorios de ruta (`tasaciones/*`, `valuacion-para-vender/`, `informes-periciales/`,
-  `nosotros/`, `preguntas-frecuentes/`, `contacto/`)
+- `assets/` (CSS, JS —incluidos `site.min.css` y `site.min.js` regenerados por el build—, imágenes)
+- los directorios de ruta de `docs/routes.json` (`tasaciones/*`, `valuacion-para-vender/`,
+  `informes-periciales/`, `nosotros/`, `preguntas-frecuentes/`, `contacto/`)
 
 Nunca incluye: `docs/`, `prompts/`, `tests/`, `deploy/`, `.git*`, `content.mjs`,
-`build-site.mjs`, `verify.mjs`, `package*.json`, `plan.md`, ni `leads.log`.
+`build-site.mjs`, `verify.mjs`, `package*.json`, `docs/history/plan.md` (ni nada de `docs/history/`), ni un `leads.log` viejo; la bandeja de leads queda fuera de `public_html/`.
 
 ## 2. Subir a Hostinger
 
@@ -50,21 +52,21 @@ Nunca incluye: `docs/`, `prompts/`, `tests/`, `deploy/`, `.git*`, `content.mjs`,
 2. Subir `dist/tasacion-<fecha>.zip`.
 3. Extraer ahí mismo (el zip es plano: `index.html` y `.htaccess` quedan directamente en
    `public_html/`, no en una subcarpeta).
-4. Verificar que `leads.log` sea escribible por PHP (se crea solo en el primer POST si no existe).
+4. Verificar que PHP pueda crear y escribir la bandeja privada `.tasacion-lead-outbox/` (se crea sola en el primer envío, en la carpeta que contiene a `public_html/`; la ruta se puede cambiar con la variable `TASACION_OUTBOX_DIR`, siempre fuera de `public_html/`). Comprobarlo con `php tools/lead-delivery.php status` y `check` por SSH (§6).
 
 ## 3. Variables de entorno (opcionales, nunca bloquean el sitio)
 
 Si el hosting permite variables de entorno, se pueden usar; tienen prioridad sobre el archivo de configuración:
 
-- `VENDERCRM_URL` / `VENDERCRM_API_KEY` — sin esto, los leads quedan solo en `leads.log`
-  (ver `lead-forward.php`).
+- `VENDERCRM_URL` / `VENDERCRM_API_KEY` — sin esto, los leads quedan pendientes en la bandeja
+  privada `.tasacion-lead-outbox/` y no se envían a VenderCRM hasta que haya configuración (ver `lead-forward.php` y `docs/LEAD_DELIVERY.md`).
   En Hostinger sin menú de variables de entorno, copiar `deploy/vendercrm-config.example.php`
   como `/home/USUARIO/domains/tasacion.com.py/vendercrm-config.php` (sustituir `USUARIO`
   por el usuario de hosting). La ubicación exacta relativa al handler es
   `__DIR__ . '/../vendercrm-config.php'`: un nivel por encima de `public_html`, a su lado,
   **no dentro** de `public_html`. Completar `url` y `api_key` en ese archivo privado.
   El ejemplo no se incluye en el ZIP; subir la configuración por separado a esa carpeta.
-  Si falta el archivo y no hay variables de entorno, los leads solo se guardan en `leads.log`.
+  Si falta el archivo y no hay variables de entorno, los leads solo se guardan, pendientes, en la bandeja privada.
 - El ID de analítica (GA4 `G-…` o GTM `GTM-…`) se fija **al generar** el HTML, no en el
   servidor (Hostinger publica el HTML commiteado). `build-site.mjs` lo toma, en este orden, de la
   variable de entorno `ANALYTICS_ID`, de `site.config.json` en la raíz del repo
@@ -81,7 +83,7 @@ Si el hosting permite variables de entorno, se pueden usar; tienen prioridad sob
 `site.css` de 6 días de antigüedad sobre un HTML recién publicado (`max-age=604800` por URL),
 dejando el sitio roto (íconos gigantes, menú de WhatsApp en dos columnas) para todo visitante real
 mientras `curl` sin User-Agent mostraba el sitio perfecto. Desde entonces `build-site.mjs`
-versiona `site.css`/`site.js` con `?v=<hash>` — un deploy nuevo siempre pide un archivo con URL
+versiona `assets/css/site.min.css` y `assets/js/site.min.js` (generados desde `site.css`/`site.js`) con `?v=<hash>` — un deploy nuevo siempre pide un archivo con URL
 distinta — pero **purgar sigue siendo el paso que confirma que el edge no tiene nada viejo
 cacheado bajo la URL vieja** para quien ya tenía la página abierta.
 
@@ -96,7 +98,7 @@ Verificar en una ventana de incógnito (nunca en una pestaña que ya tenía el s
   el panel de precio a mitad de página.
 - El FAB (esquina inferior derecha) abre el menú de WhatsApp con la opción 1 preseleccionada.
 - El formulario de `/contacto/` hace POST a `/lead-forward.php` y redirige a `/gracias.html`.
-- `https://tasacion.com.py/sitemap.xml` responde con las 15 URLs.
+- `https://tasacion.com.py/sitemap.xml` responde con las URLs de `docs/routes.json`.
 
 ## 6. Cron (bandeja privada de leads)
 
