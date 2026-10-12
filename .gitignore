@@ -14,3 +14,4 @@ deploy/vendercrm-config.php
 
 # Commit the loader code; credential config files stay ignored.
 !/lib/vendercrm-config.php
+site.config.json
