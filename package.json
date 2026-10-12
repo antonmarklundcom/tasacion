@@ -1,8 +1,8 @@
 {
   "name": "tasacion-com-py",
   "version": "1.0.0",
+  "private": true,
   "description": "",
-  "main": "index.js",
   "scripts": {
     "build": "node build-site.mjs",
     "verify": "node verify.mjs",
@@ -10,7 +10,7 @@
     "seo:diff": "node tools/seo-diff.mjs",
     "check:links": "node tools/link-check.mjs",
     "test:wa": "node tests/wa-menu.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run verify && npm run test:leads",
     "test:leads": "php tests/lead-delivery.php && php tests/lead-monitoring.php && node tests/lead-form.cjs && node tests/vendercrm-config.cjs"
   },
   "keywords": [],
@@ -22,5 +22,8 @@
   },
   "devDependencies": {
     "playwright": "^1.47.0"
+  },
+  "engines": {
+    "node": ">=20.11"
   }
 }

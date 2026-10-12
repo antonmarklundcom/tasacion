@@ -5,6 +5,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 
 const PORT = 4322;
+const HOST = '127.0.0.1';
 const ROOT = import.meta.dirname;
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
@@ -31,4 +32,4 @@ createServer(async (req, res) => {
   } catch {
     res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' }).end('<h1>404</h1>');
   }
-}).listen(PORT, () => console.log(`tasacion.com.py → http://localhost:${PORT}`));
+}).listen(PORT, HOST, () => console.log(`tasacion.com.py → http://${HOST}:${PORT}`));
