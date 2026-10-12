@@ -425,3 +425,27 @@ ul.list--links li{margin-bottom:.4em}
 .hero--compact{padding:56px 0 24px}
 @media (max-width:640px){.hero--compact{padding:28px 0 8px}}
 .hero--compact .hero__text{gap:16px}
+
+/* == improve-2 == */
+/* Accesibilidad: enlace de salto, bloqueo de scroll, inert y hoja de símbolos SVG */
+
+/* Enlace "Saltar al contenido": fuera de pantalla (sigue siendo enfocable, sin display:none)
+   y visible solo al recibir foco, por encima de todo (z-index máximo actual: .wa-menu__panel 95) */
+.skip-link{position:fixed;top:0;left:0;z-index:96;padding:12px 20px;background:var(--navy);color:var(--on-dark);font-weight:600;text-decoration:none;border-radius:0 0 var(--r-sm) 0;transform:translateY(-120%);transition:transform var(--dur-fast) var(--ease-out)}
+.skip-link:focus,.skip-link:focus-visible{transform:translateY(0);outline:3px solid var(--navy);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.skip-link{transition:none}}
+/* <main> recibe foco por programa (tabindex="-1"); no necesita aro */
+main#contenido:focus{outline:none}
+
+/* Diálogo de WhatsApp abierto: el JS añade .is-locked al body; sin cambios de maquetación */
+body.is-locked{overflow:hidden;overscroll-behavior:contain}
+
+/* Respaldo para motores sin soporte nativo de inert (header/main/footer mientras el diálogo está abierto) */
+[inert]{pointer-events:none;user-select:none;-webkit-user-select:none}
+[inert] *{cursor:default}
+
+/* Hoja de símbolos SVG: nunca ocupa espacio. No usar display:none, que rompe las referencias <use> en algunos navegadores */
+.svg-sprite{position:absolute;width:0;height:0;overflow:hidden}
+svg use{fill:currentColor}
+/* El alto real lo da aspect-ratio: sin esto el atributo height="960" de la foto del hero (puesto contra el CLS) fijaría 960px. */
+.hero__pic img{height:auto}

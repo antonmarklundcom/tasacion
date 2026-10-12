@@ -65,8 +65,14 @@ Si el hosting permite variables de entorno, se pueden usar; tienen prioridad sob
   **no dentro** de `public_html`. Completar `url` y `api_key` en ese archivo privado.
   El ejemplo no se incluye en el ZIP; subir la configuración por separado a esa carpeta.
   Si falta el archivo y no hay variables de entorno, los leads solo se guardan en `leads.log`.
-- El ID de analítica (`ANALYTICS_ID`) no es una env var: es la línea
-  `var ANALYTICS_ID = '';` en `build-site.mjs` — ponerla ahí y regenerar (§9.3 de `plan.md`).
+- El ID de analítica (GA4 `G-…` o GTM `GTM-…`) se fija **al generar** el HTML, no en el
+  servidor (Hostinger publica el HTML commiteado). `build-site.mjs` lo toma, en este orden, de la
+  variable de entorno `ANALYTICS_ID`, de `site.config.json` en la raíz del repo
+  (`{"analyticsId": "G-XXXXXXX"}`, git-ignorado) o, si no hay ninguno, queda vacío (sin
+  analítica). Termina en `<html data-analytics-id="…">`, que lee `site.js`. Para activarlo:
+  `ANALYTICS_ID=G-XXXXXXX node build-site.mjs`, commitear el HTML regenerado y desplegar.
+  Ojo: un build posterior sin la variable ni el archivo lo vuelve a dejar vacío, así que con el
+  ID definitivo conviene crear `site.config.json` en cada máquina que genere el sitio.
 
 ## 4. Después de subir el zip: purgar el CDN
 

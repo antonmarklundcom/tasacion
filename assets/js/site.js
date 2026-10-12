@@ -6,6 +6,8 @@
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-ev]');
     if (!t) return;
+    // Un trigger con el menú ya abierto lo cierra: no es una nueva apertura.
+    if (t.hasAttribute('data-wa-trigger') && document.querySelector('[data-wa-menu].is-open')) return;
     window.dataLayer.push({ event: t.dataset.ev, ev_loc: t.dataset.evLoc || '', page_path: location.pathname, wa_option: t.dataset.waOpen || t.dataset.waOption || '' });
   }, true);
 
@@ -74,6 +76,13 @@
   }
   /* Tiempo de llenado en ms, medido solo en el navegador (sin depender del
      reloj del visitante). lead-forward.php descarta en silencio < 3 s. */
+  if (contactForm) {
+    contactForm.addEventListener('submit', function () {
+      var purpose = contactForm.querySelector('[name="purpose"]');
+      window.dataLayer.push({ event: 'form_submit', ev_loc: 'contact_form', page_path: location.pathname, wa_option: purpose ? purpose.value : '' });
+    });
+  }
+
   var formTs = document.getElementById('form_ts');
   if (formTs && formTs.form) {
     var formLoaded = Date.now();
@@ -97,9 +106,23 @@
     var burger = document.querySelector('[data-hdr-burger]');
     var panel = document.querySelector('[data-hdr-panel]');
     if (burger && panel) {
-      burger.addEventListener('click', function () {
-        var open = panel.classList.toggle('is-open');
+      var setNav = function (open, returnFocus) {
+        panel.classList.toggle('is-open', open);
         burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (!open && returnFocus) burger.focus();
+      };
+      burger.addEventListener('click', function () {
+        setNav(!panel.classList.contains('is-open'), false);
+      });
+      /* Escape o click fuera cierran el menú móvil; Escape devuelve el foco
+         a la hamburguesa. */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && panel.classList.contains('is-open')) setNav(false, true);
+      });
+      document.addEventListener('click', function (e) {
+        if (!panel.classList.contains('is-open')) return;
+        if (panel.contains(e.target) || burger.contains(e.target)) return;
+        setNav(false, false);
       });
     }
   }
@@ -126,11 +149,25 @@
     var panelEl = menu.querySelector('[data-wa-panel]');
     var options = Array.prototype.slice.call(menu.querySelectorAll('.wa-menu__option'));
     var lastTrigger = null;
+    var hideTimer = null;
+    /* Mientras el diálogo está abierto el resto de la página queda inert
+       (sin foco ni clicks) y sin scroll. Sin soporte de inert queda el
+       atrapado de Tab de más abajo. */
+    var supportsInert = 'inert' in HTMLElement.prototype;
+    var background = Array.prototype.slice.call(document.querySelectorAll('body > header, body > main, body > footer'));
 
     function isOpen() { return menu.classList.contains('is-open'); }
 
+    function setBackground(locked) {
+      document.body.classList.toggle('is-locked', locked);
+      if (supportsInert) background.forEach(function (el) { el.inert = locked; });
+    }
+
     function open(trigger) {
       lastTrigger = trigger || null;
+      window.clearTimeout(hideTimer);
+      hideTimer = null;
+      setBackground(true);
       var anchor = (trigger && trigger.dataset.waAnchor) || 'fab';
       panelEl.setAttribute('data-anchor', anchor);
       menu.hidden = false;
@@ -146,7 +183,10 @@
       if (!isOpen()) { menu.hidden = true; return; }
       menu.classList.remove('is-open');
       triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
-      window.setTimeout(function () { menu.hidden = true; }, 200);
+      setBackground(false);
+      window.clearTimeout(hideTimer);
+      // Si se reabre antes de los 200 ms, open() cancela este timer.
+      hideTimer = window.setTimeout(function () { hideTimer = null; if (!isOpen()) menu.hidden = true; }, 200);
       if (returnFocus && lastTrigger) lastTrigger.focus();
       lastTrigger = null;
     }

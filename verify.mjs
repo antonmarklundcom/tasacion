@@ -10,8 +10,10 @@ import { PRECIO_TXT, CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIO
 
 // Mismo tratamiento de CRLF que build-site.mjs para checkouts Windows.
 const sha1_8 = (path) => createHash('sha1').update(readFileSync(path, 'utf8').replace(/\r/g, '')).digest('hex').slice(0, 8);
-const CSS_HASH = sha1_8('assets/css/site.css');
-const JS_HASH = sha1_8('assets/js/site.js');
+// El HTML referencia los .min generados por build-site.mjs (informe
+// 2026-10-12 §17); el paso 1 exige que estén commiteados y al día.
+const CSS_HASH = sha1_8('assets/css/site.min.css');
+const JS_HASH = sha1_8('assets/js/site.min.js');
 
 let failures = 0;
 const fail = (msg) => { console.error('  FAIL  ' + msg); failures++; };
@@ -25,8 +27,9 @@ const { routes, copyDone } = routesDoc;
 step('build limpio');
 execSync('node build-site.mjs', { stdio: 'inherit' });
 try {
-  execSync('git diff --exit-code -- "*.html" sitemap.xml', { stdio: 'pipe' });
-  ok('node build-site.mjs no deja cambios en *.html ni sitemap.xml');
+  execSync('git diff --exit-code -- "*.html" sitemap.xml assets/css/site.min.css assets/js/site.min.js', { stdio: 'pipe' });
+  if (execSync('git ls-files --others --exclude-standard -- assets/css/site.min.css assets/js/site.min.js', { encoding: 'utf8' }).trim()) throw new Error('min sin commitear');
+  ok('node build-site.mjs no deja cambios en *.html, sitemap.xml ni site.min.css/js');
 } catch {
   fail('build-site.mjs generó HTML distinto al commiteado — correr `node build-site.mjs` y commitear');
 }
@@ -119,8 +122,18 @@ for (const r of [...routes, { slug: '404.html', extra: true }, { slug: 'gracias.
   // audit 2026-09-11 §0: el CDN de Hostinger cacheó site.css/site.js viejos
   // por hasta 7 días detrás de un HTML fresco. El ?v= debe ser el hash del
   // archivo tal como está en disco ahora mismo, o un rebuild quedó pendiente.
-  if (!html.includes(`/assets/css/site.css?v=${CSS_HASH}`)) fail(`${p}: site.css?v= no coincide con el hash actual del archivo (rebuild required)`);
-  if (!html.includes(`/assets/js/site.js?v=${JS_HASH}`)) fail(`${p}: site.js?v= no coincide con el hash actual del archivo (rebuild required)`);
+  if (!html.includes(`/assets/css/site.min.css?v=${CSS_HASH}`)) fail(`${p}: site.min.css?v= no coincide con el hash actual del archivo (rebuild required)`);
+  if (!html.includes(`/assets/js/site.min.js?v=${JS_HASH}`)) fail(`${p}: site.min.js?v= no coincide con el hash actual del archivo (rebuild required)`);
+
+  // informe 2026-10-12 §10: sin width/height la foto del hero mueve el layout (CLS).
+  for (const img of html.matchAll(/<img\b[^>]*>/g)) {
+    if (!/\swidth="\d+"/.test(img[0]) || !/\sheight="\d+"/.test(img[0])) fail(`${p}: <img> sin width/height: ${img[0].slice(0, 90)}`);
+  }
+  if (/<img\b/.test(html) && !/<source type="image\/avif" srcset="[^"]*-640\.avif 640w, [^"]*-1280\.avif 1280w, [^"]*-1920\.avif 1920w"/.test(html)) fail(`${p}: el hero no tiene <source> AVIF con 640/1280/1920`);
+  if (/data-ev="wa_click"/.test(html)) fail(`${p}: quedó data-ev="wa_click" (usar wa_menu_open / wa_outbound_click)`);
+  for (const t of html.matchAll(/<a\b[^>]*data-wa-trigger[^>]*>/g)) {
+    if (!t[0].includes('data-ev="wa_menu_open"')) fail(`${p}: un [data-wa-trigger] no emite wa_menu_open`);
+  }
   const ctx = (html.match(/data-page-context="([^"]*)"/) || [])[1] || '';
   for (const href of menuOptionLinks) {
     const text = decodeURIComponent(href.split('?text=')[1] || '');

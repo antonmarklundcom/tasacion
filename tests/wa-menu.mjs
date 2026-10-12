@@ -218,6 +218,87 @@ try {
     await page.close();
   }
 
+  // ------------------------------------------- informe 2026-10-12 §6/§7/§8/§9
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    await page.goto(BASE + '/tasaciones/terrenos/');
+    const fab = page.locator('.wa-fab');
+    // §6: cerrar y reabrir dentro de los 200 ms no debe dejar el panel oculto.
+    await fab.click();
+    await page.locator('[data-wa-panel]').waitFor({ state: 'visible' });
+    await fab.click();
+    await page.waitForTimeout(50);
+    await fab.click();
+    await page.waitForTimeout(400);
+    const reopened = await page.evaluate(() => { const m = document.querySelector('[data-wa-menu]'); return !m.hidden && m.classList.contains('is-open'); });
+    if (!reopened) fail('cerrar y reabrir rápido deja el panel WA oculto');
+    else ok('cerrar y reabrir rápido deja el panel WA visible');
+    // §8: un viaje = un wa_menu_open + un wa_outbound_click, nunca wa_click.
+    const events = await page.evaluate(() => window.dataLayer.map((e) => e && e.event).filter(Boolean));
+    if (events.includes('wa_click')) fail('dataLayer todavía recibe wa_click');
+    const opens = events.filter((e) => e === 'wa_menu_open').length;
+    if (opens !== 2) fail(`se esperaban 2 wa_menu_open (abrir, reabrir), hubo ${opens}`);
+    else ok('el trigger emite wa_menu_open solo al abrir');
+    await Promise.all([page.context().waitForEvent('page', { timeout: 3000 }).then((p) => p.close()).catch(() => null), page.locator('.wa-menu__option').first().click()]);
+    const outbound = await page.evaluate(() => window.dataLayer.filter((e) => e && e.event === 'wa_outbound_click').length);
+    if (outbound !== 1) fail(`una opción del menú emitió ${outbound} wa_outbound_click`);
+    else ok('la opción del menú emite wa_outbound_click');
+    // §9: el skip link es lo primero al tabular y lleva el foco a <main>.
+    await page.goto(BASE + '/');
+    await page.keyboard.press('Tab');
+    const skip = await page.evaluate(() => document.activeElement && document.activeElement.className);
+    if (skip !== 'skip-link') fail('el primer Tab no llega al skip link');
+    else {
+      await page.keyboard.press('Enter');
+      const mainFocused = await page.evaluate(() => document.activeElement && document.activeElement.id);
+      if (mainFocused !== 'contenido') fail('el skip link no lleva el foco a <main id="contenido">');
+      else ok('skip link: primer Tab y foco en <main>');
+    }
+    // §8: form_submit en el formulario de contacto.
+    await page.goto(BASE + '/contacto/');
+    await page.evaluate(() => { const f = document.querySelector('form[action="/lead-forward.php"]'); f.addEventListener('submit', (e) => e.preventDefault()); f.dispatchEvent(new Event('submit', { cancelable: true })); });
+    const submits = await page.evaluate(() => window.dataLayer.filter((e) => e && e.event === 'form_submit').length);
+    if (submits !== 1) fail('el formulario no emite form_submit');
+    else ok('el formulario emite form_submit');
+    await page.close();
+  }
+
+  // §7 a 390px: Escape / click fuera cierran el menú móvil; diálogo WA con inert y scroll bloqueado.
+  {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    await page.goto(BASE + '/tasaciones/terrenos/');
+    const burger = page.locator('[data-hdr-burger]');
+    const navOpen = () => page.evaluate(() => document.querySelector('[data-hdr-panel]').classList.contains('is-open'));
+    await burger.click();
+    if (!(await navOpen())) fail('la hamburguesa no abre el menú móvil');
+    await page.keyboard.press('Escape');
+    const focusBack = await page.evaluate(() => document.activeElement && document.activeElement.hasAttribute('data-hdr-burger'));
+    if ((await navOpen()) || !focusBack) fail('Escape no cierra el menú móvil o no devuelve el foco a la hamburguesa');
+    else ok('Escape cierra el menú móvil y devuelve el foco a la hamburguesa');
+    await burger.click();
+    await page.mouse.click(200, 800);
+    if (await navOpen()) fail('click fuera no cierra el menú móvil');
+    else ok('click fuera cierra el menú móvil');
+    await page.locator('.wa-round').click();
+    await page.locator('[data-wa-panel]').waitFor({ state: 'visible' });
+    const locked = await page.evaluate(() => ({
+      body: document.body.classList.contains('is-locked') && getComputedStyle(document.body).overflow === 'hidden',
+      inert: ['header', 'main', 'footer'].every((t) => document.querySelector('body > ' + t).inert),
+    }));
+    if (!locked.body || !locked.inert) fail(`diálogo WA abierto: scroll bloqueado=${locked.body}, inert=${locked.inert}`);
+    else ok('diálogo WA abierto: fondo inert y scroll bloqueado');
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(300);
+    const released = await page.evaluate(() => !document.body.classList.contains('is-locked') && !document.querySelector('body > main').inert && document.activeElement && document.activeElement.classList.contains('wa-round'));
+    if (!released) fail('al cerrar el diálogo WA el fondo sigue bloqueado o el foco no vuelve al trigger');
+    else ok('al cerrar el diálogo WA se libera el fondo y el foco vuelve al trigger');
+    // §10: la foto del hero conserva su proporción con width/height.
+    const ratio = await page.evaluate(() => { const r = document.querySelector('.hero__pic img').getBoundingClientRect(); return r.width / r.height; });
+    if (Math.abs(ratio - 4 / 3) > 0.02) fail(`la foto del hero se deformó (proporción ${ratio.toFixed(2)})`);
+    else ok('la foto del hero mantiene 4:3 con width/height');
+    await page.close();
+  }
+
   // ------------------------------------------------------------- sin JS
   {
     const context = await browser.newContext({ javaScriptEnabled: false });

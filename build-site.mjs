@@ -1,6 +1,6 @@
 // build-site.mjs — genera las 13 páginas + 404.html + gracias.html desde
 // content.mjs. node build-site.mjs
-import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import {
@@ -15,16 +15,44 @@ import { WA_NUMBER, WA_DISPLAY, TEL_HREF, PURPOSES, menuRows, defaultPurpose, wa
 // Se quita \r antes de hashear: un checkout Windows (CRLF) y uno Linux (LF)
 // tienen que dar el mismo ?v=, si no verify.mjs falla en CI.
 const assetHash = (f) => createHash('sha1').update(readFileSync(f, 'utf8').replace(/\r/g, '')).digest('hex').slice(0, 8);
+
+// Minificado sin dependencias (informe 2026-10-12 §17): solo comentarios de
+// bloque, comentarios `//` de línea completa, sangría y líneas vacías. No toca
+// nada dentro de una línea de código, así que no puede romper strings,
+// regex ni URLs. Las fuentes siguen legibles; el HTML referencia los .min.
+function minifyAsset(src, { lineComments = false } = {}) {
+  let out = src.replace(/\r/g, '');
+  // Comentario de bloque que empieza al inicio de una línea o tras un espacio
+  // (en site.js/site.css nunca hay "/*" así dentro de un string o regex).
+  out = out.replace(/(^|[ \t])\/\*[\s\S]*?\*\//gm, '$1');
+  let lines = out.split('\n').map((l) => l.replace(/^[ \t]+/, '').replace(/[ \t]+$/, ''));
+  if (lineComments) lines = lines.filter((l) => !l.startsWith('//'));
+  return lines.filter((l) => l !== '').join('\n') + '\n';
+}
+writeFileSync('assets/css/site.min.css', minifyAsset(readFileSync('assets/css/site.css', 'utf8')));
+writeFileSync('assets/js/site.min.js', minifyAsset(readFileSync('assets/js/site.js', 'utf8'), { lineComments: true }));
+
 const ASSET_V = {
   fonts: assetHash('assets/fonts/fonts.css'),
-  css: assetHash('assets/css/site.css'),
-  js: assetHash('assets/js/site.js'),
+  css: assetHash('assets/css/site.min.css'),
+  js: assetHash('assets/js/site.min.js'),
 };
 
 // GA4 (G-…) o GTM (GTM-…). Vacío = sin analítica. site.js lo lee de
 // <html data-analytics-id>, así no queda ningún <script> inline ejecutable
 // (CSP: solo JSON-LD inline).
-const ANALYTICS_ID = '';
+// Origen, en orden: variable de entorno ANALYTICS_ID, `site.config.json`
+// (git-ignorado: {"analyticsId": "G-…"}), o vacío. Ver docs/DEPLOY.md §3.
+function readAnalyticsId() {
+  if (process.env.ANALYTICS_ID !== undefined) return process.env.ANALYTICS_ID.trim();
+  if (existsSync('site.config.json')) {
+    const cfg = JSON.parse(readFileSync('site.config.json', 'utf8'));
+    if (typeof cfg.analyticsId === 'string') return cfg.analyticsId.trim();
+  }
+  return '';
+}
+const ANALYTICS_ID = readAnalyticsId();
+if (ANALYTICS_ID && !/^(G|GTM)-[A-Z0-9]+$/.test(ANALYTICS_ID)) throw new Error(`ANALYTICS_ID inválido: ${ANALYTICS_ID}`);
 
 // Misma regla que lead-forward.php: `+` inicial opcional, 6–15 dígitos y
 // separadores espacio, guion, punto o paréntesis. Escapado para el flag `v`
@@ -52,11 +80,19 @@ function waOptionHref(optionId, ctx, page) {
 const pagePurpose = (page) => (page.hero && page.hero.primary && page.hero.primary.waOption) || defaultPurpose(page.slug);
 
 // -------------------------------------------------------------- icons (SVG)
-const ICON_CHECK = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const ICON_ARROW = `<svg viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ICON_CHECK = `<svg viewBox="0 0 16 16" fill="none"><use href="#i-check"/></svg>`;
+const ICON_ARROW = `<svg viewBox="0 0 16 16" fill="none"><use href="#i-arrow"/></svg>`;
 const ICON_PHONE = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1l-2.22 2.2Z"/></svg>`;
-const ICON_WA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-.95.23-3.2-.67-2.7-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75 0-1.3.68-1.95.93-2.21.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.6.46.23.55.77 1.9.84 2.03.07.14.11.3.02.48-.09.18-.13.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.18-.27.35-.22.59-.13.24.09 1.53.72 1.79.85.26.13.44.2.5.31.07.11.07.63-.17 1.31Z"/></svg>`;
-const ICON_SEAL = `<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" fill="#A98B57"/><path d="M12 20.5l5.5 5.5L28 15" stroke="#0F3D5C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+// El path de WhatsApp va una sola vez por página (SVG_SPRITE, tras <body>);
+// cada uso es un <use> (informe 2026-10-12 §17: eran 7 copias por página).
+const WA_PATH = 'M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.35-.5.05-.95.23-3.2-.67-2.7-1.06-4.4-3.8-4.53-3.98-.13-.18-1.08-1.44-1.08-2.75 0-1.3.68-1.95.93-2.21.24-.27.53-.33.7-.33.18 0 .35 0 .5.01.16.01.38-.06.6.46.23.55.77 1.9.84 2.03.07.14.11.3.02.48-.09.18-.13.29-.27.44-.13.16-.28.35-.4.47-.13.13-.27.28-.12.54.15.27.67 1.1 1.44 1.79.99.88 1.82 1.16 2.08 1.29.26.13.41.11.56-.07.15-.18.65-.76.82-1.02.18-.27.35-.22.59-.13.24.09 1.53.72 1.79.85.26.13.44.2.5.31.07.11.07.63-.17 1.31Z';
+const STROKE_16 = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+const SVG_SPRITE = `<svg class="svg-sprite" hidden aria-hidden="true" focusable="false"><symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="${WA_PATH}"/></symbol>`
+  + `<symbol id="i-check" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" ${STROKE_16}/></symbol>`
+  + `<symbol id="i-arrow" viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" ${STROKE_16}/></symbol>`
+  + `<symbol id="i-seal" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#A98B57"/><path d="M12 20.5l5.5 5.5L28 15" stroke="#0F3D5C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol></svg>`;
+const ICON_WA = `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>`;
+const ICON_SEAL = `<svg viewBox="0 0 40 40" fill="none"><use href="#i-seal"/></svg>`;
 const ICON_BURGER = `<svg viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 
 // ---------------------------------------------------------------- header/nav
@@ -97,8 +133,8 @@ function renderNav(current, ctx, page) {
         ${items}
       </ul>
     </nav>
-    <a class="wa-pill" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${pagePurpose(page)}" data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false">${ICON_WA}WhatsApp</a>
-    <a class="wa-round" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${pagePurpose(page)}" data-wa-anchor="header" data-ev="wa_click" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="WhatsApp">${ICON_WA}</a>
+    <a class="wa-pill" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${pagePurpose(page)}" data-wa-anchor="header" data-ev="wa_menu_open" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false">${ICON_WA}WhatsApp</a>
+    <a class="wa-round" href="${defaultHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${pagePurpose(page)}" data-wa-anchor="header" data-ev="wa_menu_open" data-ev-loc="header" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="WhatsApp">${ICON_WA}</a>
     <button type="button" class="hdr__burger" data-hdr-burger aria-expanded="false" aria-controls="hdr-panel" aria-label="Abrir menú">${ICON_BURGER}</button>
   </div>
   <div class="hdr__panel" id="hdr-panel" data-hdr-panel>
@@ -145,7 +181,7 @@ function renderFooter(slug) {
     </nav>
     <div>
       <p class="ftr__label">Contacto</p>
-      <p><a class="ftr__wa" href="${waLink(slug, 'footer')}" target="_blank" rel="noopener" data-ev="wa_click" data-ev-loc="footer">WhatsApp: ${WA_DISPLAY}</a></p>
+      <p><a class="ftr__wa" href="${waLink(slug, 'footer')}" target="_blank" rel="noopener" data-ev="wa_outbound_click" data-ev-loc="footer">WhatsApp: ${WA_DISPLAY}</a></p>
       <p><a href="${TEL_HREF}">Llamar</a></p>
     </div>
   </div>
@@ -158,7 +194,7 @@ function renderFooter(slug) {
 // ------------------------------------------------------------------ wa menu
 function renderWaMenu(ctx, page) {
   const defaultOption = pagePurpose(page);
-  const options = menuRows(page.slug).map((id) => ({ id, ...PURPOSES[id] })).map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waLink(page.slug, o.id)}" target="_blank" rel="noopener" data-wa-option="${o.id}" data-ev="wa_click" data-ev-loc="menu">
+  const options = menuRows(page.slug).map((id) => ({ id, ...PURPOSES[id] })).map((o) => `<li><a class="wa-menu__option${o.id === defaultOption ? ' wa-menu__option--current' : ''}" href="${waLink(page.slug, o.id)}" target="_blank" rel="noopener" data-wa-option="${o.id}" data-ev="wa_outbound_click" data-ev-loc="menu">
           <span class="wa-menu__opt-title">${esc(o.label)}</span>
           <span class="wa-menu__opt-sub">${esc(o.sub)}</span>
         </a></li>`).join('\n        ');
@@ -175,9 +211,9 @@ function renderWaMenu(ctx, page) {
     <p class="wa-menu__foot">${ICON_WA}Se abre WhatsApp con el mensaje ya escrito.</p>
   </div>
 </div>
-<a class="wa-fab" href="${waOptionHref(defaultOption, ctx, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${defaultOption}" data-wa-anchor="fab" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="Abrir WhatsApp" data-ev="wa_click" data-ev-loc="fab">${ICON_WA}</a>
+<a class="wa-fab" href="${waOptionHref(defaultOption, ctx, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${defaultOption}" data-wa-anchor="fab" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" aria-label="Abrir WhatsApp" data-ev="wa_menu_open" data-ev-loc="fab">${ICON_WA}</a>
 <div class="mbar" data-mbar>
-  <a class="mbar__btn mbar__btn--wa" href="${waOptionHref(defaultOption, ctx, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${defaultOption}" data-wa-anchor="mbar" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" data-ev="wa_click" data-ev-loc="mbar">${ICON_WA}WhatsApp</a>
+  <a class="mbar__btn mbar__btn--wa" href="${waOptionHref(defaultOption, ctx, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${defaultOption}" data-wa-anchor="mbar" aria-haspopup="dialog" aria-controls="wa-menu" aria-expanded="false" data-ev="wa_menu_open" data-ev-loc="mbar">${ICON_WA}WhatsApp</a>
   <a class="mbar__btn mbar__btn--tel" href="${TEL_HREF}" data-ev="tel_click" data-ev-loc="mbar">${ICON_PHONE}Llamar</a>
 </div>`;
 }
@@ -186,7 +222,7 @@ function renderWaMenu(ctx, page) {
 function faqMore(page) {
   const rows = menuRows(page.slug);
   const purpose = rows.includes('consulta') ? 'consulta' : rows[rows.length - 1];
-  return `<p class="faq__more">¿Otra duda? <a href="${waLink(page.slug, purpose)}" target="_blank" rel="noopener" data-ev="wa_click" data-ev-loc="faq">Preguntanos por WhatsApp</a></p>`;
+  return `<p class="faq__more">¿Otra duda? <a href="${waLink(page.slug, purpose)}" target="_blank" rel="noopener" data-ev="wa_outbound_click" data-ev-loc="faq">Preguntanos por WhatsApp</a></p>`;
 }
 
 function block(section, page) {
@@ -229,7 +265,7 @@ function block(section, page) {
     <h2>${esc(section.heading)}</h2>
     ${nl2p(section.body)}${section.links ? `
     <p class="lead__links">${section.links.map((l) => `<a class="link" href="${l.href}">${esc(l.label)}</a>`).join(' · ')}</p>` : ''}
-    ${section.cta ? (section.cta.wa ? (() => { const o = section.cta.waOption || 'compraventa'; return `<p><a class="btn btn--primary" href="${waOptionHref(o, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${o}" data-ev="wa_click" data-ev-loc="lead">${esc(section.cta.label)}</a></p>`; })() : `<p><a class="btn btn--primary" href="${section.cta.href}">${esc(section.cta.label)}</a></p>`) : ''}
+    ${section.cta ? (section.cta.wa ? (() => { const o = section.cta.waOption || 'compraventa'; return `<p><a class="btn btn--primary" href="${waOptionHref(o, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${o}" data-ev="wa_menu_open" data-ev-loc="lead">${esc(section.cta.label)}</a></p>`; })() : `<p><a class="btn btn--primary" href="${section.cta.href}">${esc(section.cta.label)}</a></p>`) : ''}
   </div>
 </section>`;
 
@@ -267,7 +303,7 @@ function block(section, page) {
         ${section.rows.map((r) => `<li><span>${esc(r[0])}</span><span>${esc(r[1])}</span></li>`).join('\n        ')}
       </ul>
       ${section.pie ? `<p class="price-panel__pie">${esc(section.pie)}</p>` : ''}
-      <a class="btn btn--onlight" href="${waOptionHref(waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${waOption}" data-ev="wa_click" data-ev-loc="price">${ICON_WA}${esc(ctaLabel)}</a>
+      <a class="btn btn--onlight" href="${waOptionHref(waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${waOption}" data-ev="wa_menu_open" data-ev-loc="price">${ICON_WA}${esc(ctaLabel)}</a>
     </div>
   </div>
 </section>`;
@@ -342,7 +378,7 @@ function block(section, page) {
         <ul class="list">
           ${t.incluye.map((i) => `<li>${ICON_CHECK}${esc(i)}</li>`).join('\n          ')}
         </ul>
-        <a class="btn ${t.highlight ? 'btn--primary' : 'btn--ghost'}" href="${waOptionHref(t.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${t.waOption}" data-ev="wa_click" data-ev-loc="pricing_tier">${t.highlight ? ICON_WA : ''}${esc(t.cta)}</a>
+        <a class="btn ${t.highlight ? 'btn--primary' : 'btn--ghost'}" href="${waOptionHref(t.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${t.waOption}" data-ev="wa_menu_open" data-ev-loc="pricing_tier">${t.highlight ? ICON_WA : ''}${esc(t.cta)}</a>
       </div>`).join('\n      ')}
     </div>
     ${section.pie ? `<p class="pricing-tiers__foot">${section.pie.map((s) => `<span>${ICON_CHECK}${esc(s)}</span>`).join('')}</p>` : ''}
@@ -388,8 +424,8 @@ function block(section, page) {
       <p>${esc(section.body)}</p>
     </div>
     <div class="cta-band__actions">
-      <a class="btn btn--wa" href="${waOptionHref(section.primary.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${section.primary.waOption}" data-ev="wa_click" data-ev-loc="band">${ICON_WA}${esc(section.primary.label)}</a>
-      <a class="link" href="${waOptionHref(section.secondaryLink.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${section.secondaryLink.waOption}" data-ev="wa_click" data-ev-loc="band_secondary">${esc(section.secondaryLink.label)}</a>
+      <a class="btn btn--wa" href="${waOptionHref(section.primary.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${section.primary.waOption}" data-ev="wa_menu_open" data-ev-loc="band">${ICON_WA}${esc(section.primary.label)}</a>
+      <a class="link" href="${waOptionHref(section.secondaryLink.waOption, page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${section.secondaryLink.waOption}" data-ev="wa_menu_open" data-ev-loc="band_secondary">${esc(section.secondaryLink.label)}</a>
     </div>
   </div>
 </section>`;
@@ -510,7 +546,7 @@ function block(section, page) {
     <aside class="contact-split__aside">
       <h2 class="contact-split__aside-h">${esc(a.heading)}</h2>
       <p>${esc(a.body)}</p>
-      <a class="btn btn--wa" href="${waOptionHref('compraventa', page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="compraventa" data-ev="wa_click" data-ev-loc="contact_aside">${ICON_WA}${esc(a.waLabel)}</a>
+      <a class="btn btn--wa" href="${waOptionHref('compraventa', page.waContext, page)}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="compraventa" data-ev="wa_menu_open" data-ev-loc="contact_aside">${ICON_WA}${esc(a.waLabel)}</a>
       <a class="contact-split__tel" href="${TEL_HREF}" data-ev="tel_click" data-ev-loc="contact_aside">${ICON_PHONE}Llamar al ${esc(WA_DISPLAY)}</a>
       <ul class="contact-split__facts">
         ${a.facts.map((f) => `<li><strong>${esc(f.label)}</strong><span>${esc(f.value)}</span></li>`).join('\n        ')}
@@ -564,18 +600,36 @@ function block(section, page) {
 function graciasWaAnchor(cls, loc, label) {
   const map = {};
   for (const id of Object.keys(PURPOSES)) map[id] = waLink('gracias.html', id);
-  return `<a class="${cls}" href="${waLink('gracias.html', 'compraventa')}" target="_blank" rel="noopener" data-gracias-wa data-wa-map="${attr(JSON.stringify(map))}" data-ev="wa_click" data-ev-loc="${loc}">${ICON_WA}${esc(label)}</a>`;
+  return `<a class="${cls}" href="${waLink('gracias.html', 'compraventa')}" target="_blank" rel="noopener" data-gracias-wa data-wa-map="${attr(JSON.stringify(map))}" data-ev="wa_outbound_click" data-ev-loc="${loc}">${ICON_WA}${esc(label)}</a>`;
 }
 
 // -------------------------------------------------------------------- hero
+// width/height reales de cada variante: sin ellos el primer render salta al
+// cargar la foto (CLS). Primero assets/img/manifest.json; las fotos que no
+// figuran ahí se leen de la cabecera del .webp (VP8, VP8L o VP8X), sin sharp.
+const IMG_DIMS = new Map(JSON.parse(readFileSync('assets/img/manifest.json', 'utf8')).images
+  .flatMap((i) => i.files.map((f) => [f.file, f])));
+function webpSize(file) {
+  const b = readFileSync(file);
+  if (b.toString('ascii', 0, 4) !== 'RIFF' || b.toString('ascii', 8, 12) !== 'WEBP') throw new Error(`${file} no es WebP`);
+  const chunk = b.toString('ascii', 12, 16);
+  if (chunk === 'VP8X') return { width: 1 + b.readUIntLE(24, 3), height: 1 + b.readUIntLE(27, 3) };
+  if (chunk === 'VP8L') { const v = b.readUInt32LE(21); return { width: 1 + (v & 0x3fff), height: 1 + ((v >> 14) & 0x3fff) }; }
+  if (chunk === 'VP8 ') return { width: b.readUInt16LE(26) & 0x3fff, height: b.readUInt16LE(28) & 0x3fff };
+  throw new Error(`${file}: cabecera WebP desconocida`);
+}
+const imgDims = (name) => IMG_DIMS.get(name) || webpSize(`assets/img/${name}`);
+const HERO_SIZES = '(min-width:900px) 45vw, 100vw';
+
 function heroPicture(img, eager, seal) {
   const b = img.base;
+  const dims = imgDims(`${b}-1280.webp`);
   const srcset = (ext) => [640, 1280, 1920].map((w) => `/assets/img/${b}-${w}.${ext} ${w}w`).join(', ');
   return `<div class="hero__pic-wrap">
       <picture class="hero__pic">
-        <source type="image/avif" srcset="${srcset('avif')}" sizes="(min-width:900px) 45vw, 100vw">
-        <source type="image/webp" srcset="${srcset('webp')}" sizes="(min-width:900px) 45vw, 100vw">
-        <img src="/assets/img/${b}-1280.webp" alt="${esc(img.alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'}>
+        <source type="image/avif" srcset="${srcset('avif')}" sizes="${HERO_SIZES}">
+        <source type="image/webp" srcset="${srcset('webp')}" sizes="${HERO_SIZES}">
+        <img src="/assets/img/${b}-1280.webp" srcset="${srcset('webp')}" sizes="${HERO_SIZES}" width="${dims.width}" height="${dims.height}" alt="${esc(img.alt)}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'}>
       </picture>
       ${seal || ''}
     </div>`;
@@ -610,7 +664,7 @@ function renderHero(page) {
     <div class="hero__actions">
       ${primary.gracias
         ? graciasWaAnchor('btn btn--wa', 'hero', primary.label)
-        : `<a class="btn btn--primary" href="${primaryHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${primary.waOption}" data-ev="wa_click" data-ev-loc="hero">${ICON_WA}${esc(primary.label)}</a>`}
+        : `<a class="btn btn--primary" href="${primaryHref}" target="_blank" rel="noopener" data-wa-trigger data-wa-open="${primary.waOption}" data-ev="wa_menu_open" data-ev-loc="hero">${ICON_WA}${esc(primary.label)}</a>`}
       ${secondary}
     </div>
     ${freeLink}
@@ -751,7 +805,6 @@ function renderPage(page) {
 <html lang="es-PY" data-analytics-id="${attr(ANALYTICS_ID)}">
 <head>
 <meta charset="utf-8">
-<script src="https://crm.clientes.com.py/vc-attribution.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
@@ -770,32 +823,39 @@ ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="preload" href="/assets/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/libre-baskerville-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/fonts/fonts.css?v=${ASSET_V.fonts}">
-<link rel="stylesheet" href="/assets/css/site.css?v=${ASSET_V.css}">
+<link rel="stylesheet" href="/assets/css/site.min.css?v=${ASSET_V.css}">
+<script src="https://crm.clientes.com.py/vc-attribution.js" defer referrerpolicy="strict-origin-when-cross-origin"></script>
 ${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
 <body data-page-context="${attr(page.waContext)}">
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+${SVG_SPRITE}
 ${renderNav(page.slug, page.waContext, page)}
-<main>
+<main id="contenido" tabindex="-1">
 ${renderHero(page)}
 ${trust}
 ${body}
 </main>
 ${renderFooter(page.slug)}
 ${renderWaMenu(page.waContext, page)}
-<script defer src="/assets/js/site.js?v=${ASSET_V.js}"></script>
+<script defer src="/assets/js/site.min.js?v=${ASSET_V.js}"></script>
 </body>
 </html>
 `;
 }
 
+// Sin sangría ni líneas vacías en el HTML publicado (no hay <pre>, y los
+// <textarea> se generan vacíos, así que no cambia ningún texto visible).
+const compactHtml = (html) => html.split('\n').map((l) => l.trim()).filter(Boolean).join('\n') + '\n';
+
 for (const page of PAGES) {
   const outPath = page.slug === '/' ? 'index.html' : join(page.slug.replace(/^\//, ''), 'index.html');
   mkdirSync(dirname(outPath), { recursive: true });
-  writeFileSync(outPath, renderPage(page));
+  writeFileSync(outPath, compactHtml(renderPage(page)));
   console.log('wrote', outPath);
 }
 
 for (const page of EXTRAS) {
-  writeFileSync(page.slug, renderPage(page));
+  writeFileSync(page.slug, compactHtml(renderPage(page)));
   console.log('wrote', page.slug);
 }
 
