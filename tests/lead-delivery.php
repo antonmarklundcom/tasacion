@@ -40,6 +40,18 @@ try {
     file_put_contents($base . '/private/' . str_repeat('f', 64) . '.json', '{broken');
     check($queue->status()['unreadable'] === 1 && is_file($base . '/private/' . str_repeat('f', 64) . '.json'), 'Corrupt entry is reported and preserved');
     check(!(new TasacionLeadDelivery([], $base . '/web'))->send(payload('unconfigured'))['received'], 'Missing configuration never claims receipt');
+    $t = 1760000000;
+    for ($i = 0; $i < 5; $i++) check($queue->allow('client-a', 5, 600, $t + $i), 'Rate limit admits the first five');
+    check(!$queue->allow('client-a', 5, 600, $t + 10), 'Sixth submission inside ten minutes is refused');
+    check($queue->allow('client-b', 5, 600, $t + 10), 'Another client keeps its own allowance');
+    check($queue->allow('client-a', 5, 600, $t + 601), 'Allowance returns once the window passes');
+    $limiterFiles = glob($base . '/private/rate-*.txt');
+    check(count($limiterFiles) === 2 && !str_contains((string)file_get_contents($limiterFiles[0]), 'client-'), 'Limiter files hold hashed keys only');
+    $pendingBefore = $queue->status()['pending'];
+    foreach ($limiterFiles as $file) touch($file, time() - 601);
+    $queue->status();
+    check(glob($base . '/private/rate-*.txt') === [] && $queue->status()['pending'] === $pendingBefore, 'Status sweep expires limiter files and ignores them as entries');
+    check((new TasacionLeadDelivery(['outbox_dir' => $base . '/web/queue'], $base . '/web'))->allow('client-c'), 'Limiter storage failure fails open');
     echo "PASS: $checks durable delivery checks (fictional data only).\n";
 } finally {
     // Remove only this test's unique directory below the verified temp root.

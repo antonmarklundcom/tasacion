@@ -64,3 +64,23 @@ RedirectMatch 301 ^/guias/.*$ /preguntas-frecuentes/
     Header set Cache-Control "public, max-age=300, must-revalidate"
   </FilesMatch>
 </IfModule>
+
+# Encabezados de seguridad (informe 2026-10-12 §15). HSTS de 1 año: el sitio
+# y sus subdominios se sirven solo por HTTPS.
+# La CSP arranca en modo Report-Only: el navegador anota las violaciones en
+# la consola pero no bloquea nada. Para hacerla obligatoria, después de
+# revisar la consola en todas las páginas (formulario, menú WA, analítica
+# con el ID cargado), cambiar `Content-Security-Policy-Report-Only` por
+# `Content-Security-Policy` en la línea de abajo.
+# - Los únicos <script> inline son JSON-LD (bloques de datos, no se ejecutan);
+#   el ID de analítica va en <html data-analytics-id> y lo lee site.js.
+# - style-src lleva 'unsafe-inline' por el style= del honeypot del formulario.
+# - wa.me son enlaces de navegación (target=_blank): CSP no los restringe.
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "DENY"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' https://crm.clientes.com.py https://www.googletagmanager.com; connect-src 'self' https://crm.clientes.com.py https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+</IfModule>

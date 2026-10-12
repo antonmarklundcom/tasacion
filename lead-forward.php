@@ -27,16 +27,43 @@ if (form_text('website', 200) !== '') {
     redirect_and_exit(THANK_YOU);
 }
 
-/* 2. Teléfono: obligatorio, es la identidad del contacto en el CRM. */
-$phone = form_text('telefono', 31);
-// strlen, no mb_strlen: un teléfono es ASCII y así el handler no depende de
-// que mbstring esté habilitado en el hosting.
-if ($phone === '' || strlen($phone) < 6 || strlen($phone) > 30) {
+/* 1b. Tiempo de llenado: site.js manda en `ts` los ms entre la carga del
+   formulario y el envío (diferencia medida en el navegador, así el reloj del
+   visitante no importa). Menos de 3 s es un bot: mismo trato que el honeypot.
+   Sin `ts` (sin JS, formulario en caché) el envío sigue normal. */
+$fillMs = form_text('ts', 20);
+if ($fillMs !== '' && ctype_digit($fillMs) && (int)$fillMs < 3000) {
+    redirect_and_exit(THANK_YOU);
+}
+
+/* 1c. Límite por cliente: 5 envíos cada 10 min. La clave combina REMOTE_ADDR
+   con el primer X-Forwarded-For, para que un CDN delante del hosting no junte
+   a todos los visitantes en una sola IP; como ese encabezado se puede falsear,
+   un segundo techo más alto por REMOTE_ADDR solo frena a quien lo rote.
+   Pasado el límite se muestra el error con el enlace de WhatsApp. */
+$remoteIp = (string)($_SERVER['REMOTE_ADDR'] ?? '');
+$forwardedIp = trim(explode(',', (string)($_SERVER['HTTP_X_FORWARDED_FOR'] ?? ''))[0]);
+if (!$delivery->allow('client|' . $remoteIp . '|' . substr($forwardedIp, 0, 64), 5, 600)
+    || !$delivery->allow('remote|' . $remoteIp, 60, 600)) {
+    redirect_and_exit('/contacto/?error=envio');
+}
+
+/* 2. Teléfono: obligatorio, es la identidad del contacto en el CRM. Se valida
+   la versión normalizada (sin espacios, guiones, puntos ni paréntesis; `+`
+   inicial opcional, 6–15 dígitos) y al CRM va el texto tal como se escribió. */
+$phone = form_text('telefono', 40);
+$phoneDigits = preg_replace('/[\s.()\-]+/', '', $phone) ?? '';
+if (!preg_match('/^\+?\d{6,15}$/D', $phoneDigits)) {
     redirect_and_exit('/contacto/?error=telefono');
 }
 
 $name    = form_text('nombre', 200);
 $email   = form_text('email', 320);
+/* Email opcional: si no es válido se descarta y el lead sigue (el CRM
+   rechazaría el lead entero por un email mal escrito). */
+if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+    $email = '';
+}
 $message = form_text('mensaje', 4000);
 $pageUrl = form_text('page_url', 2000);
 

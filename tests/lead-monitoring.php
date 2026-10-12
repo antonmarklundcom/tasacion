@@ -9,7 +9,7 @@ $assert = static function (bool $value, string $label): void { if (!$value) thro
 $rejects = static function (callable $operation) use ($assert): void { try { $operation(); } catch (Throwable $expected) { return; } $assert(false, 'expected rejection'); };
 $now = time();
 try {
-    $payload = ['idempotency_key' => bin2hex(random_bytes(16)), 'phone' => '+595000000000', 'name' => 'Fictional operator', 'message' => "Prueba á / \u{2028}", 'utm' => ['z' => 2, 'a' => ['second', 'first']]];
+    $payload = ['idempotency_key' => bin2hex(random_bytes(16)), 'phone' => '+0000000000', 'name' => 'Fictional operator', 'message' => "Prueba á / \u{2028}", 'utm' => ['z' => 2, 'a' => ['second', 'first']]];
     $id = $delivery->enqueue($payload);
     $assert(TasacionLeadDelivery::fingerprint($payload) === TasacionLeadDelivery::fingerprint(array_reverse($payload, true)), 'canonical object ordering');
     $changed = $payload; $changed['utm']['a'] = ['first', 'second'];

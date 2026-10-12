@@ -21,6 +21,16 @@ const ASSET_V = {
   js: assetHash('assets/js/site.js'),
 };
 
+// GA4 (G-…) o GTM (GTM-…). Vacío = sin analítica. site.js lo lee de
+// <html data-analytics-id>, así no queda ningún <script> inline ejecutable
+// (CSP: solo JSON-LD inline).
+const ANALYTICS_ID = '';
+
+// Misma regla que lead-forward.php: `+` inicial opcional, 6–15 dígitos y
+// separadores espacio, guion, punto o paréntesis. Escapado para el flag `v`
+// que los navegadores aplican al atributo pattern.
+const PHONE_PATTERN = String.raw`\+?[\s\-.\(\)]*(?:\d[\s\-.\(\)]*){6,15}`;
+
 // <lastmod> del sitemap: fecha fija, nunca la del día del build (si no, el
 // HTML/sitemap commiteado deja de coincidir con el rebuild al día siguiente).
 // Subirla a mano cuando cambia el contenido; una página puede fijar su propio
@@ -479,10 +489,11 @@ function block(section, page) {
       <form class="form form--wide" action="/lead-forward.php" method="post" data-wa-error="${attr(waLink('/contacto/', 'error'))}">
         <input type="hidden" name="page_url" id="page_url">
         <input type="hidden" name="submission_id" id="submission_id">
+        <input type="hidden" name="ts" id="form_ts">
         <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <div class="form__row">
           <label class="field">Nombre completo<input type="text" name="nombre" autocomplete="name" required></label>
-          <label class="field">Número de WhatsApp<input type="tel" name="telefono" autocomplete="tel" inputmode="tel" placeholder="0981 123 456" minlength="6" required></label>
+          <label class="field">Número de WhatsApp<input type="tel" name="telefono" autocomplete="tel" inputmode="tel" placeholder="0981 123 456" pattern="${attr(PHONE_PATTERN)}" title="Entre 6 y 15 dígitos; podés usar +, espacios, guiones, puntos o paréntesis" required></label>
         </div>
         <label class="field">¿Para qué necesitás la tasación?<select name="purpose" required>
             ${opts}
@@ -737,12 +748,11 @@ function renderPage(page) {
   const body = page.sections.map((s) => block(s, page)).join('\n');
   const trust = !page.noindex ? renderTrustRow() : '';
   return `<!doctype html>
-<html lang="es-PY">
+<html lang="es-PY" data-analytics-id="${attr(ANALYTICS_ID)}">
 <head>
 <meta charset="utf-8">
 <script src="https://crm.clientes.com.py/vc-attribution.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>var ANALYTICS_ID = '';</script>
 <title>${esc(page.title)}</title>
 <meta name="description" content="${esc(page.description)}">
 ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
