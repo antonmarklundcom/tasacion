@@ -1066,6 +1066,11 @@ PAGES.push({
     },
     {
       type: 'lead',
+      heading: 'Cookies y atribución',
+      body: 'Todas las páginas de este sitio cargan un script de crm.clientes.com.py, el CRM que usamos para responder tus consultas. La primera vez que nos visitás, ese script guarda una cookie propia llamada vc_attr. Allí queda registrado de dónde vino tu visita: la primera página en la que entraste, el sitio que te refirió, los parámetros de campaña del enlace (UTM: source, medium, campaign, term y content) y los identificadores de clic de anuncios (gclid de Google y fbclid de Meta), si están presentes.\n\nLa cookie no contiene tu nombre, tu teléfono ni tu email. Solo se envía junto con el formulario de contacto cuando lo enviás, para que sepamos por qué canal llegó la consulta. Duración de la cookie: [confirmar]. Tiempo que el CRM conserva esos datos junto con la consulta: [confirmar].\n\nPodés borrar la cookie cuando quieras desde la configuración de tu navegador. El sitio y el formulario siguen funcionando igual sin ella.',
+    },
+    {
+      type: 'lead',
       heading: 'Para qué usamos y dónde guardamos tus datos',
       body: 'Usamos esta información para responder tu consulta, entender qué tasación necesitás y coordinar el alcance, el presupuesto y la visita al inmueble. No vendemos tus datos.\n\nLos leads, es decir, las consultas recibidas, se guardan en un archivo de registro del servidor y se reenvían a un sistema de gestión de contactos (CRM), cuando está configurado y disponible. Ese sistema permite al equipo dar seguimiento a tu solicitud. El registro local sirve como respaldo si el reenvío no se completa. Si no podemos guardar ni reenviar la consulta, el formulario te indica que nos escribas por WhatsApp.',
     },

@@ -1,3 +1,5 @@
+> Histórico — ver docs/OPERATIONS.md
+
 # BUILD-SPEC — tasacion.com.py · MODO 3.5 CORE 15
 
 **Läge 0-output.** Ingen kod skrivs i det här dokumentet. Nästa session

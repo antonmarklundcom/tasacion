@@ -3,6 +3,7 @@
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import {
   PAGES, EXTRAS, NAV, SITE, TASADOR, PRECIO_TXT,
   CRED_CSJ, CRED_ARQ, PLAZO_TXT, IVA_TXT, FACTURA_TXT, PRECIOS, FINALIDADES,
@@ -59,11 +60,10 @@ if (ANALYTICS_ID && !/^(G|GTM)-[A-Z0-9]+$/.test(ANALYTICS_ID)) throw new Error(`
 // que los navegadores aplican al atributo pattern.
 const PHONE_PATTERN = String.raw`\+?[\s\-.\(\)]*(?:\d[\s\-.\(\)]*){6,15}`;
 
-// <lastmod> del sitemap: fecha fija, nunca la del día del build (si no, el
-// HTML/sitemap commiteado deja de coincidir con el rebuild al día siguiente).
-// Subirla a mano cuando cambia el contenido; una página puede fijar su propio
-// `lastmod` en content.mjs.
-const SITE_LASTMOD = '2026-09-30';
+
+// Año del © sin JS; site.js lo reemplaza por el año actual. Fijo para que el
+// HTML generado no cambie según el día del build.
+const COPYRIGHT_YEAR = '2026';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
@@ -186,7 +186,7 @@ function renderFooter(slug) {
     </div>
   </div>
   <div class="container ftr__base">
-    <p>© <span id="yr">${SITE_LASTMOD.slice(0, 4)}</span> Tasación.com.py — Asunción, Paraguay.</p>
+    <p>© <span id="yr">${COPYRIGHT_YEAR}</span> Tasación.com.py — Asunción, Paraguay.</p>
   </div>
 </footer>`;
 }
@@ -717,21 +717,39 @@ function faqJsonLd(page) {
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
 }
 
-function professionalServiceJsonLd() {
+// Una sola entidad del negocio y una sola persona, con @id estable: las demás
+// páginas y el Service la referencian en vez de repetirla (informe
+// 2026-10-12 §13). La ficha completa de la persona va en / y /nosotros/.
+const ORG_ID = `${SITE}/#org`;
+const PERSON_ID = `${SITE}/#fernando-capurro`;
+// Por confirmar con Anton (docs/decisions-needed.md): calle, perfiles
+// (GBP/Instagram/LinkedIn) y horario. El horario repite el visible en /contacto/.
+const STREET_ADDRESS = '';
+const SAME_AS = [];
+
+function professionalServiceJsonLd(page) {
+  const fullPerson = page.slug === '/' || page.slug === '/nosotros/';
+  const address = { '@type': 'PostalAddress', addressLocality: 'Asunción', addressCountry: 'PY' };
+  if (STREET_ADDRESS) address.streetAddress = STREET_ADDRESS;
   const data = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
+    '@id': ORG_ID,
     name: 'Tasación.com.py',
-    url: SITE,
+    url: SITE + '/',
+    image: `${SITE}/assets/img/og-tasacion-com-py.jpg`,
     telephone: '+' + WA_NUMBER,
+    address,
     areaServed: ['Asunción', 'Gran Asunción'],
     priceRange: 'Gs. 800.000 – 2.500.000',
-    founder: {
-      '@type': 'Person',
-      name: 'Fernando Capurro',
-      jobTitle: 'Perito Tasador',
-      hasCredential: [CRED_CSJ, CRED_ARQ],
-    },
+    sameAs: SAME_AS,
+    openingHoursSpecification: [
+      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '18:00' },
+      { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '08:00', closes: '12:00' },
+    ],
+    founder: fullPerson
+      ? { '@type': 'Person', '@id': PERSON_ID, name: 'Fernando Capurro', jobTitle: 'Perito Tasador', hasCredential: [CRED_CSJ, CRED_ARQ], worksFor: { '@id': ORG_ID } }
+      : { '@id': PERSON_ID },
   };
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>\n`;
 }
@@ -762,7 +780,7 @@ function serviceJsonLd(page) {
     '@context': 'https://schema.org',
     '@type': 'Service',
     serviceType: page.kind === 'primary-report' ? 'Informe pericial de tasación' : page.h1,
-    provider: { '@type': 'ProfessionalService', name: 'Tasación.com.py' },
+    provider: { '@id': ORG_ID },
     areaServed: ['Asunción', 'Gran Asunción', { '@type': 'Country', name: 'Paraguay' }],
   };
   // vertical-b2b (franja de dominio): precio por proyecto, sin rango publicado.
@@ -825,7 +843,7 @@ ${page.noindex ? '<meta name="robots" content="noindex,nofollow">' : ''}
 <link rel="stylesheet" href="/assets/fonts/fonts.css?v=${ASSET_V.fonts}">
 <link rel="stylesheet" href="/assets/css/site.min.css?v=${ASSET_V.css}">
 <script src="https://crm.clientes.com.py/vc-attribution.js" defer referrerpolicy="strict-origin-when-cross-origin"></script>
-${faqJsonLd(page)}${professionalServiceJsonLd()}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
+${faqJsonLd(page)}${professionalServiceJsonLd(page)}${serviceJsonLd(page)}${breadcrumbJsonLd(page)}</head>
 <body data-page-context="${attr(page.waContext)}">
 <a class="skip-link" href="#contenido">Saltar al contenido</a>
 ${SVG_SPRITE}
@@ -859,7 +877,11 @@ for (const page of EXTRAS) {
   console.log('wrote', page.slug);
 }
 
-// Sitemap generado desde PAGES; las páginas noindex quedan excluidas.
+// Sitemap desde docs/routes.json (informe 2026-10-12 §12). <lastmod> cambia
+// solo cuando cambia el contenido de <main> de la página: docs/lastmod.json
+// guarda {hash, fecha} por ruta. Así el rebuild de verify.mjs es estable
+// (mismo contenido = misma fecha) aunque se cambien CSS/JS o el día. Una ruta
+// nueva arranca con la fecha del último commit de su HTML (o hoy, en UTC).
 const sitemapPriorities = {
   "/": "1.0",
   "/tasaciones/": "0.95",
@@ -878,15 +900,34 @@ const sitemapPriorities = {
   "/contacto/": "0.6",
   "/privacidad/": "0.3"
 };
-const sitemapPages = PAGES.filter((page) => !page.noindex);
+const ROUTES = JSON.parse(readFileSync('docs/routes.json', 'utf8')).routes;
+const LASTMOD_FILE = 'docs/lastmod.json';
+const lastmodPrev = existsSync(LASTMOD_FILE) ? JSON.parse(readFileSync(LASTMOD_FILE, 'utf8')) : {};
+const todayUtc = new Date().toISOString().slice(0, 10);
+function gitDate(file) {
+  try {
+    const ts = execFileSync('git', ['log', '-1', '--format=%ct', '--', file], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    return ts ? new Date(Number(ts) * 1000).toISOString().slice(0, 10) : null;
+  } catch { return null; }
+}
+const lastmod = {};
+for (const r of ROUTES) {
+  const file = r.slug === '/' ? 'index.html' : r.slug.replace(/^\//, '') + 'index.html';
+  const main = (readFileSync(file, 'utf8').match(/<main[^>]*>([\s\S]*)<\/main>/) || [])[1];
+  if (main === undefined) throw new Error(`${file}: sin <main> para calcular lastmod`);
+  const hash = createHash('sha1').update(main).digest('hex').slice(0, 12);
+  const prev = lastmodPrev[r.slug];
+  lastmod[r.slug] = prev && prev.hash === hash ? prev : { hash, date: prev ? todayUtc : (gitDate(file) || todayUtc) };
+}
+writeFileSync(LASTMOD_FILE, JSON.stringify(lastmod, null, 2) + '\n');
 const sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
-  '<!-- ' + sitemapPages.length + ' URLs. 404.html y gracias.html excluidas a propósito. -->',
+  '<!-- ' + ROUTES.length + ' URLs de docs/routes.json. 404.html y gracias.html excluidas a propósito. -->',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  ...sitemapPages.map((page) => ['  <url>',
-    '    <loc>' + esc(SITE + page.slug) + '</loc>',
-    '    <lastmod>' + esc(page.lastmod ?? SITE_LASTMOD) + '</lastmod>',
+  ...ROUTES.map((r) => ['  <url>',
+    '    <loc>' + esc(r.canonical) + '</loc>',
+    '    <lastmod>' + lastmod[r.slug].date + '</lastmod>',
     '    <changefreq>monthly</changefreq>',
-    '    <priority>' + (sitemapPriorities[page.slug] ?? '0.6') + '</priority>',
+    '    <priority>' + (sitemapPriorities[r.slug] ?? '0.6') + '</priority>',
     '  </url>'].join('\n')),
   '</urlset>', ''].join('\n');
 writeFileSync('sitemap.xml', sitemap);

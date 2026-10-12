@@ -1,0 +1,66 @@
+{
+  "/": {
+    "hash": "1d2303f5adec",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/": {
+    "hash": "c9e01e70f5ec",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/casas/": {
+    "hash": "f855c9749d69",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/departamentos/": {
+    "hash": "9fbbbfc72329",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/terrenos/": {
+    "hash": "9738120dd1d1",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/corporativa/": {
+    "hash": "0cf5fb33ea2b",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/hipotecaria/": {
+    "hash": "fc12db594185",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/locales-comerciales/": {
+    "hash": "a095cfa832e3",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/campos/": {
+    "hash": "0f1b74d1d41b",
+    "date": "2026-10-12"
+  },
+  "/tasaciones/franja-de-dominio/": {
+    "hash": "70d0ec86470a",
+    "date": "2026-10-12"
+  },
+  "/valuacion-para-vender/": {
+    "hash": "e6f11085caa0",
+    "date": "2026-10-12"
+  },
+  "/informes-periciales/": {
+    "hash": "3291aff78af6",
+    "date": "2026-10-12"
+  },
+  "/nosotros/": {
+    "hash": "eafda45b395f",
+    "date": "2026-10-12"
+  },
+  "/preguntas-frecuentes/": {
+    "hash": "be677d8ea476",
+    "date": "2026-10-12"
+  },
+  "/contacto/": {
+    "hash": "0b79627d8fc3",
+    "date": "2026-10-12"
+  },
+  "/privacidad/": {
+    "hash": "b47420f90709",
+    "date": "2026-10-12"
+  }
+}

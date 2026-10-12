@@ -1,3 +1,5 @@
+> Histórico — ver docs/OPERATIONS.md
+
 # NEXT-STEPS — tasacion.com.py
 
 Estado actual: rediseño "informe oficial primero" completo y en `master` (los 4 PRs de

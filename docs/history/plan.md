@@ -1,3 +1,5 @@
+> Histórico — ver docs/OPERATIONS.md
+
 # plan.md — tasacion.com.py: rediseño completo (informe oficial primero)
 
 Plan escrito 2026-09-05 en una sesión de planificación. Lo ejecuta **una sesión Sonnet**

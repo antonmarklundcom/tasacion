@@ -27,9 +27,9 @@ const { routes, copyDone } = routesDoc;
 step('build limpio');
 execSync('node build-site.mjs', { stdio: 'inherit' });
 try {
-  execSync('git diff --exit-code -- "*.html" sitemap.xml assets/css/site.min.css assets/js/site.min.js', { stdio: 'pipe' });
+  execSync('git diff --exit-code -- "*.html" sitemap.xml docs/lastmod.json assets/css/site.min.css assets/js/site.min.js', { stdio: 'pipe' });
   if (execSync('git ls-files --others --exclude-standard -- assets/css/site.min.css assets/js/site.min.js', { encoding: 'utf8' }).trim()) throw new Error('min sin commitear');
-  ok('node build-site.mjs no deja cambios en *.html, sitemap.xml ni site.min.css/js');
+  ok('node build-site.mjs no deja cambios en *.html, sitemap.xml, docs/lastmod.json ni site.min.css/js');
 } catch {
   fail('build-site.mjs generó HTML distinto al commiteado — correr `node build-site.mjs` y commitear');
 }
@@ -70,6 +70,8 @@ const locs = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1]);
 if (locs.length !== routes.length) fail(`sitemap.xml tiene ${locs.length} <loc>, se esperaban ${routes.length}`);
 const expected = new Set(routes.map((r) => r.canonical));
 for (const loc of locs) if (!expected.has(loc)) fail(`sitemap.xml tiene una URL fuera de docs/routes.json: ${loc}`);
+const lastmods = [...sitemap.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)].map((m) => m[1]);
+if (lastmods.length !== routes.length || !lastmods.every((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))) fail('sitemap.xml: cada URL necesita un <lastmod> AAAA-MM-DD');
 if (locs.length === routes.length && locs.every((l) => expected.has(l))) ok(`sitemap.xml == ${routes.length} rutas de docs/routes.json`);
 
 // ------------------------------------------------------ 4. checks por página
