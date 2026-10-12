@@ -195,8 +195,55 @@ final class TasacionLeadDelivery
         });
     }
 
-    public function status(): array
+    /**
+     * Per-client submission ceiling, stored next to the outbox (never in the
+     * web root). Keys are sha256(client + UTC day): no raw IP is written.
+     * Files are rate-<hash>.txt so the *.json queue globs never see them.
+     * Returns false only when the ceiling is reached; a storage problem fails
+     * open so the outbox itself decides whether the enquiry can be retained.
+     */
+    public function allow(string $client, int $max = 5, int $window = 600, ?int $now = null): bool
     {
+        $now ??= time();
+        try {
+            $dir = $this->directory();
+            $path = $dir . '/rate-' . hash('sha256', $client . '|' . gmdate('Y-m-d', $now)) . '.txt';
+            if (is_link($path)) return true;
+            $handle = @fopen($path, 'c+');
+            if (!$handle) return true;
+            @chmod($path, 0600);
+            try {
+                if (!flock($handle, LOCK_EX)) return true;
+                $recent = [];
+                foreach (explode("\n", (string)stream_get_contents($handle)) as $line) {
+                    if (ctype_digit($line) && (int)$line > $now - $window) $recent[] = (int)$line;
+                }
+                $allowed = count($recent) < $max;
+                if ($allowed) $recent[] = $now;
+                ftruncate($handle, 0);
+                rewind($handle);
+                fwrite($handle, implode("\n", $recent));
+                fflush($handle);
+                return $allowed;
+            } finally { flock($handle, LOCK_UN); fclose($handle); }
+        } catch (Throwable $error) {
+            return true;
+        }
+    }
+
+    /** Removes limiter files untouched for longer than the window. */
+    private function sweepRateLimits(string $dir, int $window = 600, ?int $now = null): void
+    {
+        $now ??= time();
+        foreach (glob($dir . '/rate-*.txt') ?: [] as $file) {
+            $modified = @filemtime($file);
+            if (!is_link($file) && $modified !== false && $modified < $now - $window) @unlink($file);
+        }
+    }
+
+    public function status(?int $now = null): array
+    {
+        $this->sweepRateLimits($this->directory(), 600, $now);
         $counts = ['pending' => 0, 'delivered' => 0, 'unreadable' => 0, 'oldest_pending_at' => null];
         foreach (glob($this->directory() . '/*.json') ?: [] as $file) {
             try {
@@ -212,6 +259,7 @@ final class TasacionLeadDelivery
     public function retry(int $limit): array
     {
         $counts = ['examined' => 0, 'delivered' => 0, 'pending' => 0, 'unreadable' => 0];
+        $this->sweepRateLimits($this->directory());
         $files = glob($this->directory() . '/*.json') ?: [];
         sort($files, SORT_STRING);
         foreach ($files as $file) {

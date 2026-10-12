@@ -92,7 +92,31 @@ Verificar en una ventana de incógnito (nunca en una pestaña que ya tenía el s
 - El formulario de `/contacto/` hace POST a `/lead-forward.php` y redirige a `/gracias.html`.
 - `https://tasacion.com.py/sitemap.xml` responde con las 15 URLs.
 
-## 6. Rollback
+## 6. Cron (bandeja privada de leads)
+
+Cada consulta del formulario se guarda primero en una bandeja privada (`.tasacion-lead-outbox/`,
+**fuera** de `public_html/`); si VenderCRM no confirma la recepción, queda pendiente. Dos cron jobs
+la mantienen al día. Crearlos
+en hPanel → Avanzado → **Cron Jobs** es un paso manual que Anton hace una sola vez; un deploy no
+los crea ni los toca.
+
+| Frecuencia | Expresión | Comando |
+|---|---|---|
+| Cada 10 minutos | `*/10 * * * *` | `php /home/USER/domains/tasacion.com.py/public_html/tools/lead-delivery.php retry 20` |
+| Cada hora | `7 * * * *` | `php /home/USER/domains/tasacion.com.py/public_html/tools/lead-delivery.php heartbeat` |
+
+- `USER` es el usuario de la cuenta de Hostinger: se ve en la ruta del File Manager de hPanel
+  (`/home/USER/domains/…`).
+- `tools/lead-delivery.php` solo corre por CLI; por HTTP responde 404 (y `.htaccess` ya bloquea `tools/`).
+- `retry` reenvía a VenderCRM las consultas pendientes de la bandeja, con backoff entre intentos
+  (1 min, duplicándose hasta un máximo de 6 h). `20` es el tope por corrida; el máximo permitido es 50.
+- `heartbeat` informa a VenderCRM la salud de la cola: solo conteos agregados (pendientes, ilegibles,
+  antigüedad del más viejo), sin datos personales.
+- Ambos terminan con código distinto de cero si algo falla (ilegibles en la cola, o heartbeat no
+  recibido), así el email de cron de Hostinger avisa los problemas.
+- Para inspeccionar la cola por SSH: `php tools/lead-delivery.php status` (desde la raíz del sitio).
+
+## 7. Rollback
 
 Hostinger no versiona `public_html/` automáticamente. Antes de extraer un zip nuevo sobre una
 versión en producción, descargar un backup de `public_html/` desde el File Manager (o usar el

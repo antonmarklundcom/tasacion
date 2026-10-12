@@ -3,7 +3,7 @@ const {spawn}=require('node:child_process');
 const tempRoot=require('node:os').tmpdir();
 const root=path.resolve(__dirname,'..'),base=fs.mkdtempSync(path.join(tempRoot,'tasacion-form-fixture-'));
 const web=base+'/web';fs.mkdirSync(web+'/lib',{recursive:true});
-for(const file of ['lead-forward.php','lib/lead-delivery.php'])fs.copyFileSync(root+'/'+file,web+'/'+file);
+for(const file of ['lead-forward.php','lib/lead-delivery.php','lib/vendercrm-config.php'])fs.copyFileSync(root+'/'+file,web+'/'+file);
 const pause=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
  const listener=net.createServer();await new Promise(r=>listener.listen(0,'127.0.0.1',r));const port=listener.address().port;await new Promise(r=>listener.close(r));
@@ -28,6 +28,33 @@ const pause=ms=>new Promise(r=>setTimeout(r,ms));
   assert(entries.every(x=>x.state==='pending'&&x.last_code==='configuration'),'Unavailable CRM leaves inspectable pending entries');
   assert(entries.every(x=>!JSON.stringify(x).includes('api_key')),'Queue stores no key');
   server.kill();await new Promise(r=>server.once('close',r));
+  // Fresh outbox: validation and rate-limit cases each start with a full allowance.
+  const startServer=(outbox)=>spawn(process.env.PHP_BINARY || 'php',['-S',`127.0.0.1:${port}`,'-t',web],{windowsHide:true,stdio:'ignore',env:{...process.env,TASACION_OUTBOX_DIR:outbox,VENDERCRM_URL:'unconfigured',VENDERCRM_API_KEY:''}});
+  const stop=async(child)=>{child.kill();await new Promise(r=>child.once('close',r));};
+  const queued=(outbox)=>fs.existsSync(outbox)?fs.readdirSync(outbox).filter(f=>f.endsWith('.json')).map(f=>JSON.parse(fs.readFileSync(outbox+'/'+f)).payload):[];
+  const second=base+'/private-validation',validation=startServer(second);
+  try{
+   await waitForServer();
+   assert((await post({...payload,telefono:'abcdef'})).headers.get('location')==='/contacto/?error=telefono','Letters are not a phone');
+   assert((await post({...payload,telefono:'1234567890123456'})).headers.get('location')==='/contacto/?error=telefono','More than 15 digits rejected');
+   assert((await post({...payload,telefono:'+595 981 123-456',email:'no-es-un-email',submission_id:'abcdefabcdefabcdefabcdef00000001'})).headers.get('location')==='/gracias.html?p=consulta','Formatted international phone accepted');
+   const kept=queued(second);
+   assert(kept.length===1&&kept[0].phone==='+595 981 123-456','CRM receives the phone as typed');
+   assert(!('email' in kept[0]),'Invalid optional email is dropped, lead kept');
+   assert((await post({...payload,email:'cliente@example.com',submission_id:'abcdefabcdefabcdefabcdef00000002'})).headers.get('location')==='/gracias.html?p=consulta','Valid email accepted');
+   assert(queued(second).some(x=>x.email==='cliente@example.com'),'Valid email forwarded');
+   const before=queued(second).length;
+   assert((await post({...payload,ts:'1200',submission_id:'abcdefabcdefabcdefabcdef00000003'})).headers.get('location')==='/gracias.html','Under three seconds gets the silent thank-you');
+   assert(queued(second).length===before,'Too-fast submission is not queued');
+   assert((await post({...payload,ts:'8000',submission_id:'abcdefabcdefabcdefabcdef00000004'})).headers.get('location')==='/gracias.html?p=consulta','Normal fill time accepted');
+  }finally{await stop(validation);}
+  const third=base+'/private-limit',limited=startServer(third);
+  try{
+   await waitForServer();
+   for(let i=0;i<5;i++)assert((await post({...payload,submission_id:'abcdefabcdefabcdefabcdef0000010'+i})).headers.get('location')==='/gracias.html?p=consulta','Five submissions inside the limit');
+   assert((await post({...payload,submission_id:'abcdefabcdefabcdefabcdef00000199'})).headers.get('location')==='/contacto/?error=envio','Sixth submission in ten minutes shows the WhatsApp fallback');
+   assert(queued(third).length===5,'Rate-limited submission is not queued');
+  }finally{await stop(limited);}
   const blocked=spawn(process.env.PHP_BINARY || 'php',['-S',`127.0.0.1:${port}`,'-t',web],{windowsHide:true,stdio:'ignore',env:{...process.env,TASACION_OUTBOX_DIR:web+'/unsafe',VENDERCRM_URL:'unconfigured',VENDERCRM_API_KEY:''}});
   try{await waitForServer();assert((await post(payload)).headers.get('location')==='/contacto/?error=envio','No queue and no receipt cannot show thank-you');}finally{blocked.kill();await new Promise(r=>blocked.once('close',r));}
   console.log(`PASS: ${checks} local PHP form checks; no real CRM submission.`);

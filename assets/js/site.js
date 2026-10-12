@@ -9,7 +9,7 @@
     window.dataLayer.push({ event: t.dataset.ev, ev_loc: t.dataset.evLoc || '', page_path: location.pathname, wa_option: t.dataset.waOpen || t.dataset.waOption || '' });
   }, true);
 
-  var ID = (typeof ANALYTICS_ID === 'string' ? ANALYTICS_ID : '').trim();
+  var ID = (document.documentElement.getAttribute('data-analytics-id') || '').trim();
   if (ID) {
     var s = document.createElement('script');
     s.async = true;
@@ -32,7 +32,7 @@
       var alert = document.createElement('p');
       alert.setAttribute('role', 'alert');
       alert.textContent = error === 'telefono'
-        ? 'El número es demasiado corto. Ingresá tu número completo de WhatsApp, con al menos 6 caracteres.'
+        ? 'Revisá el número: ingresá tu WhatsApp completo, de 6 a 15 dígitos. Podés usar +595, espacios o guiones.'
         : 'No pudimos enviar tus datos. Escribinos por WhatsApp para coordinar tu tasación: ';
       if (error === 'envio') {
         var link = document.createElement('a');
@@ -71,6 +71,13 @@
     var bytes = new Uint8Array(16);
     window.crypto.getRandomValues(bytes);
     submissionId.value = Array.prototype.map.call(bytes, function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+  }
+  /* Tiempo de llenado en ms, medido solo en el navegador (sin depender del
+     reloj del visitante). lead-forward.php descarta en silencio < 3 s. */
+  var formTs = document.getElementById('form_ts');
+  if (formTs && formTs.form) {
+    var formLoaded = Date.now();
+    formTs.form.addEventListener('submit', function () { formTs.value = String(Date.now() - formLoaded); });
   }
   var pu = document.getElementById('page_url');
   if (pu) pu.value = location.href;
